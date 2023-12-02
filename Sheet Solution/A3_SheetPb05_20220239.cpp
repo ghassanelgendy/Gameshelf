@@ -195,5 +195,6 @@ int main() {
     c.AddProcess(G,K);
     c.sortByMemoryUse();
     c.print();
+    system("pause");
     Bye
 }
