@@ -1,8 +1,7 @@
 // File: A3_SheetPb02_20220239.cpp
 // Purpose: Class named StringSet that uses the cosine similarity formula to calculate the
 // similarity between two strings or files or set of words in general, with features like
-// getting
-// the intersection and the union of two sets.
+// getting the intersection and the union of two sets.
 // Author: Ghassan Elgendy
 // Section: S21
 // ID: 20220239
@@ -19,25 +18,22 @@ private:
 public:
     StringSet() = default;
 
-    StringSet(string input) {
-        bool isFilename{!(input.find(".txt") == string::npos)};
-        if (isFilename) {
-            //haftah elfile wakhod mno elkalam
-            string name = ".//";
-            name.append(input);
-            fstream file(name);
-            string sentence;
-            if (!file.is_open()) {
-                cout << "Cannot find your file.\n";
-            }
-            while (getline(file, sentence)) {
-                addString(sentence);
-            }
-            file.close();
-        } else {
-            //hat3amel enaha stringaya tawela
-            addString(input);
+    StringSet(string input) { //for strings
+        addString(input);
+    }
+
+    StringSet(char *filename) { //for txt files
+        string name = ".//";
+        name.append(filename);
+        fstream file(name);
+        string sentence;
+        if (!file.is_open()) {
+            cout << "Cannot find your file.\n";
         }
+        while (getline(file, sentence)) {
+            addString(sentence);
+        }
+        file.close();
     }
 
     void clear() {
@@ -110,13 +106,15 @@ int main() {
     cout << "Actual output: " << set1.size() << "\n\n";
 
     // Test the constructor that takes a string
-    StringSet set2("Hello, world!");
+    string in2{"Hello, world!"};
+    StringSet set2(in2);
     cout << "String constructor test:\n";
     cout << "Expected output: 2\n";
     cout << "Actual output: " << set2.size() << "\n\n";
 
     // Test the addString method
-    set1.addString("Hello, world!");
+    string in1 = "Hello, world!";
+    set1.addString(in1);
     cout << "addString method test:\n";
     cout << "Expected output: 2\n";
     cout << "Actual output: " << set1.size() << "\n\n";
@@ -154,34 +152,40 @@ int main() {
     cout << "\n";
 
     // Test the constructor that takes a filename
-    StringSet set5("A3_SheetPb02_20220239.txt");
+    char *filename = "A3_SheetPb02_20220239.txt";
+    StringSet set5(filename);
     cout << "Filename constructor test:\n";
     cout << "Expected output: " << '7' << "\n";
     cout << "Actual output: " << set5.size() << "\n\n";
 
     // Test the overloaded << operator
     StringSet set;
-    set.addString("Hello, world!");
+    string setIn{"Hello, world!"};
+    set.addString(setIn);
     cout << "Overloaded << operator test:\n";
     cout << "Expected output: hello world \n";
     cout << "Actual output: ";
     cout << set << "\n\n";
+    string input1{"ghassan"};
+    string input2{"Ghassan"};
 
-    StringSet x("ghassan");
-    StringSet y("Ghassan");
+    StringSet x(input1);
+    StringSet y(input2);
     cout << x.computeSimilarity(y) << '\n'; //woooooooo
     cout << x.computeSimilarity(set5) << "\n\n";
     // Test the cosine similarity function
     cout << "similarity test cases:\n";
-    StringSet wahed("a little bird");
-    StringSet etnen("a little bird");
+    string xx{"a little bird"};
+    StringSet wahed(xx);
+    StringSet etnen(xx);
     cout << "Expected output: 1\n";
     cout << "Actual output: " << wahed.computeSimilarity(etnen) << "\n\n";
-    StringSet talata("a little bird shata ghassan chirps");
+    string testwallahy{"a little bird shata ghassan chirps"};
+    StringSet talata(testwallahy);
     cout << "Expected output: 0.707107\n"; // sqrt(1/3) = 0.577350269
     cout << "Actual output: " << wahed.computeSimilarity(talata) << "\n\n";
-
-    StringSet arb3a("a big dog barks");
+    string big{"a big dog barks"};
+    StringSet arb3a(big);
     cout << "Expected output: 0.288675\n";
     cout << "Actual output: " << wahed.computeSimilarity(arb3a) << "\n\n";
     End
