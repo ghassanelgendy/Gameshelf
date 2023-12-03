@@ -1,5 +1,8 @@
 // File: A3_SheetPb02_20220239.cpp
-// Purpose: Class named StringSet that uses the cosine similarity formula to calculate the similarity between two strings or files or set of words in general, with features like getting the intersection and the union of two sets.
+// Purpose: Class named StringSet that uses the cosine similarity formula to calculate the
+// similarity between two strings or files or set of words in general, with features like
+// getting
+// the intersection and the union of two sets.
 // Author: Ghassan Elgendy
 // Section: S21
 // ID: 20220239
