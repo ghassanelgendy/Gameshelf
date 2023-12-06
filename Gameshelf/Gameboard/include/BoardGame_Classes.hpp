@@ -1,7 +1,9 @@
-// Class definition for XO game classes
-// Author:  Mohammad El-Ramly
+// Class definition for Connect Four game classes
+// Author:       Mohamed Elramly
+// Updated by :  Ghassan Elgendy
 // Date:    10/10/2022
-// Version: 1
+// Version: 1.1
+#include <string>
 #ifndef _BoardGame_CLASSES_H
 #define _BoardGame_CLASSES_H
 using namespace std;
