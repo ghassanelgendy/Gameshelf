@@ -37,7 +37,9 @@ public:
     }
 
     void clear() {
-        tokens.clear();
+        if (!tokens.empty())
+            tokens.clear();
+        cout<<"Set is empty!\n";
     }
 
     void addString(string input) {
