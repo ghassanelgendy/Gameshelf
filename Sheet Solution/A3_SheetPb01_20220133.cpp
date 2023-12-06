@@ -1,9 +1,10 @@
-//Sheet 2 Problem 1
-// Author: Rawan ehab
+// File name:A3_SheetPb01_20220133.cpp
+// Purpose: to generate a series of names that form a sequential pattern,
+// Author(s): Rawan Ehab
+// ID(s): 20220133
 // Section: S21
-// ID: 20220133
-// TA: Rana Abdelkader
 // Date: 2 Dec 2023
+// TA: Rana Abdelkader
 
 #include <iostream>
 #include <fstream>
