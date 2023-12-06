@@ -92,7 +92,7 @@ int main() {
     }
 
     cout << endl;
-   FileLabelGenerator figureLabels("Figure ", 1, "labels.txt");
+   FileLabelGenerator figureLabels("Figure ", 1, "A3_SheetPb01_20220133.txt");
 cout << "Figure labels:\n";
 for (int i = 0; i < 3; i++) {
     cout << figureLabels.nextLabel() << endl;
