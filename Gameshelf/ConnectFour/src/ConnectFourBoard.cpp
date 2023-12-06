@@ -105,6 +105,16 @@ bool ConnectFourBoard::is_winner() {
         }
 
     }
+      for (unsigned short i = 0; i < 3; i++) {
+          for (unsigned short j = 3; j < 7; j++) {
+              if (board[i][j] == board[i + 1][j - 1] &&
+                  board[i][j] == board[i + 2][j - 2] &&
+                  board[i][j] == board[i + 3][j - 3] &&
+                  (board[i][j] == 'X' || board[i][j] == 'O')) {
+                  return true;
+              }
+          }
+      }
     return false;
     }
 
