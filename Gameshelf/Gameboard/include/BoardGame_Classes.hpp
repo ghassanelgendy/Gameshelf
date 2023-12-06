@@ -12,7 +12,7 @@ class Board {
 protected:
    int n_rows, n_cols;
    char** board;
-   int  n_moves = 0;
+   int  n_moves = 0; 
 
 public:
    // Return true  if move is valid and put it on board
