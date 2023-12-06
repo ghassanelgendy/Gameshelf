@@ -9,13 +9,7 @@
 
 using namespace std;
 
-class ConnectFourPlayer :public Player {
-private:
-    short lastMoveX;
-    short lastMoveY;
-};
-class ConnectFourBoard:public Board{
-public:
+class ConnectFourBoard:public Board{ public:
     ConnectFourBoard();
     bool update_board (int x, int y, char mark);
     void display_board();
@@ -23,5 +17,17 @@ public:
     bool is_draw();
     bool game_is_over();
 };
+class AI_Player : public Player
+{
+public:
+    pair<int,int> getBestMove();
+    AI_Player(Board* brdPtr);
+private:
+    pair<int, int>move; //contains x y axises
+    short score;
+    Board* brdPtr;
+};
+
+
 ///////////////////////////////////////////
 #endif

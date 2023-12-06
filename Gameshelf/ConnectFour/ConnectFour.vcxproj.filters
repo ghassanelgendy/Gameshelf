@@ -38,7 +38,7 @@
     <ClCompile Include="src\RandomPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ConnectFourPlayer.cpp">
+    <ClCompile Include="src\AI_Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

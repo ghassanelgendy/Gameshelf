@@ -52,6 +52,7 @@ class Player {
         string name;
         char symbol;
     public:
+        Player();
         // Two constructors to initiate player
         // Give player a symbol to use in playing
         // It can be X or O or others

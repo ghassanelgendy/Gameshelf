@@ -35,7 +35,7 @@ void Player::get_move (int& x, int& y) {
 
 // Give player info as a string
 string Player::to_string(){
-    return "Player: " + name ;
+    return name;
 }
 
 // Get symbol used by player

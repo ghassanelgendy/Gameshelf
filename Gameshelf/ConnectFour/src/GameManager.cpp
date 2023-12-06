@@ -25,7 +25,11 @@ void GameManager::run() {
             while (!boardPtr->update_board (x, y, players[i]->get_symbol())){
                 players[i]->get_move(x, y);
             }
+            system("cls");
+            cout << players[0]->to_string() <<" ("<<players[0]->get_symbol()<<')' << " VS " << players[1]->to_string() << " (" << players[1]->get_symbol() << ')' << endl;
+
             boardPtr->display_board();
+
             if (boardPtr->is_winner()){
                 cout  << players[i]->to_string() << " wins\n";
                 return;
@@ -36,4 +40,5 @@ void GameManager::run() {
             }
         }
     }
+   
 }
