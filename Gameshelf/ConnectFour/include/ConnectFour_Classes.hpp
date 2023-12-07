@@ -9,25 +9,24 @@
 
 using namespace std;
 
-class ConnectFourBoard:public Board{ public:
+class ConnectFourBoard:public Board{ 
+public:
     ConnectFourBoard();
     bool update_board (int x, int y, char mark);
     void display_board();
     bool is_winner();
     bool is_draw();
     bool game_is_over();
+    char getCell(short& x, short& y);
 };
 class AI_Player : public Player
 {
 public:
     pair<int,int> getBestMove();
-    AI_Player(Board* brdPtr);
+    AI_Player(ConnectFourBoard* brdPtr);
 private:
     pair<int, int>move; //contains x y axises
     short score;
-    Board* brdPtr;
+    ConnectFourBoard* AICopyOfBoard;
 };
-
-
-///////////////////////////////////////////
 #endif

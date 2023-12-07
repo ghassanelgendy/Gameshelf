@@ -8,17 +8,26 @@ pair<int, int> AI_Player::getBestMove()
 	for (short i = 0; i < 7; i++)
 	{
 		for (short j = 0; j < 6; j++) {
-			if(board->)
+			if (AICopyOfBoard->getCell(i, j) == 0) {
+				move.first = i;
+				move.second = j;
+
+				AICopyOfBoard->update_board(i, j, 'o');
+
+
+				
+
+				AICopyOfBoard->update_board(i, j, 0);
+			}
+			else if(AICopyOfBoard->getCell(i, j) == 'X'){
+
+			}
 		}
 	}
-
-
-
 	return pair<int, int>();
 }
 
-AI_Player::AI_Player(Board* brdPtr) : Player(2, 'o') {
-
+AI_Player::AI_Player(ConnectFourBoard* brdPtr) : Player(2, 'o'), AICopyOfBoard(brdPtr) {
 }
  
 
