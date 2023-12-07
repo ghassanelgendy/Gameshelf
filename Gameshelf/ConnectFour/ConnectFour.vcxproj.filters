@@ -29,16 +29,16 @@
     <ClCompile Include="src\ConnectFourBoard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameManager.cpp">
+    <ClCompile Include="..\Gameboard\src\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Player.cpp">
+    <ClCompile Include="..\Gameboard\src\GameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\RandomPlayer.cpp">
+    <ClCompile Include="..\Gameboard\src\RandomPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AI_Player.cpp">
+    <ClCompile Include="src\ConnectRandomPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

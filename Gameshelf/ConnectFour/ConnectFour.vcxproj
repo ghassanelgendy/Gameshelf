@@ -131,12 +131,12 @@
     <ClInclude Include="include\ConnectFour_Classes.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AI_Player.cpp" />
+    <ClCompile Include="..\Gameboard\src\GameManager.cpp" />
+    <ClCompile Include="..\Gameboard\src\Player.cpp" />
+    <ClCompile Include="..\Gameboard\src\RandomPlayer.cpp" />
     <ClCompile Include="src\ConnectFourBoard.cpp" />
     <ClCompile Include="src\ConnectFour_App.cpp" />
-    <ClCompile Include="src\GameManager.cpp" />
-    <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\RandomPlayer.cpp" />
+    <ClCompile Include="src\ConnectRandomPlayer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

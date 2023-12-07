@@ -1,5 +1,6 @@
 // Class definition for XO_GameManager class
-// Author:  Mohammad El-Ramly
+// Author:       Mohamed Elramly
+// Updated by :  Ghassan Elgendy
 // Date:    10/10/2022
 // Version: 1
 
@@ -24,7 +25,11 @@ void GameManager::run() {
             while (!boardPtr->update_board (x, y, players[i]->get_symbol())){
                 players[i]->get_move(x, y);
             }
+            system("cls");
+            cout<<"\t\t\t\t\t===[" << players[0]->to_string() << " (" << players[0]->get_symbol() << ')' << " VS " << players[1]->to_string() << " (" << players[1]->get_symbol() << ")]===\n\n" << endl;
+
             boardPtr->display_board();
+
             if (boardPtr->is_winner()){
                 cout  << players[i]->to_string() << " wins\n";
                 return;
@@ -35,4 +40,5 @@ void GameManager::run() {
             }
         }
     }
+   
 }

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-class ConnectFourBoard:public Board{ 
+class ConnectFourBoard : public Board{ 
 public:
     ConnectFourBoard();
     bool update_board (int x, int y, char mark);
@@ -17,16 +17,12 @@ public:
     bool is_winner();
     bool is_draw();
     bool game_is_over();
-    char getCell(short& x, short& y);
 };
-class AI_Player : public Player
-{
-public:
-    pair<int,int> getBestMove();
-    AI_Player(ConnectFourBoard* brdPtr);
-private:
-    pair<int, int>move; //contains x y axises
-    short score;
-    ConnectFourBoard* AICopyOfBoard;
+
+class ConnectRandomPlayer : public RandomPlayer{
+    public:
+    ConnectRandomPlayer(char sym, int dimension);
+    void get_move(int& x, int& y);
 };
+
 #endif

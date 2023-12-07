@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0285b71e-90d1-4259-91ae-029334d5593c}</ProjectGuid>
+    <ProjectGuid>{2bd71afc-df2b-4f37-b5b4-759bbd26ab7c}</ProjectGuid>
     <RootNamespace>Gameshelf</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -127,11 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Gameshelf_App.cpp" />
-    <ClCompile Include="src\Gameshelf_Classes.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\Gameshelf_Classes.hpp" />
+    <ClCompile Include="..\ConnectFour\src\ConnectFourBoard.cpp" />
+    <ClCompile Include="..\ConnectFour\src\ConnectRandomPlayer.cpp" />
+    <ClCompile Include="..\Gameboard\src\GameManager.cpp" />
+    <ClCompile Include="..\Gameboard\src\Player.cpp" />
+    <ClCompile Include="..\Gameboard\src\RandomPlayer.cpp" />
+    <ClCompile Include="..\Gameboard\src\X_O_Board.cpp" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

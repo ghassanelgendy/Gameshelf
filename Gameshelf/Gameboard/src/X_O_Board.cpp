@@ -36,7 +36,6 @@ bool X_O_Board::update_board (int x, int y, char mark){
 
 // Display the board and the pieces on it
 void X_O_Board::display_board() {
-	   system("cls"); //clears console
    for (int i: {0,1,2}) {
       cout << "\n| ";
       for (int j: {0,1,2}) {
@@ -48,7 +47,7 @@ void X_O_Board::display_board() {
              cout << setw(2) << board[i][j] << " |";
          }
       }
-      cout << "\n-----------------------------------------------------------------";
+      cout << "\n-----------------------------";
    }
    cout << endl;
 }

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gameshelf", "Gameshelf.vcxproj", "{0285B71E-90D1-4259-91AE-029334D5593C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gameshelf", "Gameshelf.vcxproj", "{2BD71AFC-DF2B-4F37-B5B4-759BBD26AB7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,19 +13,19 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0285B71E-90D1-4259-91AE-029334D5593C}.Debug|x64.ActiveCfg = Debug|x64
-		{0285B71E-90D1-4259-91AE-029334D5593C}.Debug|x64.Build.0 = Debug|x64
-		{0285B71E-90D1-4259-91AE-029334D5593C}.Debug|x86.ActiveCfg = Debug|Win32
-		{0285B71E-90D1-4259-91AE-029334D5593C}.Debug|x86.Build.0 = Debug|Win32
-		{0285B71E-90D1-4259-91AE-029334D5593C}.Release|x64.ActiveCfg = Release|x64
-		{0285B71E-90D1-4259-91AE-029334D5593C}.Release|x64.Build.0 = Release|x64
-		{0285B71E-90D1-4259-91AE-029334D5593C}.Release|x86.ActiveCfg = Release|Win32
-		{0285B71E-90D1-4259-91AE-029334D5593C}.Release|x86.Build.0 = Release|Win32
+		{2BD71AFC-DF2B-4F37-B5B4-759BBD26AB7C}.Debug|x64.ActiveCfg = Debug|x64
+		{2BD71AFC-DF2B-4F37-B5B4-759BBD26AB7C}.Debug|x64.Build.0 = Debug|x64
+		{2BD71AFC-DF2B-4F37-B5B4-759BBD26AB7C}.Debug|x86.ActiveCfg = Debug|Win32
+		{2BD71AFC-DF2B-4F37-B5B4-759BBD26AB7C}.Debug|x86.Build.0 = Debug|Win32
+		{2BD71AFC-DF2B-4F37-B5B4-759BBD26AB7C}.Release|x64.ActiveCfg = Release|x64
+		{2BD71AFC-DF2B-4F37-B5B4-759BBD26AB7C}.Release|x64.Build.0 = Release|x64
+		{2BD71AFC-DF2B-4F37-B5B4-759BBD26AB7C}.Release|x86.ActiveCfg = Release|Win32
+		{2BD71AFC-DF2B-4F37-B5B4-759BBD26AB7C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3165E924-CBE0-48FF-A02F-387137ABEBFC}
+		SolutionGuid = {E2C2D780-5E3B-4A8F-9AAF-DCBB8E4A2CE7}
 	EndGlobalSection
 EndGlobal
