@@ -9,12 +9,7 @@
 
 using namespace std;
 
-class ConnectFourPlayer :public Player {
-private:
-    short lastMoveX;
-    short lastMoveY;
-};
-class ConnectFourBoard:public Board{
+class ConnectFourBoard : public Board{ 
 public:
     ConnectFourBoard();
     bool update_board (int x, int y, char mark);
@@ -23,5 +18,11 @@ public:
     bool is_draw();
     bool game_is_over();
 };
-///////////////////////////////////////////
+
+class ConnectRandomPlayer : public RandomPlayer{
+    public:
+    ConnectRandomPlayer(char sym, int dimension);
+    void get_move(int& x, int& y);
+};
+
 #endif
