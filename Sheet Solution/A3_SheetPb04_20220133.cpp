@@ -1,9 +1,10 @@
-//Sheet 2 Problem 4
-// Author: Rawan ehab
+// File name:A3_SheetPb04_20220133.cpp
+// Purpose: a template-based class that implements a set of items.
+// Author(s): Rawan Ehab
+// ID(s): 20220133
 // Section: S21
-// ID: 20220133
-// TA: Rana Abdelkader
 // Date: 2 Dec 2023
+// TA: Rana Abdelkader
 #include <iostream>
 #include <vector>
 using namespace std;
