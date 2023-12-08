@@ -1,3 +1,12 @@
+// File name: PyramicTicTacToe_app.cpp
+// Purpose: Main file for the PyramicTicTacToe game .
+// Author(s):  Rawan Ehab 
+// ID(s):       20220133  
+// Section:  S21
+//TA : Eng. Rana Abdelrazik
+// Date:    8/12/2023
+// Version: 1
+
 #include "../include/PyramicTicTacToe_classes.h"
  #include "PyramicTicTacToe_board.cpp"
  #include "../../Gameboard//src//Player.cpp"

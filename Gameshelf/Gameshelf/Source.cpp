@@ -1,3 +1,12 @@
+// File name: Source.cpp
+// Purpose: Main file for the project containing the menu and each game initialization.
+// Author(s): Ghassan Elgendy - Rawan Ehab - Jana mohamed
+// ID(s):     20220239        - 20220133   -  202220470
+// Section:  S21
+//TA : Eng. Rana Abdelrazik
+// Date:    8/12/2023
+// Version: 1.1
+
 #include <iostream>
 #include "../Gameboard/include/BoardGame_Classes.hpp"
 #include "../ConnectFour/include/ConnectFour_Classes.hpp"

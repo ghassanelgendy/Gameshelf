@@ -1,3 +1,12 @@
+// File name: PyramicTicTacToe_classes.h
+// Purpose: Header file for the PyramicTicTacToe game containing the classes and their functions.
+// Author(s):  Rawan Ehab 
+// ID(s):       20220133  
+// Section:  S21
+//TA : Eng. Rana Abdelrazik
+// Date:    8/12/2023
+// Version: 1
+
 #include "../../Gameboard//include//BoardGame_Classes.hpp"
 
 

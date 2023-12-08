@@ -1,4 +1,4 @@
-// Class definition for Connect Four game classes
+// Class definition for  game classes
 // Author:       Mohamed Elramly
 // Updated by :  Ghassan Elgendy
 // Date:    10/10/2022
