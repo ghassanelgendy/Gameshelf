@@ -1,6 +1,17 @@
 #include <iostream>
 #include "../Gameboard/include/BoardGame_Classes.hpp"
 #include "../ConnectFour/include/ConnectFour_Classes.hpp"
+#include "../PyramicTicTacToe/include/PyramicTicTacToe_classes.h"
+
+// #include "../Gameboard/src/Player.cpp"
+// #include "../Gameboard/src/GameManager.cpp"
+// #include "../Gameboard/src/X_O_Board.cpp"
+// #include "../Gameboard/src/RandomPlayer.cpp"
+// #include "../ConnectFour/src/ConnectFourBoard.cpp"
+// #include "../ConnectFour/src/ConnectRandomPlayer.cpp"
+// #include "../PyramicTicTacToe/src/PyramicTicTacToe_board.cpp"
+// #include "../PyramicTicTacToe/src/PyramicTicTacToe_RandomPlayer.cpp"
+
 
 using namespace std;
 
@@ -58,6 +69,55 @@ startConnectFourLabel:
         goto startChoice;
     }
 }
+ void static initPyramicTicTacToe(char& choice) {
+    Player* players[2];
+    players[0] = new Player(1, 'x');
+    startChoice:
+    cout << "enter 1 for multi-player mode or enter 2 to play against a computer: ";
+    cin >> choice;
+    int comp_choice;
+    if (choice == '1')
+    {
+        players[1] = new Player(2, 'o');
+    }
+    else if (choice == '2')
+    { 
+        compchoicestart:
+        cout << "\nenter 1 to play against a dumb computer or enter 2 to play against an AI: ";
+        cin >> comp_choice;
+        if (comp_choice == 1)
+            players[1] = new PyramicTicTacToe_RandomPlayer('o');
+        else if (comp_choice == 2)
+            //players[1] = new PyramicTicTacToe_AIPlayer('o');
+            cout << "AI not implemented yet\n";
+        else
+        {
+            cout << "Please choose a valid option\n";
+            goto compchoicestart;
+        }
+        
+    }
+    else
+    {
+        cout << "Please choose a valid option\n";
+        goto startChoice;
+
+    }
+    
+    startpyramicgame:
+
+    Board* boardPtr = new PyramicTicTacToe_Board();
+    system("cls");
+    GameManager pyramic_tic_tac_toe_game(boardPtr, players);
+    pyramic_tic_tac_toe_game.run();
+
+    cout << "Want to play again ? Y/N \n";
+    char rematch;
+    cin >> rematch;
+    if (tolower(rematch) == 'y') {
+       goto startpyramicgame;
+    }
+}
 int main() {
     chooseGameLabel:
     char gameChoice;
@@ -74,11 +134,14 @@ int main() {
         break;
 
     case('3'):
+        initPyramicTicTacToe(choice);
         break;
     case('4'):
         initConnectFour(choice);
         break;
     default:
+        cout << "Please choose a valid option\n";
+        goto chooseGameLabel;
         break;
     }
     cout << "Want to try another game? Y/N\n";
