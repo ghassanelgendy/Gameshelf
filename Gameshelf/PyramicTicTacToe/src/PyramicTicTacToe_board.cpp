@@ -8,13 +8,13 @@ PyramicTicTacToe_Board::PyramicTicTacToe_Board() {
     //pyramid. Five squares make the base, then three, then one.
     n_rows = 3;
     n_cols = 5;
-    board = new char*[n_rows];
+    board = new char *[n_rows];
     for (int i = 0; i < n_rows; i++) {
         board[i] = new char[n_cols];
         for (int j = 0; j < n_cols; j++)
             board[i][j] = 0; //bytb3 blank 3shan zero hena ascii mesh number fa btb2a space fadya
-            // board[i][j] = 36 dah bytb3 array 5x3 of $ 3shan ascii 36 = $
-                     }
+        // board[i][j] = 36 dah bytb3 array 5x3 of $ 3shan ascii 36 = $
+    }
 }
 
 void PyramicTicTacToe_Board::display_board() {
@@ -23,11 +23,10 @@ void PyramicTicTacToe_Board::display_board() {
         for (int k = 0; k < n_rows - i - 1; k++) {
             cout << "        ";
         }
-        for (int j = 0; j < 2*i + 1; j++) {
+        for (int j = 0; j < 2 * i + 1; j++) {
             if (board[i][j] == 0) {
-                 cout << setw(4)<<"(" << i << ","  << j << ")"<< setw(4);
-            }
-            else {
+                cout << setw(4) << "(" << i << "," << j << ")" << setw(4);
+            } else {
                 cout << setw(4) << board[i][j] << setw(4) << "";
             }
         }
@@ -38,54 +37,40 @@ void PyramicTicTacToe_Board::display_board() {
 
 bool PyramicTicTacToe_Board::update_board(int x, int y, char mark) {
     // Only update if move is valid
-    if (x >= 0 && x < n_rows && y >= 0 && y < 2*x + 1 && board[x][y] == 0) {
+    if (x >= 0 && x < n_rows && y >= 0 && y < 2 * x + 1 && board[x][y] == 0) {
         board[x][y] = toupper(mark);
         n_moves++;
         return true;
-    }
-    else
+    } else
         return false;
 }
 
-
 bool PyramicTicTacToe_Board::is_winner() {
-    for (int i = 0; i < n_rows; i++) { //rows
-        for (int j = 0; j < 2 * i -1; j++) {
-            if (board[i][j] != 0 && board[i][j] == board[i][j + 1] && board[i][j] == board[i][j + 2]) {
-                return true;
-            }
-        }
+    if(board[0][0]==board[1][1]&&board[0][0]==board[2][2]&&board[0][0]!=0) return true;
+    if(board[1][0]==board[1][1]&&board[1][1]==board[1][2]&&(board[1][1]!=0))return true;
+    if(board[0][0]==board[1][0]&&board[0][0]==board[2][0]&&(board[0][2]!=0)) return true;
+    if(board[0][0]==board[1][2]&&board[0][0]==board[2][4]&&(board[0][0]!=0)) return true;
+    for(int i=2,j=0;j<3;j++)
+    {
+        if(board[i][j]==board[i][j+1]&&board[i][j]==board[i][j+2]&&(board[i][j]=='X'||board[i][j]=='O')) return true;
     }
 
-    for (int j = 0; j < 2 * n_rows - 1; j++) { //columns
-        for (int i = 0; i < n_rows - 2; i++) {
-            if (board[i][j] != 0 && board[i][j] == board[i + 1][j] && board[i][j] == board[i + 2][j]) {
-                return true;
-            }
-        }
-    }
-
-    for (int i = 0; i < n_rows - 2; i++) { //diagonals
-        for (int j = 0; j < 2 * i - 1; j++) {
-            if (board[i][j] != 0 && board[i][j] == board[i + 1][j + 1] && board[i][j] == board[i + 2][j + 2]) {
-                return true;
-            }
-        }
-
-        //checking elna7ya elymeen mesh shaghal
-    }
-
-    return false;
+   return false;
 }
+
+
 
 
 bool PyramicTicTacToe_Board::is_draw() {
-     return (n_moves == 9 && !is_winner());
+    return (n_moves == 9 && !is_winner());
 }
 
 bool PyramicTicTacToe_Board::game_is_over() {
-       return n_moves >= 9;
+    return n_moves >= 9;
 }
+
+
+
 
 
 

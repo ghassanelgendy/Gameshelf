@@ -17,7 +17,7 @@ public:
 
 class PyramicTicTacToe_RandomPlayer:public RandomPlayer {
 public:
-    explicit PyramicTicTacToe_RandomPlayer(char symbol);
+    PyramicTicTacToe_RandomPlayer(char symbol);
     void get_move(int& x, int& y) override;
 };
 
