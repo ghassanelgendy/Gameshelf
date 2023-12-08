@@ -21,4 +21,16 @@ public:
     void get_move(int& x, int& y) override;
 };
 
+class PyramicTicTacToe_AIPlayer:public RandomPlayer {
+public:
+   PyramicTicTacToe_AIPlayer(char symbol);
+    void get_move(int& x, int& y) override;
+};
+
+void static initPyramicTicTacToe() {
+    PyramicTicTacToe_Board();
+    PyramicTicTacToe_RandomPlayer('o');
+    PyramicTicTacToe_AIPlayer('o');
+}
+
 #endif //CS213_A3_PYRAMICTICTACTOE_CLASSES_H

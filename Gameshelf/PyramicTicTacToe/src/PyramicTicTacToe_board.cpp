@@ -48,11 +48,11 @@ bool PyramicTicTacToe_Board::update_board(int x, int y, char mark) {
 bool PyramicTicTacToe_Board::is_winner() {
     if(board[0][0]==board[1][1]&&board[0][0]==board[2][2]&&board[0][0]!=0) return true;
     if(board[1][0]==board[1][1]&&board[1][1]==board[1][2]&&(board[1][1]!=0))return true;
-    if(board[0][0]==board[1][0]&&board[0][0]==board[2][0]&&(board[0][2]!=0)) return true;
+    if(board[0][0]==board[1][0]&&board[0][0]==board[2][0]&&(board[0][0]!=0)) return true;
     if(board[0][0]==board[1][2]&&board[0][0]==board[2][4]&&(board[0][0]!=0)) return true;
     for(int i=2,j=0;j<3;j++)
     {
-        if(board[i][j]==board[i][j+1]&&board[i][j]==board[i][j+2]&&(board[i][j]=='X'||board[i][j]=='O')) return true;
+        if(board[i][j]==board[i][j+1]&&board[i][j]==board[i][j+2]&&(board[i][j]!=0)) return true;
     }
 
    return false;
