@@ -732,7 +732,7 @@ ConnectFour::~ConnectFour()
 
 PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
-	this->SetSizeHints(500, 500);
+	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
 	this->SetBackgroundColour(wxColour(1, 68, 33));
 
 	MenuBar = new wxMenuBar(0);
@@ -790,32 +790,34 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 	{
 		buttons[i] = new wxButton(this, 1000 + i, "");
 		buttons[i]->Bind(wxEVT_LEFT_DOWN, wxCommandEventHandler(XO3x3::OnButtonClick), this);
+
+		buttons[i]->SetMinSize(wxSize(50, 50));
 		
 
 	}
 	// create the sizer for the first row (one button)
 	wxBoxSizer* row1 = new wxBoxSizer(wxHORIZONTAL);
-	row1->Add(buttons[0], 6, wxALIGN_CENTER | wxALL, 5);
+	row1->Add(buttons[0], 4, wxALIGN_CENTER | wxALL, 5);
 
 	// create the sizer for the second row (three buttons)
 	wxBoxSizer* row2 = new wxBoxSizer(wxHORIZONTAL);
-	row2->Add(buttons[1], 1, wxALIGN_CENTER | wxALL, 5);
-	row2->Add(buttons[2], 1, wxALIGN_CENTER | wxALL, 5);
-	row2->Add(buttons[3], 1, wxALIGN_CENTER | wxALL, 5);
+	row2->Add(buttons[1], 4, wxALIGN_CENTER | wxALL, 5);
+	row2->Add(buttons[2], 4, wxALIGN_CENTER | wxALL, 5);
+	row2->Add(buttons[3], 4, wxALIGN_CENTER | wxALL, 5);
 
 	// create the sizer for the third row (five buttons)
 	wxBoxSizer* row3 = new wxBoxSizer(wxHORIZONTAL);
-	row3->Add(buttons[4], 1, wxALIGN_CENTER | wxALL, 5);
-	row3->Add(buttons[5], 1, wxALIGN_CENTER | wxALL, 5);
-	row3->Add(buttons[6], 1, wxALIGN_CENTER | wxALL, 5);
-	row3->Add(buttons[7], 1, wxALIGN_CENTER | wxALL, 5);
-	row3->Add(buttons[8], 1, wxALIGN_CENTER | wxALL, 5);
+	row3->Add(buttons[4], 4, wxALIGN_CENTER | wxALL, 5);
+	row3->Add(buttons[5], 4, wxALIGN_CENTER | wxALL, 5);
+	row3->Add(buttons[6], 4, wxALIGN_CENTER | wxALL, 5);
+	row3->Add(buttons[7], 4, wxALIGN_CENTER | wxALL, 5);
+	row3->Add(buttons[8], 4, wxALIGN_CENTER | wxALL, 5);
 
 	// create the main sizer and add the rows
 	wxBoxSizer* main_sizer = new wxBoxSizer(wxVERTICAL);
-	main_sizer->Add(row1, 0, wxALIGN_CENTER | wxALL, 5);
-	main_sizer->Add(row2, 0, wxALIGN_CENTER | wxALL, 5);
-	main_sizer->Add(row3, 0, wxALIGN_CENTER | wxALL, 5);
+	main_sizer->Add(row1, 2, wxALIGN_CENTER | wxALL, 5);
+	main_sizer->Add(row2, 2, wxALIGN_CENTER | wxALL, 5);
+	main_sizer->Add(row3, 2, wxALIGN_CENTER | wxALL, 5);
 
 	// set the main sizer and the size of the window
 	
@@ -826,7 +828,7 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 	GameStatusAndScore->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
 	GameStatusAndScore->SetBackgroundColour(wxColour(1, 68, 33));
 
-	main_sizer->Add(GameStatusAndScore, 0, wxALIGN_CENTER | wxALL, 5);
+	main_sizer->Add(GameStatusAndScore, 2, wxALIGN_CENTER | wxALL, 5);
 
 SetSizerAndFit(main_sizer);
 
@@ -834,6 +836,7 @@ SetSizerAndFit(main_sizer);
 
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+main_sizer->Layout();
 	this->Layout();
 	this->Centre(wxBOTH);
 
