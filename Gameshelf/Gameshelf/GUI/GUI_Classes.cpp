@@ -730,194 +730,119 @@ ConnectFour::~ConnectFour()
 
 }
 
-PyramicTicTac::PyramicTicTac( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
-	this->SetBackgroundColour( wxColour( 58, 200, 55 ) );
+	this->SetSizeHints(500, 500);
+	this->SetBackgroundColour(wxColour(1, 68, 33));
 
-	MenuBar = new wxMenuBar( 0 );
+	MenuBar = new wxMenuBar(0);
 	Games = new wxMenu();
 	wxMenuItem* XO3x3;
-	XO3x3 = new wxMenuItem( Games, wxID_ANY, wxString( wxT("3x3 XO") ) , wxEmptyString, wxITEM_NORMAL );
-	Games->Append( XO3x3 );
+	XO3x3 = new wxMenuItem(Games, wxID_ANY, wxString(wxT("3x3 XO")), wxEmptyString, wxITEM_NORMAL);
+	Games->Append(XO3x3);
 
 	wxMenuItem* XO5x5;
-	XO5x5 = new wxMenuItem( Games, wxID_ANY, wxString( wxT("5x5 XO") ) , wxEmptyString, wxITEM_NORMAL );
-	Games->Append( XO5x5 );
+	XO5x5 = new wxMenuItem(Games, wxID_ANY, wxString(wxT("5x5 XO")), wxEmptyString, wxITEM_NORMAL);
+	Games->Append(XO5x5);
 
 	wxMenuItem* ConnectFour;
-	ConnectFour = new wxMenuItem( Games, wxID_ANY, wxString( wxT("Connect Four") ) , wxEmptyString, wxITEM_NORMAL );
-	Games->Append( ConnectFour );
+	ConnectFour = new wxMenuItem(Games, wxID_ANY, wxString(wxT("Connect Four")), wxEmptyString, wxITEM_NORMAL);
+	Games->Append(ConnectFour);
 
 	wxMenuItem* PyramicXO;
-	PyramicXO = new wxMenuItem( Games, wxID_ANY, wxString( wxT("Pyramic XO") ) , wxEmptyString, wxITEM_NORMAL );
-	Games->Append( PyramicXO );
+	PyramicXO = new wxMenuItem(Games, wxID_ANY, wxString(wxT("Pyramic XO")), wxEmptyString, wxITEM_NORMAL);
+	Games->Append(PyramicXO);
 
-	MenuBar->Append( Games, wxT("Games") );
+	MenuBar->Append(Games, wxT("Games"));
 
 	Players = new wxMenu();
 	wxMenuItem* Player1;
-	Player1 = new wxMenuItem( Players, wxID_ANY, wxString( wxT("Player 1 (X)") ) , wxEmptyString, wxITEM_NORMAL );
-	Players->Append( Player1 );
+	Player1 = new wxMenuItem(Players, wxID_ANY, wxString(wxT("Player 1 (X)")), wxEmptyString, wxITEM_NORMAL);
+	Players->Append(Player1);
 
 	wxMenuItem* Player2;
-	Player2 = new wxMenuItem( Players, wxID_ANY, wxString( wxT("Player 2 (O)") ) , wxEmptyString, wxITEM_NORMAL );
-	Players->Append( Player2 );
+	Player2 = new wxMenuItem(Players, wxID_ANY, wxString(wxT("Player 2 (O)")), wxEmptyString, wxITEM_NORMAL);
+	Players->Append(Player2);
 
-	MenuBar->Append( Players, wxT("Players") );
+	MenuBar->Append(Players, wxT("Players"));
 
 	Help = new wxMenu();
 	wxMenuItem* Instructions;
-	Instructions = new wxMenuItem( Help, wxID_ANY, wxString( wxT("Instructions") ) + wxT('\t') + wxT("ALT+I"), wxEmptyString, wxITEM_NORMAL );
-	Help->Append( Instructions );
+	Instructions = new wxMenuItem(Help, wxID_ANY, wxString(wxT("Instructions")) + wxT('\t') + wxT("ALT+I"), wxEmptyString, wxITEM_NORMAL);
+	Help->Append(Instructions);
 
 	wxMenuItem* SourceCode;
-	SourceCode = new wxMenuItem( Help, wxID_ANY, wxString( wxT("Source Code") ) + wxT('\t') + wxT("ALT+S"), wxT("See source code"), wxITEM_NORMAL );
-	Help->Append( SourceCode );
+	SourceCode = new wxMenuItem(Help, wxID_ANY, wxString(wxT("Source Code")) + wxT('\t') + wxT("ALT+S"), wxT("See source code"), wxITEM_NORMAL);
+	Help->Append(SourceCode);
 
 	Help->AppendSeparator();
 
 	wxMenuItem* Credits;
-	Credits = new wxMenuItem( Help, wxID_ANY, wxString( wxT("Credits") ) + wxT('\t') + wxT("ALT+C"), wxEmptyString, wxITEM_NORMAL );
-	Help->Append( Credits );
+	Credits = new wxMenuItem(Help, wxID_ANY, wxString(wxT("Credits")) + wxT('\t') + wxT("ALT+C"), wxEmptyString, wxITEM_NORMAL);
+	Help->Append(Credits);
 
-	MenuBar->Append( Help, wxT("Help") );
+	MenuBar->Append(Help, wxT("Help"));
 
-	this->SetMenuBar( MenuBar );
+	this->SetMenuBar(MenuBar);
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	wxGridSizer* gSizer18;
-	gSizer18 = new wxGridSizer( 3, 5, 0, 0 );
+	for (int i = 0; i < 9; i++)
+	{
+		buttons[i] = new wxButton(this, 1000 + i, "");
+		buttons[i]->Bind(wxEVT_LEFT_DOWN, wxCommandEventHandler(XO3x3::OnButtonClick), this);
+		
 
-	wxGridSizer* gSizer201;
-	gSizer201 = new wxGridSizer( 1, 1, 0, 0 );
+	}
+	// create the sizer for the first row (one button)
+	wxBoxSizer* row1 = new wxBoxSizer(wxHORIZONTAL);
+	row1->Add(buttons[0], 6, wxALIGN_CENTER | wxALL, 5);
 
+	// create the sizer for the second row (three buttons)
+	wxBoxSizer* row2 = new wxBoxSizer(wxHORIZONTAL);
+	row2->Add(buttons[1], 1, wxALIGN_CENTER | wxALL, 5);
+	row2->Add(buttons[2], 1, wxALIGN_CENTER | wxALL, 5);
+	row2->Add(buttons[3], 1, wxALIGN_CENTER | wxALL, 5);
 
-	gSizer18->Add( gSizer201, 1, wxEXPAND, 5 );
+	// create the sizer for the third row (five buttons)
+	wxBoxSizer* row3 = new wxBoxSizer(wxHORIZONTAL);
+	row3->Add(buttons[4], 1, wxALIGN_CENTER | wxALL, 5);
+	row3->Add(buttons[5], 1, wxALIGN_CENTER | wxALL, 5);
+	row3->Add(buttons[6], 1, wxALIGN_CENTER | wxALL, 5);
+	row3->Add(buttons[7], 1, wxALIGN_CENTER | wxALL, 5);
+	row3->Add(buttons[8], 1, wxALIGN_CENTER | wxALL, 5);
 
-	wxGridSizer* gSizer2011;
-	gSizer2011 = new wxGridSizer( 1, 1, 0, 0 );
+	// create the main sizer and add the rows
+	wxBoxSizer* main_sizer = new wxBoxSizer(wxVERTICAL);
+	main_sizer->Add(row1, 0, wxALIGN_CENTER | wxALL, 5);
+	main_sizer->Add(row2, 0, wxALIGN_CENTER | wxALL, 5);
+	main_sizer->Add(row3, 0, wxALIGN_CENTER | wxALL, 5);
 
+	// set the main sizer and the size of the window
+	
 
-	gSizer18->Add( gSizer2011, 1, wxEXPAND, 5 );
+	GameStatusAndScore = new wxStaticText(this, wxID_ANY, wxT("\nPlayer 1 (X) vs Player 2 (O)"), wxDefaultPosition, wxDefaultSize, 0);
+	GameStatusAndScore->Wrap(-1);
+	GameStatusAndScore->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
+	GameStatusAndScore->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
+	GameStatusAndScore->SetBackgroundColour(wxColour(1, 68, 33));
 
-	cells[0][0] = new wxButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+	main_sizer->Add(GameStatusAndScore, 0, wxALIGN_CENTER | wxALL, 5);
 
-	cells[0][0]->SetBackgroundColour(wxColour(255, 255, 255));
+SetSizerAndFit(main_sizer);
 
-	gSizer18->Add(cells[0][0], 0, wxEXPAND, 5 );
-
-	wxGridSizer* gSizer20;
-	gSizer20 = new wxGridSizer( 1, 1, 0, 0 );
-
-
-	gSizer18->Add( gSizer20, 1, wxEXPAND, 5 );
-
-	wxGridSizer* gSizer2012;
-	gSizer2012 = new wxGridSizer( 1, 1, 0, 0 );
-
-
-	gSizer18->Add( gSizer2012, 1, wxEXPAND, 5 );
-
-	wxGridSizer* gSizer19;
-	gSizer19 = new wxGridSizer( 1, 1, 0, 0 );
-
-
-	gSizer18->Add( gSizer19, 1, wxEXPAND, 5 );
-
-
-	cells[1][1] = new wxButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-
-	cells[1][1]->SetBackgroundColour(wxColour(255, 255, 255));
-
-	gSizer18->Add(cells[1][1], 0, wxEXPAND, 5 );
-	cells[1][2] = new wxButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-
-	cells[1][2]->SetBackgroundColour(wxColour(255, 255, 255));
 
 
 	
-	gSizer18->Add(cells[1][2], 0, wxEXPAND, 5 );
-
-	cells[2][0] = new wxButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-
-	cells[2][0]->SetBackgroundColour(wxColour(255, 255, 255));
-
-	gSizer18->Add(cells[2][0], 0, wxEXPAND, 5 );
-
-	wxGridSizer* gSizer20111;
-	gSizer20111 = new wxGridSizer( 1, 1, 0, 0 );
-
-
-	gSizer18->Add( gSizer20111, 1, wxEXPAND, 5 );
-
-
-	cells[2][1] = new wxButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-
-	cells[2][1]->SetBackgroundColour(wxColour(255, 255, 255));
-
-	
-	gSizer18->Add(cells[2][1], 0, wxEXPAND, 5 );
-
-	cells[3][0] = new wxButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-
-	cells[3][0]->SetBackgroundColour(wxColour(255, 255, 255));
-
-
-	gSizer18->Add(cells[3][0], 0, wxEXPAND, 5 );
-	
-	/*CellNo3 = new wxButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer18->Add( CellNo3, 0, wxEXPAND, 5 );
-
-	CellNo6 = new wxButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer18->Add( CellNo6, 0, wxEXPAND, 5 );
-
-	CellNo1 = new wxButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer18->Add( CellNo1, 0, wxEXPAND, 5 );*/
-
-	wxGridSizer* gSizer201131;
-	gSizer201131 = new wxGridSizer( 1, 1, 0, 0 );
-
-
-	gSizer18->Add( gSizer201131, 1, wxEXPAND, 5 );
-
-	wxGridSizer* gSizer20113;
-	gSizer20113 = new wxGridSizer( 1, 1, 0, 0 );
-
-
-	gSizer18->Add( gSizer20113, 1, wxEXPAND, 5 );
-
-	wxFlexGridSizer* fgSizer2;
-	fgSizer2 = new wxFlexGridSizer( 1, 1, 0, 0 );
-	fgSizer2->SetFlexibleDirection( wxBOTH );
-	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
-
-	GameStatusAndScore = new wxStaticText( this, wxID_ANY, wxT("\nPlayer 1 (X) vs Player 2 (O)"), wxDefaultPosition, wxDefaultSize, 0 );
-	GameStatusAndScore->Wrap( -1 );
-	GameStatusAndScore->SetFont( wxFont( 12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt") ) );
-	GameStatusAndScore->SetForegroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BACKGROUND ) );
-	GameStatusAndScore->SetBackgroundColour( wxColour( 58, 200, 55 ) );
-
-	fgSizer2->Add( GameStatusAndScore, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
-
-
-	gSizer18->Add( fgSizer2, 1, wxEXPAND, 5 );
-
-	wxGridSizer* gSizer20112;
-	gSizer20112 = new wxGridSizer( 1, 1, 0, 0 );
-
-
-	gSizer18->Add( gSizer20112, 1, wxEXPAND, 5 );
-
-
-	this->SetSizer( gSizer18 );
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	this->Layout();
+	this->Centre(wxBOTH);
 
-	this->Centre( wxBOTH );
 
+	
 	// Connect Events
-	Games->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PyramicTicTac::openThree ), this, XO3x3->GetId());
-	Help->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( PyramicTicTac::CreditsOnMenuSelection ), this, Credits->GetId());
-	this->Connect( Credits->GetId(), wxEVT_UPDATE_UI, wxUpdateUIEventHandler( PyramicTicTac::CreditsOnUpdateUI ) );
+	Games->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(PyramicTicTac::openThree), this, XO3x3->GetId());
+	Help->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(PyramicTicTac::CreditsOnMenuSelection), this, Credits->GetId());
+	this->Connect(Credits->GetId(), wxEVT_UPDATE_UI, wxUpdateUIEventHandler(PyramicTicTac::CreditsOnUpdateUI));
 }
 
 PyramicTicTac::~PyramicTicTac()

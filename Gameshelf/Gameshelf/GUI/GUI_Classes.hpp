@@ -77,7 +77,7 @@ class XO3x3 : public wxFrame
 	protected:
 		wxButton* cells[3][3];
 		wxToggleButton* m_toggleBtn11;
-		wxToggleButton* m_toggleBtn13;
+		wxToggleButton* m_toggleBtn13;                            
 		wxToggleButton* m_toggleBtn16;
 		wxToggleButton* m_toggleBtn18;
 		wxToggleButton* m_toggleBtn17;
@@ -140,28 +140,30 @@ class ConnectFour : public wxFrame
 ///////////////////////////////////////////////////////////////////////////////
 class PyramicTicTac : public wxFrame
 {
-	private:
+private:
 
-	protected:
-		wxMenuBar* MenuBar;
-		wxMenu* Games;
-		wxMenu* Players;
-		wxMenu* Help;
-		wxButton* cells[3][5];
-		wxStaticText* GameStatusAndScore;
+protected:
+	wxMenuBar* MenuBar;
+	wxMenu* Games;
+	wxMenu* Players;
+	wxMenu* Help;
+	wxButton* buttons[9];
+	wxStaticText* GameStatusAndScore;
+	wxBoxSizer* sizer;
+	int board[9];
 
-		// Virtual event handlers, override them in your derived class
-		virtual void openThree( wxCommandEvent& event ) { event.Skip(); }
-		virtual void CreditsOnMenuSelection(wxCommandEvent& event);
+	// Virtual event handlers, override them in your derived class
+	virtual void openThree(wxCommandEvent& event) { event.Skip(); }
+	
+	virtual void CreditsOnMenuSelection(wxCommandEvent& event);
+	virtual void CreditsOnUpdateUI(wxUpdateUIEvent& event) { event.Skip(); }
 
-		virtual void CreditsOnUpdateUI( wxUpdateUIEvent& event ) { event.Skip(); }
 
+public:
 
-	public:
+	PyramicTicTac(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Pyramic Tic Tac Toe"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(600, 400), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
 
-		PyramicTicTac( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Pyramic Tic Tac Toe"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 600,400 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-
-		~PyramicTicTac();
+	~PyramicTicTac();
 
 };
 
