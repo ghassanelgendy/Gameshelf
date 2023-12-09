@@ -151,6 +151,10 @@ protected:
 	wxStaticText* GameStatusAndScore;
 	wxBoxSizer* sizer;
 	int board[9];
+	int turn;
+	bool is_winner(int player);
+	void Reset();
+	bool is_draw();
 
 	// Virtual event handlers, override them in your derived class
 	virtual void openThree(wxCommandEvent& event) { event.Skip(); }
@@ -162,7 +166,7 @@ protected:
 public:
 
 	PyramicTicTac(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Pyramic Tic Tac Toe"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(600, 400), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
-
+	void OnButtonClicked(wxCommandEvent& event);
 	~PyramicTicTac();
 
 };

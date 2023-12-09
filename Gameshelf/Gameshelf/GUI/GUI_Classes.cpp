@@ -92,6 +92,8 @@ void XO5x5::CreditsOnMenuSelection(wxCommandEvent& event)
 	xo->Show(true);
 }
 
+
+
 void PyramicTicTac::CreditsOnMenuSelection(wxCommandEvent& event)
 {
 	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
@@ -730,7 +732,7 @@ ConnectFour::~ConnectFour()
 
 }
 
-PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style & ~wxRESIZE_BORDER)
+PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX))
 {
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
 	this->SetBackgroundColour(wxColour(1, 68, 33));
@@ -789,43 +791,53 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 	for (int i = 0; i < 9; i++)
 	{
 		buttons[i] = new wxButton(this, 1000 + i, "");
-		buttons[i]->Bind(wxEVT_LEFT_DOWN, wxCommandEventHandler(XO3x3::OnButtonClick), this);
+		buttons[i]->Bind(wxEVT_LEFT_DOWN, wxCommandEventHandler(PyramicTicTac::OnButtonClicked), this);
 
 		buttons[i]->SetMinSize(wxSize(80, 80));
 		
 		buttons[i]->SetBackgroundColour(wxColour(255, 255, 255));
+
+		// Set font size for "X" and "O"
+		wxFont buttonFont = buttons[i]->GetFont();
+		buttonFont.SetPointSize(16);  
+		buttons[i]->SetFont(buttonFont);
 	}
-	// create the sizer for the first row (one button)
+
+	for (int i = 0; i < 9; i++)
+	{
+		board[i] = 0;
+	}
+	turn = 1;
+
+
+	//sizer hanhot fyh el buttons btarteeb el pyramid
 	wxBoxSizer* row1 = new wxBoxSizer(wxHORIZONTAL);
 	row1->Add(buttons[0], 4, wxALIGN_CENTER | wxALL, 5);
 
-	// create the sizer for the second row (three buttons)
+	
 	wxBoxSizer* row2 = new wxBoxSizer(wxHORIZONTAL);
 	row2->Add(buttons[1], 4, wxALIGN_CENTER | wxALL, 5);
 	row2->Add(buttons[2], 4, wxALIGN_CENTER | wxALL, 5);
 	row2->Add(buttons[3], 4, wxALIGN_CENTER | wxALL, 5);
 
-	// create the sizer for the third row (five buttons)
 	wxBoxSizer* row3 = new wxBoxSizer(wxHORIZONTAL);
 	row3->Add(buttons[4], 4, wxALIGN_CENTER | wxALL, 5);
 	row3->Add(buttons[5], 4, wxALIGN_CENTER | wxALL, 5);
 	row3->Add(buttons[6], 4, wxALIGN_CENTER | wxALL, 5);
 	row3->Add(buttons[7], 4, wxALIGN_CENTER | wxALL, 5);
 	row3->Add(buttons[8], 4, wxALIGN_CENTER | wxALL, 5);
-
-	// create the main sizer and add the rows
+	
 	wxBoxSizer* main_sizer = new wxBoxSizer(wxVERTICAL);
 	main_sizer->Add(row1, 2, wxALIGN_CENTER | wxALL, 3);
 	main_sizer->Add(row2, 2, wxALIGN_CENTER | wxALL, 3);
 	main_sizer->Add(row3, 2, wxALIGN_CENTER | wxALL, 3);
 
-	// set the main sizer and the size of the window
 	
 
 	GameStatusAndScore = new wxStaticText(this, wxID_ANY, wxT("\nPlayer 1 (X) vs Player 2 (O)"), wxDefaultPosition, wxDefaultSize, 0);
 	GameStatusAndScore->Wrap(-1);
 	GameStatusAndScore->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
-	GameStatusAndScore->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
+	GameStatusAndScore->SetForegroundColour(wxColour(255, 255, 255));
 	GameStatusAndScore->SetBackgroundColour(wxColour(1, 68, 33));
 
 	main_sizer->Add(GameStatusAndScore, 2, wxALIGN_CENTER | wxALL, 5);
@@ -848,6 +860,100 @@ main_sizer->Layout();
 	this->Connect(Credits->GetId(), wxEVT_UPDATE_UI, wxUpdateUIEventHandler(PyramicTicTac::CreditsOnUpdateUI));
 }
 
+void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
+{
+	// get the id of the button that was clicked
+	int id = event.GetId();
+
+	// get the index of the button in the array
+	int index = id - 1000;
+
+	// check if the button is already occupied
+	if (board[index] != 0)
+	{
+		// do nothing
+		return;
+	}
+	if (turn == 1)
+	{
+		board[index] = 1;
+		buttons[index]->SetLabel("X");
+	}
+	else
+	{
+		board[index] = -1;
+		buttons[index]->SetLabel("O");
+	}
+	if (is_draw())
+	{
+		GameStatusAndScore->SetLabel("                 Draw!");
+		for (int i = 0; i < 9; i++)
+		{
+			buttons[i]->Disable();
+		}
+		return;
+	}
+	if (is_winner(turn))
+	{
+		// display the winner and disable the buttons
+		if (turn == 1)
+		{
+			GameStatusAndScore->SetLabel("                 X wins!");
+
+		}
+
+		else
+		{
+			GameStatusAndScore->SetLabel("                 O wins!");
+		}
+		
+		for (int i = 0; i < 9; i++)
+		{
+			buttons[i]->Disable();
+		}
+		return;
+	}
+	turn = -turn;
+}
+
+bool PyramicTicTac::is_winner(int player)
+{
+	// Check horizontal lines
+	if ((board[0] == player && board[2] == player && board[6] == player) ||
+		(board[1] == player && board[2] == player && board[3] == player) ||
+		(board[4] == player && board[5] == player && board[6] == player) ||
+		(board[5] == player && board[6] == player && board[7] == player) ||
+		(board[6] == player && board[7] == player && board[8] == player))
+		return true;
+
+	// Check diagonal lines
+	if ((board[0] == player && board[1] == player && board[4] == player) ||
+		(board[0] == player && board[3] == player && board[8] == player))
+		return true;
+
+	return false;
+}
+
+
+void PyramicTicTac::Reset()
+{
+	for (int i = 0; i < 9; i++)
+	{
+		board[i] = 0;
+		buttons[i]->SetLabel("");
+		buttons[i]->Enable();
+	}
+	turn = 1;
+}
+
+bool PyramicTicTac::is_draw()
+{
+	for (int i = 0; i < 9; i++)
+	{
+		if (board[i] == 0) return false;
+	}
+	return true;
+}
 PyramicTicTac::~PyramicTicTac()
 {
 	// Disconnect Events
