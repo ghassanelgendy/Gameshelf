@@ -8,24 +8,15 @@
 // Version: 1.1
 
 #include <iostream>
-#include "../Gameboard/include/BoardGame_Classes.hpp"
-#include "../ConnectFour/include/ConnectFour_Classes.hpp"
-#include "../PyramicTicTacToe/include/PyramicTicTacToe_classes.h"
-
-// #include "../Gameboard/src/Player.cpp"
-// #include "../Gameboard/src/GameManager.cpp"
-// #include "../Gameboard/src/X_O_Board.cpp"
-// #include "../Gameboard/src/RandomPlayer.cpp"
-// #include "../ConnectFour/src/ConnectFourBoard.cpp"
-// #include "../ConnectFour/src/ConnectRandomPlayer.cpp"
-// #include "../PyramicTicTacToe/src/PyramicTicTacToe_board.cpp"
-// #include "../PyramicTicTacToe/src/PyramicTicTacToe_RandomPlayer.cpp"
+#include "../../ConnectFour/include/ConnectFour_Classes.hpp"
+#include "../../PyramicTicTacToe/include/PyramicTicTacToe_classes.h"
+#include "../../Gameboard/include/BoardGame_Classes.hpp"
 
 
 using namespace std;
 
 void static init3x3_XO(char& choice){
-        Player * players[2];
+        Player* players[2];
         players[0] = new Player(1, 'x');
 
         cout << "Welcome to FCAI X-O Game. :)\n";
@@ -78,7 +69,7 @@ startConnectFourLabel:
         goto startChoice;
     }
 }
- void static initPyramicTicTacToe(char& choice) {
+void static initPyramicTicTacToe(char& choice) {
     Player* players[2];
     players[0] = new Player(1, 'x');
     startChoice:

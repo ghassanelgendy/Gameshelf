@@ -127,13 +127,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\ConnectFour\src\ConnectFourBoard.cpp" />
-    <ClCompile Include="..\ConnectFour\src\ConnectRandomPlayer.cpp" />
-    <ClCompile Include="..\Gameboard\src\GameManager.cpp" />
-    <ClCompile Include="..\Gameboard\src\Player.cpp" />
-    <ClCompile Include="..\Gameboard\src\RandomPlayer.cpp" />
-    <ClCompile Include="..\Gameboard\src\X_O_Board.cpp" />
+    <ClCompile Include="..\..\ConnectFour\src\ConnectFourBoard.cpp" />
+    <ClCompile Include="..\..\ConnectFour\src\ConnectRandomPlayer.cpp" />
+    <ClCompile Include="..\..\Gameboard\src\GameManager.cpp" />
+    <ClCompile Include="..\..\Gameboard\src\Player.cpp" />
+    <ClCompile Include="..\..\Gameboard\src\RandomPlayer.cpp" />
+    <ClCompile Include="..\..\Gameboard\src\X_O_Board.cpp" />
+    <ClCompile Include="..\..\PyramicTicTacToe\src\PyramicTicTacToe_board.cpp" />
+    <ClCompile Include="..\..\PyramicTicTacToe\src\PyramicTicTacToe_RandomPlayer.cpp" />
     <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ConnectFour\include\ConnectFour_Classes.hpp" />
+    <ClInclude Include="..\..\Gameboard\include\BoardGame_Classes.hpp" />
+    <ClInclude Include="..\..\PyramicTicTacToe\include\PyramicTicTacToe_classes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
