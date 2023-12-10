@@ -18,14 +18,15 @@
 #include <wx/colour.h>
 #include <wx/settings.h>
 #include <wx/string.h>
-#include <wx/tglbtn.h>
+#include <wx/button.h>
 #include <wx/sizer.h>
 #include <wx/menu.h>
 #include <wx/frame.h>
 #include <wx/stattext.h>
-#include <wx/button.h>
+#include <wx/tglbtn.h>
+#include <wx/hyperlink.h>
+#include <wx/wrapsizer.h>
 #include <wx/textctrl.h>
-#include <wx/panel.h>
 #include <wx/radiobut.h>
 #include <wx/dialog.h>
 
@@ -40,30 +41,38 @@ class MainFrame : public wxFrame
 	private:
 
 	protected:
-		wxStaticBitmap* m_bitmap2;
-		wxToggleButton* m_toggleBtn20;
-		wxStaticBitmap* m_bitmap21;
-		wxToggleButton* m_toggleBtn201;
-		wxStaticBitmap* m_bitmap22;
-		wxToggleButton* m_toggleBtn202;
-		wxStaticBitmap* m_bitmap23;
-		wxToggleButton* m_toggleBtn203;
+		wxStaticBitmap* SouretXO3x3;
+		wxButton* XO3x3Btn;
+		wxStaticBitmap* SouretXO5x5;
+		wxButton* XO5x5Btn;
+		wxStaticBitmap* SouretConnectFour;
+		wxButton* ConnectFourBtn;
+		wxStaticBitmap* SouretXOPyramid;
+		wxButton* PyramicXOBtn;
 		wxMenuBar* MenuBar;
 		wxMenu* Games;
 		wxMenu* Players;
 		wxMenu* Help;
 
 		// Virtual event handlers, override them in your derived class
-		virtual void openThree( wxMouseEvent& event ) { event.Skip(); }
-		virtual void ConnectInit( wxMouseEvent& event ) { event.Skip(); }
-		virtual void openThree( wxCommandEvent& event ) { event.Skip(); }
-		virtual void CreditsOnMenuSelection( wxCommandEvent& event ) { event.Skip(); }
+		virtual void MainFrameOnShow( wxShowEvent& event ) { event.Skip(); }
+		virtual void launch3x3Frame( wxKeyEvent& event ) { event.Skip(); }
+		virtual void launch3x3Frame( wxCommandEvent& event ) { event.Skip(); }
+		virtual void launch5x5Frame( wxKeyEvent& event ) { event.Skip(); }
+		virtual void launch5x5Frame( wxCommandEvent& event ) { event.Skip(); }
+		virtual void launchConnectFourFrame( wxKeyEvent& event ) { event.Skip(); }
+		virtual void launchConnectFourFrame( wxCommandEvent& event ) { event.Skip(); }
+		virtual void launchPyramicXOFrame( wxKeyEvent& event ) { event.Skip(); }
+		virtual void launchPyramicXOFrame( wxCommandEvent& event ) { event.Skip(); }
+		virtual void launchPlayersModal( wxCommandEvent& event ) { event.Skip(); }
+		virtual void openRepoLink( wxCommandEvent& event ) { event.Skip(); }
+		virtual void launchCreditsFrame( wxCommandEvent& event ) { event.Skip(); }
 		virtual void CreditsOnUpdateUI( wxUpdateUIEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		MainFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("FCAI Gameshelf"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1205,462 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		MainFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("FCAI Gameshelf"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1270,515 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~MainFrame();
 
@@ -77,30 +86,26 @@ class XO3x3 : public wxFrame
 	private:
 
 	protected:
-		wxToggleButton* m_toggleBtn11;
-		wxToggleButton* m_toggleBtn13;
-		wxToggleButton* m_toggleBtn16;
-		wxToggleButton* m_toggleBtn18;
-		wxToggleButton* m_toggleBtn17;
-		wxToggleButton* m_toggleBtn15;
-		wxToggleButton* m_toggleBtn14;
-		wxToggleButton* m_toggleBtn12;
-		wxToggleButton* m_toggleBtn1;
+		wxButton* Cell;
+		wxButton* Cell2;
+		wxButton* Cell5;
+		wxButton* Cell8;
+		wxButton* Cell7;
+		wxButton* Cell6;
+		wxButton* Cell4;
+		wxButton* Cell3;
+		wxButton* Cell1;
 		wxStaticText* GameStatusAndScore;
 		wxMenuBar* MenuBar;
-		wxMenu* Games;
-		wxMenu* Players;
 		wxMenu* Help;
 
 		// Virtual event handlers, override them in your derived class
-		virtual void openThree( wxCommandEvent& event ) { event.Skip(); }
-		virtual void CreditsOnMenuSelection( wxCommandEvent& event ) { event.Skip(); }
-		virtual void CreditsOnUpdateUI( wxUpdateUIEvent& event ) { event.Skip(); }
+		virtual void onCellClick( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		XO3x3( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("3x3 Tic Tac Toe"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,600 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		XO3x3( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("3x3 Tic Tac Toe"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 456,600 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~XO3x3();
 
@@ -114,7 +119,7 @@ class ConnectFour : public wxFrame
 	private:
 
 	protected:
-		wxToggleButton* m_toggleBtn38;
+		wxButton* thisOneIsCorrect;
 		wxToggleButton* m_toggleBtn40;
 		wxToggleButton* m_toggleBtn41;
 		wxToggleButton* m_toggleBtn42;
@@ -158,14 +163,10 @@ class ConnectFour : public wxFrame
 		wxToggleButton* m_toggleBtn79;
 		wxStaticText* GameStatusAndScore;
 		wxMenuBar* MenuBar;
-		wxMenu* Games;
-		wxMenu* Players;
 		wxMenu* Help;
 
 		// Virtual event handlers, override them in your derived class
-		virtual void openThree( wxCommandEvent& event ) { event.Skip(); }
-		virtual void CreditsOnMenuSelection( wxCommandEvent& event ) { event.Skip(); }
-		virtual void CreditsOnUpdateUI( wxUpdateUIEvent& event ) { event.Skip(); }
+		virtual void onCellClick( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
@@ -185,24 +186,20 @@ class PyramicTicTac : public wxFrame
 
 	protected:
 		wxMenuBar* MenuBar;
-		wxMenu* Games;
-		wxMenu* Players;
 		wxMenu* Help;
-		wxButton* CellNo14;
-		wxButton* CellNo11;
-		wxButton* CellNo13;
-		wxButton* CellNo12;
-		wxButton* CellNo10;
-		wxButton* CellNo9;
-		wxButton* CellNo3;
-		wxButton* CellNo6;
-		wxButton* CellNo1;
+		wxButton* cell0;
+		wxButton* cell10;
+		wxButton* cell11;
+		wxButton* cell12;
+		wxButton* cell20;
+		wxButton* cell21;
+		wxButton* cell22;
+		wxButton* cell23;
+		wxButton* cell24;
 		wxStaticText* GameStatusAndScore;
 
 		// Virtual event handlers, override them in your derived class
-		virtual void openThree( wxCommandEvent& event ) { event.Skip(); }
-		virtual void CreditsOnMenuSelection( wxCommandEvent& event ) { event.Skip(); }
-		virtual void CreditsOnUpdateUI( wxUpdateUIEvent& event ) { event.Skip(); }
+		virtual void onCellClick( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
@@ -248,14 +245,10 @@ class XO5x5 : public wxFrame
 		wxToggleButton* CellNo1;
 		wxStaticText* GameStatusAndScore;
 		wxMenuBar* MenuBar;
-		wxMenu* Games;
-		wxMenu* Players;
 		wxMenu* Help;
 
 		// Virtual event handlers, override them in your derived class
-		virtual void openThree( wxCommandEvent& event ) { event.Skip(); }
-		virtual void CreditsOnMenuSelection( wxCommandEvent& event ) { event.Skip(); }
-		virtual void CreditsOnUpdateUI( wxUpdateUIEvent& event ) { event.Skip(); }
+		virtual void onCellClick( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
@@ -274,24 +267,23 @@ class Credits : public wxFrame
 	private:
 
 	protected:
-		wxMenuBar* MenuBar;
-		wxMenu* Games;
-		wxMenu* Players;
-		wxMenu* Help;
-		wxStaticBitmap* m_bitmap7;
-		wxStaticBitmap* m_bitmap5;
-		wxStaticBitmap* m_bitmap6;
-		wxStaticText* m_staticText9;
+		wxHyperlinkCtrl* linkGhassan;
+		wxHyperlinkCtrl* linRowan;
+		wxHyperlinkCtrl* linkJana;
+		wxStaticBitmap* GhassanPic;
+		wxStaticBitmap* RowanPic;
+		wxStaticBitmap* JanaPic;
+		wxStaticText* CreditsStaticText;
 
 		// Virtual event handlers, override them in your derived class
-		virtual void openThree( wxCommandEvent& event ) { event.Skip(); }
-		virtual void CreditsOnMenuSelection( wxCommandEvent& event ) { event.Skip(); }
-		virtual void CreditsOnUpdateUI( wxUpdateUIEvent& event ) { event.Skip(); }
+		virtual void openLinkGhassan( wxKeyEvent& event ) { event.Skip(); }
+		virtual void openLinkRowan( wxKeyEvent& event ) { event.Skip(); }
+		virtual void openLinkJana( wxKeyEvent& event ) { event.Skip(); }
 
 
 	public:
 
-		Credits( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Credits"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 600,318 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		Credits( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Credits"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 634,322 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~Credits();
 
@@ -305,22 +297,27 @@ class Players : public wxDialog
 	private:
 
 	protected:
-		wxStaticText* m_staticText7;
-		wxTextCtrl* m_textCtrl1;
-		wxPanel* m_panel1;
-		wxPanel* m_panel11;
-		wxStaticText* m_staticText6;
-		wxTextCtrl* m_textCtrl2;
+		wxStaticText* playerOneStatic;
+		wxTextCtrl* playerOneField;
+		wxStaticText* playerTowStatic;
+		wxTextCtrl* playerTowField;
 		wxRadioButton* aiBtn;
 		wxRadioButton* computerBtn;
-		wxPanel* m_panel112;
-		wxPanel* m_panel111;
 		wxButton* doneBtn;
 		wxButton* cancelBtn;
+		wxStaticText* whoVSwho;
+
+		// Virtual event handlers, override them in your derived class
+		virtual void PlayersOnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void aiBtnOnRadioButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void computerBtnOnRadioButton( wxCommandEvent& event ) { event.Skip(); }
+		virtual void doneBtnOnButtonClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void cancelBtnOnButtonClick( wxCommandEvent& event ) { event.Skip(); }
+
 
 	public:
 
-		Players( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Players"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 400,200 ), long style = wxDEFAULT_DIALOG_STYLE );
+		Players( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Players"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 400,194 ), long style = wxDEFAULT_DIALOG_STYLE );
 
 		~Players();
 

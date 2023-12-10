@@ -25,9 +25,25 @@
 #include <wx/button.h>
 #include <wx/dialog.h>
 #include <wx/wx.h>
-
+#include <string>
+using namespace std;
 ///////////////////////////////////////////////////////////////////////////
 
+class GUI_Player {
+	string name;
+	char mark;
+	short pose;
+	bool isWinner;
+public:
+	void setWinning(bool w);
+	bool getWin();
+	GUI_Player();
+	GUI_Player(int p, string n,char m);
+	void set_name(string n);
+	void set_mark(char m);
+	string get_name();
+	char get_mark();
+};
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MainFrame
@@ -58,7 +74,8 @@ class MainFrame : public wxFrame
 
 
 	public:
-		static wxString p1, p2;
+
+
 		virtual void CreditsOnMenuSelection(wxCommandEvent& event);
 
 		MainFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("FCAI Gameshelf"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 1205,462 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
@@ -98,10 +115,10 @@ class XO3x3 : public wxFrame
 
 
 	public:
-		
+		void CheckWinner();
 		void OnButtonClick(wxCommandEvent& event);
 		XO3x3( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("3x3 Tic Tac Toe"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,600 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-
+		void ComputerPlay();
 		~XO3x3();
 
 };
@@ -233,6 +250,9 @@ class Credits : public wxFrame
 ///////////////////////////////////////////////////////////////////////////////
 /// Class Players
 ///////////////////////////////////////////////////////////////////////////////
+class GUI_Manager {
+
+};
 class PlayersFrame : public wxDialog
 {
 private:
@@ -252,7 +272,8 @@ protected:
 	wxButton* cancelBtn;
 
 public:
-
+	void OnRadioRightClick(wxMouseEvent& event);
+	void OnRadioButtonSelected(wxCommandEvent& event);
 	PlayersFrame(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Players"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(400, 200), long style = wxDEFAULT_DIALOG_STYLE);
 
 	~PlayersFrame();

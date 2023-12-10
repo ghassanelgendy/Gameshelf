@@ -8,6 +8,18 @@
 #include "GUI_Classes.hpp"
 #include "../../Gameboard/include/BoardGame_Classes.hpp"
 
+GUI_Player p1(1, "Player 1", 'X');
+string winner = " is the winner";
+bool isDraw{ false };
+bool isOver{ false };
+bool isComputer{ false };
+GUI_Player p2(2, "Player 2", 'O');
+GUI_Player players[2] = { p1,p2 };
+string p1_name = "Player 1";
+string p2_name = "Player 2";
+string statement = '\n' + p1_name + " V.S " + p2_name;
+short turn{ 1 };
+
 ///////////////////////////////////////////////////////////////////////////
 void MainFrame::ConnectInit(wxCommandEvent& event)
 {
@@ -66,18 +78,7 @@ void ConnectFour::CreditsOnMenuSelection(wxCommandEvent& event)
 	xo->Show(true);
 }
 
-void XO3x3::CreditsOnMenuSelection(wxCommandEvent& event)
-{
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
 
-	Credits* xo = new Credits(nullptr, wxID_ANY, "Credits",
-		wxDefaultPosition, wxSize(600, 318));
-	//creditsFrame->SetIcon(icon);
-
-	xo->SetIcon(icon);
-
-	xo->Show(true);
-}
 
 void XO5x5::CreditsOnMenuSelection(wxCommandEvent& event)
 {
@@ -129,7 +130,6 @@ void MainFrame::openThree(wxCommandEvent& event)
 		wxDefaultPosition, wxSize(500, 600));
 	//creditsFrame->SetIcon(icon);
 	creditsFrame->SetIcon(icon);
-
 	creditsFrame->Show(true);
 }
 
@@ -234,11 +234,11 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 
 	Players = new wxMenu();
 	wxMenuItem* Player1;
-	Player1 = new wxMenuItem(Players, wxID_ANY, "Player 1", wxEmptyString, wxITEM_NORMAL);
+	Player1 = new wxMenuItem(Players, wxID_ANY, p1_name, wxEmptyString, wxITEM_NORMAL);
 	Players->Append( Player1 );
 
 	wxMenuItem* Player2;
-	Player2 = new wxMenuItem( Players, wxID_ANY,"Player 2" , wxEmptyString, wxITEM_NORMAL );
+	Player2 = new wxMenuItem( Players, wxID_ANY,p2_name , wxEmptyString, wxITEM_NORMAL );
 	Players->Append( Player2 );
 
 	MenuBar->Append( Players, wxT("Players") );
@@ -282,6 +282,9 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	this->Connect( Credits->GetId(), wxEVT_UPDATE_UI, wxUpdateUIEventHandler( MainFrame::CreditsOnUpdateUI ) );
 }
 
+
+
+
 MainFrame::~MainFrame()
 {
 	// Disconnect Events
@@ -290,190 +293,14 @@ MainFrame::~MainFrame()
 	m_toggleBtn202->Disconnect(wxEVT_LEFT_DOWN, wxCommandEventHandler( MainFrame::ConnectInit ), NULL, this );
 	m_toggleBtn203->Disconnect(wxEVT_LEFT_DOWN, wxCommandEventHandler(MainFrame::PyramicInit), NULL, this);
 	this->Disconnect( wxID_ANY, wxEVT_UPDATE_UI, wxUpdateUIEventHandler( MainFrame::CreditsOnUpdateUI ) );
+	system("bye.bat");
+
+	//MainFrame::Close();
 }
 
-XO3x3::XO3x3( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
-{
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
-	this->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BTNTEXT ) );
-
-	wxGridSizer* gSizer6;
-	gSizer6 = new wxGridSizer( 4, 3, 0, 0 );
-
-	for (short i = 0; i < 3; i++)
-	{
-		for (short j = 0; j < 3; j++)
-		{
-			cells[i][j] = new wxButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-			cells[i][j]->SetBackgroundColour(wxColour(255, 255, 255));
-			gSizer6->Add(cells[i][j], 0, wxEXPAND, 5);
-		}
-
-	}
-	//m_toggleBtn11 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	//m_toggleBtn11->SetBackgroundColour( wxColour( 255, 255, 255 ) );
 
 
 
-	//m_toggleBtn13 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	//m_toggleBtn13->SetValue( true );
-	//m_toggleBtn13->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	//gSizer6->Add( m_toggleBtn13, 0, wxEXPAND, 5 );
-
-	//m_toggleBtn16 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	//m_toggleBtn16->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	//gSizer6->Add( m_toggleBtn16, 0, wxEXPAND, 5 );
-
-	//m_toggleBtn18 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	//m_toggleBtn18->SetValue( true );
-	//m_toggleBtn18->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	//gSizer6->Add( m_toggleBtn18, 0, wxEXPAND, 5 );
-
-	//m_toggleBtn17 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	//m_toggleBtn17->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	//gSizer6->Add( m_toggleBtn17, 0, wxEXPAND, 5 );
-
-	//m_toggleBtn15 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	//m_toggleBtn15->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	//gSizer6->Add( m_toggleBtn15, 0, wxEXPAND, 5 );
-
-	//m_toggleBtn14 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	//m_toggleBtn14->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	//gSizer6->Add( m_toggleBtn14, 0, wxEXPAND, 5 );
-
-	//m_toggleBtn12 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	//m_toggleBtn12->SetValue( true );
-	//m_toggleBtn12->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	//gSizer6->Add( m_toggleBtn12, 0, wxEXPAND, 5 );
-
-	//m_toggleBtn1 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-
-	//m_toggleBtn1->SetBitmapMargins( wxSize( 1,1 ) );
-	//m_toggleBtn1->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	//gSizer6->Add( m_toggleBtn1, 0, wxEXPAND, 5 );
-
-	wxFlexGridSizer* fgSizer2;
-	fgSizer2 = new wxFlexGridSizer( 0, 2, 0, 0 );
-	fgSizer2->SetFlexibleDirection( wxBOTH );
-	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
-
-
-	gSizer6->Add( fgSizer2, 1, wxEXPAND, 5 );
-
-	wxFlexGridSizer* fgSizer1;
-	fgSizer1 = new wxFlexGridSizer( 1, 0, 0, 0 );
-	fgSizer1->SetFlexibleDirection( wxVERTICAL );
-	fgSizer1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_NONE );
-
-	GameStatusAndScore = new wxStaticText( this, wxID_ANY, wxT("\n\nPlayer 1 (X) vs Player 2 (O)"), wxDefaultPosition, wxDefaultSize, 0 );
-	GameStatusAndScore->Wrap( -1 );
-	GameStatusAndScore->SetFont( wxFont( 12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt") ) );
-	GameStatusAndScore->SetForegroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BTNHIGHLIGHT ) );
-	GameStatusAndScore->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BTNTEXT ) );
-
-	fgSizer1->Add( GameStatusAndScore, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
-
-	gSizer6->Add( fgSizer1, 1, wxALIGN_CENTER_HORIZONTAL|wxEXPAND, 5 );
-
-
-	this->SetSizer( gSizer6 );
-	this->Layout();
-	MenuBar = new wxMenuBar( 0 );
-	Games = new wxMenu();
-	wxMenuItem* XO3x31;
-	XO3x31 = new wxMenuItem( Games, wxID_ANY, wxString( wxT("3x3 XO") ) , wxEmptyString, wxITEM_NORMAL );
-	Games->Append( XO3x31 );
-
-	wxMenuItem* XO5x5;
-	XO5x5 = new wxMenuItem( Games, wxID_ANY, wxString( wxT("5x5 XO") ) , wxEmptyString, wxITEM_NORMAL );
-	Games->Append( XO5x5 );
-
-	wxMenuItem* ConnectFour;
-	ConnectFour = new wxMenuItem( Games, wxID_ANY, wxString( wxT("Connect Four") ) , wxEmptyString, wxITEM_NORMAL );
-	Games->Append( ConnectFour );
-
-	wxMenuItem* PyramicXO;
-	PyramicXO = new wxMenuItem( Games, wxID_ANY, wxString( wxT("Pyramic XO") ) , wxEmptyString, wxITEM_NORMAL );
-	Games->Append( PyramicXO );
-
-	MenuBar->Append( Games, wxT("Games") );
-
-	Players = new wxMenu();
-	wxMenuItem* Player1;
-	Player1 = new wxMenuItem( Players, wxID_ANY, wxString( wxT("Player 1 (X)") ) , wxEmptyString, wxITEM_NORMAL );
-	Players->Append( Player1 );
-
-	wxMenuItem* Player2;
-	Player2 = new wxMenuItem( Players, wxID_ANY, wxString( wxT("Player 2 (O)") ) , wxEmptyString, wxITEM_NORMAL );
-	Players->Append( Player2 );
-
-	MenuBar->Append( Players, wxT("Players") );
-
-	Help = new wxMenu();
-	wxMenuItem* Instructions;
-	Instructions = new wxMenuItem( Help, wxID_ANY, wxString( wxT("Instructions") ) + wxT('\t') + wxT("ALT+I"), wxEmptyString, wxITEM_NORMAL );
-	Help->Append( Instructions );
-
-	wxMenuItem* SourceCode;
-	SourceCode = new wxMenuItem( Help, wxID_ANY, wxString( wxT("Source Code") ) + wxT('\t') + wxT("ALT+S"), wxT("See source code"), wxITEM_NORMAL );
-	Help->Append( SourceCode );
-
-	Help->AppendSeparator();
-
-	wxMenuItem* Credits;
-	Credits = new wxMenuItem( Help, wxID_ANY, wxString( wxT("Credits") ) + wxT('\t') + wxT("ALT+C"), wxEmptyString, wxITEM_NORMAL );
-	Help->Append( Credits );
-
-	MenuBar->Append( Help, wxT("Help") );
-
-	this->SetMenuBar( MenuBar );
-
-
-	this->Centre( wxBOTH );
-
-	// Connect Events
-	Games->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( XO3x3::openThree ), this, XO3x31->GetId());
-	Help->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( XO3x3::CreditsOnMenuSelection ), this, Credits->GetId());
-	this->Connect( Credits->GetId(), wxEVT_UPDATE_UI, wxUpdateUIEventHandler( XO3x3::CreditsOnUpdateUI ) );
-}
-
-XO3x3::~XO3x3()
-{
-	// Disconnect Events
-	this->Disconnect( wxID_ANY, wxEVT_UPDATE_UI, wxUpdateUIEventHandler( XO3x3::CreditsOnUpdateUI ) );
-
-}
-void XO3x3::OnButtonClick(wxCommandEvent& event) {
-	wxButton* clickedButton = dynamic_cast<wxButton*>(event.GetEventObject());
-	clickedButton->SetLabel(wxString("X")); // Set the button label as X or O
-	clickedButton->SetFont(wxFont(20, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
-
-
-	// Get the position of the clicked button in the grid (you need to implement this)
-	//int row = ...; // Determine row from the clickedButton
-	//int col = ...; // Determine column from the clickedButton
-
-	// Update game logic with the move
-	//bool isValidMove = board.update_board(row, col, currentPlayerSymbol); // Implement this function in your X_O_Board class
-
-	//if (isValidMove) {
-		// Update the display
-		//clickedButton->SetLabel(wxString(currentPlayerSymbol)); // Set the button label as X or O
-		// Check for a winner or draw, and manage game flow using your GameManager
-		// Call GameManager's run method or other relevant functions here
-		// Update the currentPlayerSymbol for the next move
-	//}
-	// Display any necessary messages based on game state
-}
 ConnectFour::ConnectFour( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
@@ -493,136 +320,6 @@ ConnectFour::ConnectFour( wxWindow* parent, wxWindowID id, const wxString& title
 		}
 
 	}
-	/*m_toggleBtn38 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn38, 0, wxEXPAND, 5 );
-
-	m_toggleBtn40 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn40, 0, wxEXPAND, 5 );
-
-	m_toggleBtn41 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn41, 0, wxEXPAND, 5 );
-
-	m_toggleBtn42 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_toggleBtn42->SetValue( true );
-	gSizer7->Add( m_toggleBtn42, 0, wxEXPAND, 5 );
-
-	m_toggleBtn43 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn43, 0, wxEXPAND, 5 );
-
-	m_toggleBtn44 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn44, 0, wxEXPAND, 5 );
-
-	m_toggleBtn45 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn45, 0, wxEXPAND, 5 );
-
-	m_toggleBtn89 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn89, 0, wxEXPAND, 5 );
-
-	m_toggleBtn46 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn46, 0, wxEXPAND, 5 );
-
-	m_toggleBtn47 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn47, 0, wxEXPAND, 5 );
-
-	m_toggleBtn48 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn48, 0, wxEXPAND, 5 );
-
-	m_toggleBtn49 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_toggleBtn49->SetValue( true );
-	gSizer7->Add( m_toggleBtn49, 0, wxEXPAND, 5 );
-
-	m_toggleBtn50 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn50, 0, wxEXPAND, 5 );
-
-	m_toggleBtn51 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn51, 0, wxEXPAND, 5 );
-
-	m_toggleBtn52 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn52, 0, wxEXPAND, 5 );
-
-	m_toggleBtn53 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn53, 0, wxEXPAND, 5 );
-
-	m_toggleBtn54 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn54, 0, wxEXPAND, 5 );
-
-	m_toggleBtn55 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_toggleBtn55->SetValue( true );
-	gSizer7->Add( m_toggleBtn55, 0, wxEXPAND, 5 );
-
-	m_toggleBtn56 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn56, 0, wxEXPAND, 5 );
-
-	m_toggleBtn57 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn57, 0, wxEXPAND, 5 );
-
-	m_toggleBtn58 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn58, 0, wxEXPAND, 5 );
-
-	m_toggleBtn59 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_toggleBtn59->SetValue( true );
-	gSizer7->Add( m_toggleBtn59, 0, wxEXPAND, 5 );
-
-	m_toggleBtn60 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn60, 0, wxEXPAND, 5 );
-
-	m_toggleBtn61 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn61, 0, wxEXPAND, 5 );
-
-	m_toggleBtn62 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn62, 0, wxEXPAND, 5 );
-
-	m_toggleBtn63 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn63, 0, wxEXPAND, 5 );
-
-	m_toggleBtn64 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn64, 0, wxEXPAND, 5 );
-
-	m_toggleBtn65 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn65, 0, wxEXPAND, 5 );
-
-	m_toggleBtn66 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn66, 0, wxEXPAND, 5 );
-
-	m_toggleBtn67 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn67, 0, wxEXPAND, 5 );
-
-	m_toggleBtn68 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn68, 0, wxEXPAND, 5 );
-
-	m_toggleBtn69 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn69, 0, wxEXPAND, 5 );
-
-	m_toggleBtn70 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn70, 0, wxEXPAND, 5 );
-
-	m_toggleBtn71 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn71, 0, wxEXPAND, 5 );
-
-	m_toggleBtn72 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn72, 0, wxEXPAND, 5 );
-
-	m_toggleBtn73 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn73, 0, wxEXPAND, 5 );
-
-	m_toggleBtn74 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn74, 0, wxEXPAND, 5 );
-
-	m_toggleBtn75 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn75, 0, wxEXPAND, 5 );
-
-	m_toggleBtn76 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn76, 0, wxEXPAND, 5 );
-
-	m_toggleBtn77 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn77, 0, wxEXPAND, 5 );
-
-	m_toggleBtn78 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn78, 0, wxEXPAND, 5 );
-
-	m_toggleBtn79 = new wxToggleButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
-	gSizer7->Add( m_toggleBtn79, 0, wxEXPAND, 5 );*/
-
 	wxGridSizer* gSizer17;
 	gSizer17 = new wxGridSizer( 0, 2, 0, 0 );
 
@@ -649,11 +346,22 @@ ConnectFour::ConnectFour( wxWindow* parent, wxWindowID id, const wxString& title
 	fgSizer2->SetFlexibleDirection( wxBOTH );
 	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
-	GameStatusAndScore = new wxStaticText( this, wxID_ANY, wxT("\nPlayer 1 (X) vs Player 2 (O)"), wxDefaultPosition, wxDefaultSize, 0 );
+	
+	
+	
+	
+	
+	GameStatusAndScore = new wxStaticText( this, wxID_ANY, statement, wxDefaultPosition, wxDefaultSize, 0 );
 	GameStatusAndScore->Wrap( -1 );
-	GameStatusAndScore->SetFont( wxFont( 12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt") ) );
+	GameStatusAndScore->SetFont( wxFont( 16, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt") ) );
 	GameStatusAndScore->SetForegroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BTNHIGHLIGHT ) );
-	GameStatusAndScore->SetBackgroundColour( wxColour( 199, 5, 54 ) );
+	GameStatusAndScore->SetBackgroundColour(wxColour(199, 5, 54));
+		// Set Foreground Color
+	// Align text to the middle (horizontal alignment)
+	GameStatusAndScore->SetWindowStyle(wxALIGN_CENTER_HORIZONTAL); // If it's a wxStaticText or similar control
+
+	// For vertically aligning text in a control (if needed)
+	GameStatusAndScore->SetWindowStyle(wxALIGN_CENTER_VERTICAL);
 
 	fgSizer2->Add( GameStatusAndScore, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
 
@@ -688,11 +396,11 @@ ConnectFour::ConnectFour( wxWindow* parent, wxWindowID id, const wxString& title
 
 	Players = new wxMenu();
 	wxMenuItem* Player1;
-	Player1 = new wxMenuItem( Players, wxID_ANY, wxString( wxT("Player 1 (X)") ) , wxEmptyString, wxITEM_NORMAL );
+	Player1 = new wxMenuItem( Players, wxID_ANY, wxString(  p1_name  ) , wxEmptyString, wxITEM_NORMAL );
 	Players->Append( Player1 );
 
 	wxMenuItem* Player2;
-	Player2 = new wxMenuItem( Players, wxID_ANY, wxString( wxT("Player 2 (O)") ) , wxEmptyString, wxITEM_NORMAL );
+	Player2 = new wxMenuItem( Players, wxID_ANY, wxString(  p2_name  ) , wxEmptyString, wxITEM_NORMAL );
 	Players->Append( Player2 );
 
 	MenuBar->Append( Players, wxT("Players") );
@@ -728,7 +436,12 @@ ConnectFour::ConnectFour( wxWindow* parent, wxWindowID id, const wxString& title
 ConnectFour::~ConnectFour()
 {
 	// Disconnect Events
+
 	this->Disconnect( wxID_ANY, wxEVT_UPDATE_UI, wxUpdateUIEventHandler( ConnectFour::CreditsOnUpdateUI ) );
+	ConnectFour::Close(true);
+	delete[] this;
+	system("bye.bat");
+
 
 }
 
@@ -759,12 +472,21 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 
 	Players = new wxMenu();
 	wxMenuItem* Player1;
+<<<<<<< Updated upstream:Gameshelf/Gameshelf/GUI/GUI_Classes.cpp
 	Player1 = new wxMenuItem(Players, wxID_ANY, wxString(wxT("Player 1 (X)")), wxEmptyString, wxITEM_NORMAL);
 	Players->Append(Player1);
 
 	wxMenuItem* Player2;
 	Player2 = new wxMenuItem(Players, wxID_ANY, wxString(wxT("Player 2 (O)")), wxEmptyString, wxITEM_NORMAL);
 	Players->Append(Player2);
+=======
+	Player1 = new wxMenuItem( Players, wxID_ANY, wxString(  p1_name  ) , wxEmptyString, wxITEM_NORMAL );
+	Players->Append( Player1 );
+
+	wxMenuItem* Player2;
+	Player2 = new wxMenuItem( Players, wxID_ANY, wxString(  p2_name  ) , wxEmptyString, wxITEM_NORMAL );
+	Players->Append( Player2 );
+>>>>>>> Stashed changes:Gameshelf/Gameshelf/GUI/Junk/GUI_Classes.cpp
 
 	MenuBar->Append(Players, wxT("Players"));
 
@@ -847,8 +569,85 @@ SetSizer(main_sizer);
 
 
 	
+<<<<<<< Updated upstream:Gameshelf/Gameshelf/GUI/GUI_Classes.cpp
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 main_sizer->Layout();
+=======
+	gSizer18->Add(cells[1][2], 0, wxEXPAND, 5 );
+
+	cells[2][0] = new wxButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+
+	cells[2][0]->SetBackgroundColour(wxColour(255, 255, 255));
+
+	gSizer18->Add(cells[2][0], 0, wxEXPAND, 5 );
+
+	wxGridSizer* gSizer20111;
+	gSizer20111 = new wxGridSizer( 1, 1, 0, 0 );
+
+
+	gSizer18->Add( gSizer20111, 1, wxEXPAND, 5 );
+
+
+	cells[2][1] = new wxButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+
+	cells[2][1]->SetBackgroundColour(wxColour(255, 255, 255));
+
+	
+	gSizer18->Add(cells[2][1], 0, wxEXPAND, 5 );
+
+	cells[3][0] = new wxButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+
+	cells[3][0]->SetBackgroundColour(wxColour(255, 255, 255));
+
+
+	gSizer18->Add(cells[3][0], 0, wxEXPAND, 5 );
+	
+	/*CellNo3 = new wxButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
+	gSizer18->Add( CellNo3, 0, wxEXPAND, 5 );
+
+	CellNo6 = new wxButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
+	gSizer18->Add( CellNo6, 0, wxEXPAND, 5 );
+
+	CellNo1 = new wxButton( this, wxID_ANY, wxT("MyButton"), wxDefaultPosition, wxDefaultSize, 0 );
+	gSizer18->Add( CellNo1, 0, wxEXPAND, 5 );*/
+
+	wxGridSizer* gSizer201131;
+	gSizer201131 = new wxGridSizer( 1, 1, 0, 0 );
+
+
+	gSizer18->Add( gSizer201131, 1, wxEXPAND, 5 );
+
+	wxGridSizer* gSizer20113;
+	gSizer20113 = new wxGridSizer( 1, 1, 0, 0 );
+
+
+	gSizer18->Add( gSizer20113, 1, wxEXPAND, 5 );
+
+	wxFlexGridSizer* fgSizer2;
+	fgSizer2 = new wxFlexGridSizer( 1, 1, 0, 0 );
+	fgSizer2->SetFlexibleDirection( wxBOTH );
+	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	GameStatusAndScore = new wxStaticText( this, wxID_ANY, statement, wxDefaultPosition, wxDefaultSize, 0 );
+	GameStatusAndScore->Wrap( -1 );
+	GameStatusAndScore->SetFont( wxFont( 12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt") ) );
+	GameStatusAndScore->SetForegroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BACKGROUND ) );
+	GameStatusAndScore->SetBackgroundColour( wxColour( 58, 200, 55 ) );
+
+	fgSizer2->Add( GameStatusAndScore, 0, wxALIGN_CENTER_HORIZONTAL|wxALL, 5 );
+
+
+	gSizer18->Add( fgSizer2, 1, wxEXPAND, 5 );
+
+	wxGridSizer* gSizer20112;
+	gSizer20112 = new wxGridSizer( 1, 1, 0, 0 );
+
+
+	gSizer18->Add( gSizer20112, 1, wxEXPAND, 5 );
+
+
+	this->SetSizer( gSizer18 );
+>>>>>>> Stashed changes:Gameshelf/Gameshelf/GUI/Junk/GUI_Classes.cpp
 	this->Layout();
 	this->Centre(wxBOTH);
 
@@ -958,6 +757,9 @@ PyramicTicTac::~PyramicTicTac()
 {
 	// Disconnect Events
 	this->Disconnect( wxID_ANY, wxEVT_UPDATE_UI, wxUpdateUIEventHandler( PyramicTicTac::CreditsOnUpdateUI ) );
+	PyramicTicTac::Close(true);
+	delete[] this;
+	system("bye.bat");
 
 }
 
@@ -969,128 +771,7 @@ XO5x5::XO5x5( wxWindow* parent, wxWindowID id, const wxString& title, const wxPo
 	wxGridSizer* gSizer6;
 	gSizer6 = new wxGridSizer( 6, 5, 0, 0 );
 
-	/*CellNo25 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo25->SetBackgroundColour( wxColour( 255, 255, 255 ) );
 
-	gSizer6->Add( CellNo25, 0, wxEXPAND, 5 );
-
-	CellNo24 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo24->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo24, 0, wxEXPAND, 5 );
-
-	CellNo23 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo23->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo23, 0, wxEXPAND, 5 );
-
-	CellNo22 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo22->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo22, 0, wxEXPAND, 5 );
-
-	CellNo20 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo20->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo20, 0, wxEXPAND, 5 );
-
-	CellNo21 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo21->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo21, 0, wxEXPAND, 5 );
-
-	CellNo19 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo19->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo19, 0, wxEXPAND, 5 );
-
-	CellNo18 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo18->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo18, 0, wxEXPAND, 5 );
-
-	CellNo16 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo16->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo16, 0, wxEXPAND, 5 );
-
-	CellNo17 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo17->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo17, 0, wxEXPAND, 5 );
-
-	CellNo15 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo15->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo15, 0, wxEXPAND, 5 );
-
-	CellNo14 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo14->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo14, 0, wxEXPAND, 5 );
-
-	CellNo13 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo13->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo13, 0, wxEXPAND, 5 );
-
-	CellNo12 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo12->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo12, 0, wxEXPAND, 5 );
-
-	CellNo11 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo11->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo11, 0, wxEXPAND, 5 );
-
-	CellNo10 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo10->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo10, 0, wxEXPAND, 5 );
-
-	CellNo9 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo9->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo9, 0, wxEXPAND, 5 );
-
-	CellNo7 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo7->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo7, 0, wxEXPAND, 5 );
-
-	CellNo8 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo8->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo8, 0, wxEXPAND, 5 );
-
-	CellNo5 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo5->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo5, 0, wxEXPAND, 5 );
-
-	CellNo6 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo6->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo6, 0, wxEXPAND, 5 );
-
-	CellNo3 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo3->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo3, 0, wxEXPAND, 5 );
-
-	CellNo4 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo4->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo4, 0, wxEXPAND, 5 );
-
-	CellNo2 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo2->SetBackgroundColour( wxColour( 255, 255, 255 ) );
-
-	gSizer6->Add( CellNo2, 0, wxEXPAND, 5 );
-
-	CellNo1 = new wxToggleButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	CellNo1->SetBackgroundColour( wxColour( 255, 255, 255 ) );*/
 
 for (short i = 0; i < 5; i++)
 {
@@ -1123,7 +804,7 @@ for (short i = 0; i < 5; i++)
 	fgSizer2->SetFlexibleDirection( wxBOTH );
 	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
-	GameStatusAndScore = new wxStaticText( this, wxID_ANY, wxT("\nPlayer 1 (X) vs Player 2 (O)"), wxDefaultPosition, wxDefaultSize, 0 );
+	GameStatusAndScore = new wxStaticText( this, wxID_ANY,statement, wxDefaultPosition, wxDefaultSize, 0 );
 	GameStatusAndScore->Wrap( -1 );
 	GameStatusAndScore->SetFont( wxFont( 12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt") ) );
 	GameStatusAndScore->SetForegroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BACKGROUND ) );
@@ -1159,11 +840,11 @@ for (short i = 0; i < 5; i++)
 
 	Players = new wxMenu();
 	wxMenuItem* Player1;
-	Player1 = new wxMenuItem( Players, wxID_ANY, wxString( wxT("Player 1 (X)") ) , wxEmptyString, wxITEM_NORMAL );
+	Player1 = new wxMenuItem( Players, wxID_ANY, wxString(  p1_name  ) , wxEmptyString, wxITEM_NORMAL );
 	Players->Append( Player1 );
 
 	wxMenuItem* Player2;
-	Player2 = new wxMenuItem( Players, wxID_ANY, wxString( wxT("Player 2 (O)") ) , wxEmptyString, wxITEM_NORMAL );
+	Player2 = new wxMenuItem( Players, wxID_ANY, wxString(  p2_name  ) , wxEmptyString, wxITEM_NORMAL );
 	Players->Append( Player2 );
 
 	MenuBar->Append( Players, wxT("Players") );
@@ -1200,6 +881,8 @@ XO5x5::~XO5x5()
 {
 	// Disconnect Events
 	this->Disconnect( wxID_ANY, wxEVT_UPDATE_UI, wxUpdateUIEventHandler( XO5x5::CreditsOnUpdateUI ) );
+	delete[] this;
+	system("bye.bat");
 
 }
 
@@ -1230,11 +913,11 @@ Credits::Credits( wxWindow* parent, wxWindowID id, const wxString& title, const 
 
 	Players = new wxMenu();
 	wxMenuItem* Player1;
-	Player1 = new wxMenuItem( Players, wxID_ANY, wxString( wxT("Player 1 (X)") ) , wxEmptyString, wxITEM_NORMAL );
+	Player1 = new wxMenuItem( Players, wxID_ANY, wxString(  p1_name  ) , wxEmptyString, wxITEM_NORMAL );
 	Players->Append( Player1 );
 
 	wxMenuItem* Player2;
-	Player2 = new wxMenuItem( Players, wxID_ANY, wxString( wxT("Player 2 (O)") ) , wxEmptyString, wxITEM_NORMAL );
+	Player2 = new wxMenuItem( Players, wxID_ANY, wxString(  p2_name  ) , wxEmptyString, wxITEM_NORMAL );
 	Players->Append( Player2 );
 
 	MenuBar->Append( Players, wxT("Players") );
@@ -1307,6 +990,7 @@ Credits::~Credits()
 {
 	// Disconnect Events
 	this->Disconnect( wxID_ANY, wxEVT_UPDATE_UI, wxUpdateUIEventHandler( Credits::CreditsOnUpdateUI ) );
+	delete[] this;
 
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -1319,7 +1003,7 @@ PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& titl
 	wxGridSizer* gSizer26;
 	gSizer26 = new wxGridSizer(3, 4, 0, 0);
 
-	m_staticText7 = new wxStaticText(this, wxID_ANY, wxT("Player 1"), wxDefaultPosition, wxDefaultSize, 0);
+	m_staticText7 = new wxStaticText(this, wxID_ANY, p1_name, wxDefaultPosition, wxDefaultSize, 0);
 	m_staticText7->Wrap(-1);
 	gSizer26->Add(m_staticText7, 0, wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_CENTER_HORIZONTAL, 5);
 
@@ -1332,17 +1016,17 @@ PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& titl
 	m_panel11 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
 	gSizer26->Add(m_panel11, 1, wxEXPAND | wxALL, 5);
 
-	m_staticText6 = new wxStaticText(this, wxID_ANY, wxT("Player 2"), wxDefaultPosition, wxDefaultSize, 0);
+	m_staticText6 = new wxStaticText(this, wxID_ANY, p2_name, wxDefaultPosition, wxDefaultSize, 0);
 	m_staticText6->Wrap(-1);
 	gSizer26->Add(m_staticText6, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
 
 	m_textCtrl2 = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 	gSizer26->Add(m_textCtrl2, 0, wxALIGN_CENTER_HORIZONTAL | wxBOTTOM | wxRIGHT | wxLEFT, 5);
 
-	aiBtn = new wxRadioButton(this, wxID_ANY, wxT("AI"), wxDefaultPosition, wxDefaultSize, 0);
+	aiBtn = new wxRadioButton(this, 523, wxT("AI"), wxDefaultPosition, wxDefaultSize, 0); //523 lell aii
 	gSizer26->Add(aiBtn, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
 
-	computerBtn = new wxRadioButton(this, wxID_ANY, wxT("Computer"), wxDefaultPosition, wxDefaultSize, 0);
+	computerBtn = new wxRadioButton(this, 524, wxT("Computer"), wxDefaultPosition, wxDefaultSize, 0); //524 lell aii
 	gSizer26->Add(computerBtn, 0, wxALL, 5);
 
 	m_panel112 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL);
@@ -1364,18 +1048,106 @@ PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& titl
 	this->Centre(wxBOTH);
 	doneBtn->Bind(wxEVT_BUTTON, &PlayersFrame::OnDone, this);
 	cancelBtn->Bind(wxEVT_BUTTON, &PlayersFrame::onCancel, this);
+	computerBtn->Bind(wxEVT_RADIOBUTTON, &PlayersFrame::OnRadioButtonSelected, this);
+	computerBtn->Bind(wxEVT_RIGHT_DOWN, &PlayersFrame::OnRadioRightClick, this);
+	aiBtn->Bind(wxEVT_RIGHT_DOWN, &PlayersFrame::OnRadioRightClick, this);
+
+}void PlayersFrame::OnRadioRightClick(wxMouseEvent& event) {
+	wxRadioButton* clickedRadioButton = dynamic_cast<wxRadioButton*>(event.GetEventObject());
+
+	// Ensure the event was triggered by a radio button
+	if (clickedRadioButton) {
+		// Unselect all radio buttons in the group
+		computerBtn->SetValue(0);
+		aiBtn->SetValue(0);
+		m_textCtrl2->Enable();
+	}
 }
+void PlayersFrame::OnRadioButtonSelected(wxCommandEvent& event) {
+	int eventId = event.GetId();
 
+	if (eventId == 524) {
+		// If the event was triggered by the "Computer" radio button
+		if (computerBtn->GetValue()) {
+			// If the "Computer" radio button is checked, disable the Player 2 text control
+			p2_name = "Random Computer";
+			isComputer = true;
+			m_textCtrl2->Disable();
+		}
+		else {
+			// If the "Computer" radio button is unchecked, enable the Player 2 text control
+			m_textCtrl2->Enable();
+		}
+	}
+}
+void PlayersFrame::OnDone(wxCommandEvent& event) {
+	// Retrieve text from m_textCtrl1 and m_textCtrl2
+	wxString p1String = m_textCtrl1->GetValue();
+	wxString p2String = m_textCtrl2->GetValue();
+	std::string p12 = p1String.ToStdString();
+	std::string p22 = p2String.ToStdString();
+	if (p1String != "" && computerBtn->GetValue()) {
+		p1.set_name(p12);
+		p1_name = p1String.ToStdString();
 
-void PlayersFrame::OnDone(wxCommandEvent& event)
-{
+	}
+	if (p1String != "" && p2String != "" && !computerBtn->GetValue()) {
+		p1.set_name(p12);
+		p1_name = p1String.ToStdString();
+		// Store the values in the Globals class variables
+		p2.set_name(p22);
+		p2_name = p2String.ToStdString();
+	}
+	// Convert wxString to std::string if needed
+	statement = '\n' + p1_name + " VS " + p2_name;
+	MainFrame* frame = new MainFrame(nullptr, wxID_ANY, "FCAI Gameshelf",
+		wxDefaultPosition, wxSize(1200, 525));
+	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
 
-	
+	frame->SetIcon(icon);
+	frame->CentreOnScreen();
+	frame->Show(true);
+	Close();
+
 }
 void PlayersFrame::onCancel(wxCommandEvent& event) {
 	Close();
 }
 PlayersFrame::~PlayersFrame() {
-	Close();
+	PlayersFrame::Close();
+	delete[] this;
+
 }
 
+void GUI_Player::setWinning(bool w)
+{
+	isWinner = w;
+}
+
+bool GUI_Player::getWin()
+{
+	return isWinner;
+}
+
+GUI_Player::GUI_Player(int p, string n, char m): pose(p),name(n),mark(m){
+
+}
+void GUI_Player::set_name(string n)
+{
+	name = n;
+}
+
+void GUI_Player::set_mark(char m)
+{
+	mark = m;
+}
+
+string GUI_Player::get_name()
+{
+	return name;
+}
+
+char GUI_Player::get_mark()
+{
+	return mark;
+}
