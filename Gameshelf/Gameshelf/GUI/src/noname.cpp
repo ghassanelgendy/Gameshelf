@@ -635,51 +635,16 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 	this->SetBackgroundColour(wxColour(1, 68, 33));
 
 	MenuBar = new wxMenuBar(0);
-	Games = new wxMenu();
-	wxMenuItem* XO3x3;
-	XO3x3 = new wxMenuItem(Games, wxID_ANY, wxString(wxT("3x3 XO")), wxEmptyString, wxITEM_NORMAL);
-	Games->Append(XO3x3);
 
-	wxMenuItem* XO5x5;
-	XO5x5 = new wxMenuItem(Games, wxID_ANY, wxString(wxT("5x5 XO")), wxEmptyString, wxITEM_NORMAL);
-	Games->Append(XO5x5);
-
-	wxMenuItem* ConnectFour;
-	ConnectFour = new wxMenuItem(Games, wxID_ANY, wxString(wxT("Connect Four")), wxEmptyString, wxITEM_NORMAL);
-	Games->Append(ConnectFour);
-
-	wxMenuItem* PyramicXO;
-	PyramicXO = new wxMenuItem(Games, wxID_ANY, wxString(wxT("Pyramic XO")), wxEmptyString, wxITEM_NORMAL);
-	Games->Append(PyramicXO);
-
-	MenuBar->Append(Games, wxT("Games"));
-
-	Players = new wxMenu();
-	wxMenuItem* Player1;
-	Player1 = new wxMenuItem(Players, wxID_ANY, wxString(wxT("Player 1 (X)")), wxEmptyString, wxITEM_NORMAL);
-	Players->Append(Player1);
-
-	wxMenuItem* Player2;
-	Player2 = new wxMenuItem(Players, wxID_ANY, wxString(wxT("Player 2 (O)")), wxEmptyString, wxITEM_NORMAL);
-	Players->Append(Player2);
-
-	MenuBar->Append(Players, wxT("Players"));
 
 	Help = new wxMenu();
 	wxMenuItem* Instructions;
 	Instructions = new wxMenuItem(Help, wxID_ANY, wxString(wxT("Instructions")) + wxT('\t') + wxT("ALT+I"), wxEmptyString, wxITEM_NORMAL);
 	Help->Append(Instructions);
 
-	wxMenuItem* SourceCode;
-	SourceCode = new wxMenuItem(Help, wxID_ANY, wxString(wxT("Source Code")) + wxT('\t') + wxT("ALT+S"), wxT("See source code"), wxITEM_NORMAL);
-	Help->Append(SourceCode);
+	
 
-	Help->AppendSeparator();
-
-	wxMenuItem* Credits;
-	Credits = new wxMenuItem(Help, wxID_ANY, wxString(wxT("Credits")) + wxT('\t') + wxT("ALT+C"), wxEmptyString, wxITEM_NORMAL);
-	Help->Append(Credits);
-
+	
 	MenuBar->Append(Help, wxT("Help"));
 
 	this->SetMenuBar(MenuBar);
@@ -752,9 +717,25 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 
 
 	// Connect Events
-	Games->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(PyramicTicTac::openThree), this, XO3x3->GetId());
-	this->Connect(Credits->GetId(), wxEVT_UPDATE_UI, wxUpdateUIEventHandler(PyramicTicTac::CreditsOnUpdateUI));
+	Help->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(PyramicTicTac::OnInstructions),this, Instructions->GetId());
+	
+	
 }
+
+void PyramicTicTac::OnInstructions(wxCommandEvent& event)
+{
+	// You can customize the instructions message here
+	wxString instructionsMessage = "Welcome to Pyramic Tic Tac Toe!\n\n"
+		"Instructions:\n"
+		"• The game board is shaped like a pyramid. \n• Five squares make the base, then three, then one. \n• Players take turns marking Xs and Os as in traditional tic - tac - toe.\n"
+		"Winning:\n• The first player to get three - in - a - row vertically, horizontally, or diagonally wins\n";
+
+	// Display instructions in a dialog
+	wxMessageDialog dialog(this, instructionsMessage, "Instructions", wxOK | wxCENTRE);
+	dialog.ShowModal();
+}
+
+
 
 void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 {
@@ -780,6 +761,26 @@ void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 		board[index] = -1;
 		buttons[index]->SetLabel("O");
 	}
+	if (is_winner(turn))
+	{
+		// display the winner and disable the buttons
+		if (turn == 1)
+		{
+			GameStatusAndScore->SetLabel(players[0]->getName() + winner);
+
+		}
+
+		else
+		{
+			GameStatusAndScore->SetLabel(players[1]->getName() + winner);
+		}
+
+		for (int i = 0; i < 9; i++)
+		{
+			buttons[i]->Disable();
+		}
+		return;
+	}
 	if (is_draw())
 	{
 		GameStatusAndScore->SetLabel("                 Draw!");
@@ -789,26 +790,7 @@ void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 		}
 		return;
 	}
-	if (is_winner(turn))
-	{
-		// display the winner and disable the buttons
-		if (turn == 1)
-		{
-			GameStatusAndScore->SetLabel( players[0]->getName() + winner);
-
-		}
-
-		else
-		{
-			GameStatusAndScore->SetLabel( players[1]->getName() + winner);
-		}
-
-		for (int i = 0; i < 9; i++)
-		{
-			buttons[i]->Disable();
-		}
-		return;
-	}
+	
 	turn = -turn;
 }
 

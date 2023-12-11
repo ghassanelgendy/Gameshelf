@@ -198,6 +198,8 @@ protected:
 	void Reset();
 	bool is_draw();
 
+	void OnInstructions(wxCommandEvent& event);
+
 	// Virtual event handlers, override them in your derived class
 	virtual void openThree(wxCommandEvent& event) { event.Skip(); }
 
