@@ -1,169 +1,15 @@
-///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 4.0.0-0-g0efcecf)
-// http://www.wxformbuilder.org/
-//
-// PLEASE DO *NOT* EDIT THIS FILE!
-///////////////////////////////////////////////////////////////////////////
+// Author: Ghassan Elgendy - Rowan Ammar - Jana Ramadan
+// Section: S21
+// TA: Rana Abdelkader
+// GUI CLASSES
 #include "../include/noname.h"
+////////////////////////////////Globals//////////////////////////////////////
 GUI_Player* players[2];
 Player* Players_3ady[2];
 short currentPlayerIndex{ 0 };
 string winner = " is the winner";
-string GUI_Player::getName()
-{
-	return name;
-}
-void GUI_Player::setName(string n)
-{
-	name = n;
-}
-GUI_Player::GUI_Player(char symbol) {
-	this->symbol = symbol;
-}
 string wallahyZhe2t = "Player 1 VS Player 2";
-// Optionally, you can give him ID or order
-// Like Player 1 and Player 2
-GUI_Player::GUI_Player(int order, char symbol) {
-	cout << "Welcome player " << order << endl;
-	cout << "Please enter your name: ";
-	cin >> name;
-	this->symbol = symbol;
-}
-// Get desired move: x y (each between 0 and 2)
-// Virtual (can change for other player types)
-void GUI_Player::get_move(int& x, int& y) {
-	cout << "\nPlease enter your move x and y separated by spaces: ";
-	cin >> x >> y;
-}
-// Give player info as a string
-string GUI_Player::to_string() {
-	return name;
-}
-// Get symbol used by player
-char GUI_Player::get_symbol() {
-	return symbol;
-}
-GUI_RandomPlayer::GUI_RandomPlayer(char symbol, int dimension) :GUI_Player(symbol)
-{
-	this->dimension = dimension;
-	this->name = "Random Computer Player";
-}
-// Generate a random move
-void GUI_RandomPlayer::get_move(int& x, int& y) {
-	x = (int)(rand() / (RAND_MAX + 1.0) * dimension);
-	y = (int)(rand() / (RAND_MAX + 1.0) * dimension);
-}
-///////////////////////////////////////////////////////////////////////////
-//3shan aghayar icon elframes
-void XO3x3::iconSetter() {
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	this->SetIcon(icon);
-}
-void XO3x3::OnInstructions(wxCommandEvent& event)
-{
-	// You can customize the instructions message here
-	wxString instructionsMessage = "Welcome to Tic Tac Toe!\n\nInstructions:\n• The game board is a 3x3 grid.\n• Players choose a token (X or O) and take turns placing tokens on the grid.\n• The goal is to form a horizontal, vertical, or diagonal line of three tokens of the same mark.\n\nWinning:\n•The first player to connect three discs of their mark wins the game.\n• If the board is full and no player has connected three tokens, the game is a draw.";
-
-	// Display instructions in a dialog
-	wxMessageDialog dialog(this, instructionsMessage, "Instructions", wxOK | wxCENTRE);
-	dialog.ShowModal();
-}
-bool XO3x3::isDraw()
-{
-	return moves > 9;
-}
-void MainFrame::iconSetter() {
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	this->SetIcon(icon);
-}
-void Credits::iconSetter()
-{
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	this->SetIcon(icon);
-}
-///////////////////////////////////////////////////////////////////////////
-//3shan a3mel instances kool dousa 
-void MainFrame::CreateCredits() {
-	Credits* setupPlayersFrame = new Credits(this, wxID_ANY, wxT("Credits"));
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	setupPlayersFrame->SetIcon(icon);
-	setupPlayersFrame->Show(true);
-	setupPlayersFrame->Raise();
-}
-void MainFrame::CreatePlayerModal() {
-	PlayersFrame* setupPlayersFrame = new PlayersFrame(this, wxID_ANY, wxT("Players Setup"));
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	setupPlayersFrame->SetIcon(icon);
-	setupPlayersFrame->Show(true);
-	setupPlayersFrame->Raise();
-}
-void MainFrame::Create3x3() {
-	XO3x3* xo3x3Frame = new XO3x3(this, wxID_ANY, wxT("3x3 Tic Tac Toe"));
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	xo3x3Frame->SetIcon(icon);
-	xo3x3Frame->Show(true);
-	xo3x3Frame->Raise();
-}
-void MainFrame::Create5x5()
-{
-	XO5x5* xo5x5Frame = new XO5x5(this, wxID_ANY, wxT("5x5 Tic Tac Toe"));
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	xo5x5Frame->SetIcon(icon);
-	xo5x5Frame->Show(true);
-	xo5x5Frame->Raise();
-}
-void MainFrame::CreateConnect4()
-{
-	ConnectFour* connect4Frame = new ConnectFour(this, wxID_ANY, wxT("Connect Four"));
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	connect4Frame->SetIcon(icon);
-	connect4Frame->Show(true);
-	connect4Frame->Raise();
-}
-void MainFrame::CreatePyramic()
-{
-	PyramicTicTac* PyramicFrame = new PyramicTicTac(this, wxID_ANY, wxT("Pyramic Tic Tac Toe"));
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	PyramicFrame->SetIcon(icon);
-	PyramicFrame->Show(true);
-	PyramicFrame->Raise();
-}
-void MainFrame::MainFrameOnShow(wxShowEvent& event)
-{
-	CreatePlayerModal();
-}
-void MainFrame::launchPlayersModal(wxCommandEvent& event)
-{
-	CreatePlayerModal();
-}
-///////////////////////////////////////////////////////////////////////////
-void PlayersFrame::doneBtnOnButtonClick(wxCommandEvent& event)
-{
-	players[0] = new GUI_Player(1, 'x');
-	if (playerOneField->GetValue() != "") {
-		players[0]->setName(playerOneField->GetValue().ToStdString());
-	}
-	else
-		players[0]->setName("Player 1");
-	
-	if (!computerBtn->GetValue()) {
-	players[1] = new GUI_Player(2, 'o');
-		if (playerTowField->GetValue() != "") {
-		players[1]->setName(playerTowField->GetValue().ToStdString());
-		}
-		else
-		players[1]->setName("Player 2");
-	
-	}
-	else {
-	
-	players[1] = new GUI_RandomPlayer('o', 3);
-	}
-	wallahyZhe2t = players[0]->getName() + " (X) " + " VS " + players[1]->getName() + " (O) ";
-	whoVSwho->SetLabel(wallahyZhe2t);
-	Destroy();
-}
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////MainFrame's Methods//////////////////////////////////////
 MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX))
 {
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
@@ -306,6 +152,63 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 	Help->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrame::launchCreditsFrame), this, Credits->GetId());
 	this->Connect(Credits->GetId(), wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::CreditsOnUpdateUI));
 }
+void MainFrame::CreateCredits() {
+	Credits* setupPlayersFrame = new Credits(this, wxID_ANY, wxT("Credits"));
+	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
+	setupPlayersFrame->SetIcon(icon);
+	setupPlayersFrame->Show(true);
+	setupPlayersFrame->Raise();
+}
+void MainFrame::iconSetter() {
+	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
+	this->SetIcon(icon);
+}
+void MainFrame::CreatePlayerModal() {
+	PlayersFrame* setupPlayersFrame = new PlayersFrame(this, wxID_ANY, wxT("Players Setup"));
+	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
+	setupPlayersFrame->SetIcon(icon);
+	setupPlayersFrame->Show(true);
+	setupPlayersFrame->Raise();
+}
+void MainFrame::Create3x3() {
+	XO3x3* xo3x3Frame = new XO3x3(this, wxID_ANY, wxT("3x3 Tic Tac Toe"));
+	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
+	xo3x3Frame->SetIcon(icon);
+	xo3x3Frame->Show(true);
+	xo3x3Frame->Raise();
+}
+void MainFrame::Create5x5()
+{
+	XO5x5* xo5x5Frame = new XO5x5(this, wxID_ANY, wxT("5x5 Tic Tac Toe"));
+	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
+	xo5x5Frame->SetIcon(icon);
+	xo5x5Frame->Show(true);
+	xo5x5Frame->Raise();
+}
+void MainFrame::CreateConnect4()
+{
+	ConnectFour* connect4Frame = new ConnectFour(this, wxID_ANY, wxT("Connect Four"));
+	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
+	connect4Frame->SetIcon(icon);
+	connect4Frame->Show(true);
+	connect4Frame->Raise();
+}
+void MainFrame::CreatePyramic()
+{
+	PyramicTicTac* PyramicFrame = new PyramicTicTac(this, wxID_ANY, wxT("Pyramic Tic Tac Toe"));
+	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
+	PyramicFrame->SetIcon(icon);
+	PyramicFrame->Show(true);
+	PyramicFrame->Raise();
+}
+void MainFrame::MainFrameOnShow(wxShowEvent& event)
+{
+	CreatePlayerModal();
+}
+void MainFrame::launchPlayersModal(wxCommandEvent& event)
+{
+	CreatePlayerModal();
+}
 MainFrame::~MainFrame()
 {
 	// Disconnect Events
@@ -321,6 +224,7 @@ MainFrame::~MainFrame()
 	this->Disconnect(wxID_ANY, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::CreditsOnUpdateUI));
 
 }
+////////////////////////////////3x3's Methods//////////////////////////////////////
 XO3x3::XO3x3(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
 	moves =  0 ;
@@ -483,6 +387,23 @@ void XO3x3::isWinner() {
 	}
 	// No winner yet
 }
+void XO3x3::iconSetter() {
+	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
+	this->SetIcon(icon);
+}
+void XO3x3::OnInstructions(wxCommandEvent& event)
+{
+	// You can customize the instructions message here
+	wxString instructionsMessage = "Welcome to Tic Tac Toe!\n\nInstructions:\n• The game board is a 3x3 grid.\n• Players choose a token (X or O) and take turns placing tokens on the grid.\n• The goal is to form a horizontal, vertical, or diagonal line of three tokens of the same mark.\n\nWinning:\n•The first player to connect three discs of their mark wins the game.\n• If the board is full and no player has connected three tokens, the game is a draw.";
+
+	// Display instructions in a dialog
+	wxMessageDialog dialog(this, instructionsMessage, "Instructions", wxOK | wxCENTRE);
+	dialog.ShowModal();
+}
+bool XO3x3::isDraw()
+{
+	return moves > 9;
+}
 XO3x3::~XO3x3()
 {
 	// Disconnect Events
@@ -494,6 +415,105 @@ XO3x3::~XO3x3()
 		}
 
 	}
+}
+////////////////////////////////ConnectFour's Methods//////////////////////////////////////
+ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
+{
+	moves = 0;
+	currentPlayerIndex = 0;
+	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
+	this->SetBackgroundColour(wxColour(199, 5, 54));
+
+	wxGridSizer* boardContainer;
+	boardContainer = new wxGridSizer(7, 7, 0, 0);
+	short rr{ 989 };
+	for (short i = 0; i < 6; i++)
+	{
+		for (short j = 0; j < 7; j++)
+		{
+
+			cells[i][j] = new wxButton(this, rr, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+			cells[i][j]->SetBackgroundColour(wxColour(255, 255, 255));
+			cells[i][j]->SetLabel(' ' + to_string(j) + ' ');
+			cells[i][j]->SetFont(wxFont(27, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
+
+			boardContainer->Add(cells[i][j], 0, wxEXPAND, 5);
+			cells[i][j]->Bind(wxEVT_BUTTON, &ConnectFour::onCellClick, this);
+			cells[i][j]->SetForegroundColour(wxColour(195, 195, 195));
+			rr++;
+			if (i != 0 && j < 8) {
+				cells[i][j]->SetForegroundColour(wxColour(255, 255, 255));
+
+			}
+		}
+	}
+	for (short i = 0; i < 7; i++) {
+		cells[6][i] = new wxButton(this, -1, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+		cells[6][i]->SetLabel("----");
+	}
+
+
+	boardContainer->Add(0, 0, 1, wxEXPAND, 5);
+
+
+	boardContainer->Add(0, 0, 1, wxEXPAND, 5);
+
+
+	boardContainer->Add(0, 0, 1, wxEXPAND, 5);
+	wxFlexGridSizer* ResetSizer;
+	ResetSizer = new wxFlexGridSizer(2, 1, 0, 0);
+	ResetSizer->SetFlexibleDirection(wxBOTH);
+	ResetSizer->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+
+	GameStatusAndScore = new wxStaticText(this, wxID_ANY, wallahyZhe2t, wxDefaultPosition, wxDefaultSize, 0);
+	GameStatusAndScore->Wrap(-1);
+	GameStatusAndScore->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
+	GameStatusAndScore->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
+	GameStatusAndScore->SetBackgroundColour(wxColour(199, 5, 54));
+
+	ResetSizer->Add(GameStatusAndScore, 0, wxALL | wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM, 5);
+
+	ResetBtn = new wxButton(this, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0);
+	ResetBtn->SetBackgroundColour(wxColour(255, 255, 255));
+
+	ResetSizer->Add(ResetBtn, 0, wxALL | wxALIGN_BOTTOM | wxEXPAND, 5);
+
+
+	boardContainer->Add(ResetSizer, 1, wxEXPAND, 10);
+
+
+	this->SetSizer(boardContainer);
+	this->Layout();
+	MenuBar = new wxMenuBar(0);
+	Help = new wxMenu();
+	wxMenuItem* Instructions;
+	Instructions = new wxMenuItem(Help, wxID_ANY, wxString(wxT("Instructions")) + wxT('\t') + wxT("ALT+I"), wxEmptyString, wxITEM_NORMAL);
+	Help->Append(Instructions);
+
+	MenuBar->Append(Help, wxT("Help"));
+
+	this->SetMenuBar(MenuBar);
+
+
+	this->Centre(wxBOTH);
+
+	// Connect Events
+	for (short i = 0; i < 6; i++)
+	{
+		for (short j = 0; j < 7; j++)
+		{
+			cells[i][j]->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConnectFour::onCellClick), NULL, this);
+		}
+
+	}
+	Help->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(ConnectFour::OnInstructions), this, Instructions->GetId());
+	ResetBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConnectFour::OnResetBtn), NULL, this);
+
+	/*resetButton = new wxButton(this, wxID_ANY, wxT("Reset"));
+	resetButton->SetBackgroundColour(wxColour(255, 255, 255));
+	resetButton->SetSize(wxSize(5, 30));
+	resetButton->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &ConnectFour::OnResetBtn, this);*/
+
 }
 int ConnectFour::isWinner()
 {
@@ -673,104 +693,6 @@ void ConnectFour::onCellClick(wxCommandEvent& event) {
 		moves++;
 	}
 }
-ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
-{
-	moves = 0;
-	currentPlayerIndex = 0;
-	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
-	this->SetBackgroundColour(wxColour(199, 5, 54));
-
-	wxGridSizer* boardContainer;
-	boardContainer = new wxGridSizer(7, 7, 0, 0);
-	short rr{ 989 };
-	for (short i = 0; i < 6; i++)
-	{
-		for (short j = 0; j < 7; j++)
-		{
-
-			cells[i][j] = new wxButton(this, rr, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-			cells[i][j]->SetBackgroundColour(wxColour(255, 255, 255));
-			cells[i][j]->SetLabel(' ' + to_string(j)+ ' ');
-			cells[i][j]->SetFont(wxFont(27, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
-
-			boardContainer->Add(cells[i][j], 0, wxEXPAND, 5);
-			cells[i][j]->Bind(wxEVT_BUTTON, &ConnectFour::onCellClick, this);
-			cells[i][j]->SetForegroundColour(wxColour(195, 195, 195));
-			rr++;
-			if (i != 0 && j < 8) {
-				cells[i][j]->SetForegroundColour(wxColour(255, 255, 255));
-
-			}
-		}
-	}
-	for (short i = 0; i < 7; i++) {
-		cells[6][i] = new wxButton(this, -1, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-		cells[6][i]->SetLabel("----");
-	}
-
-
-	boardContainer->Add(0, 0, 1, wxEXPAND, 5);
-
-
-	boardContainer->Add(0, 0, 1, wxEXPAND, 5);
-
-
-	boardContainer->Add(0, 0, 1, wxEXPAND, 5);
-	wxFlexGridSizer* ResetSizer;
-	ResetSizer = new wxFlexGridSizer(2, 1, 0, 0);
-	ResetSizer->SetFlexibleDirection(wxBOTH);
-	ResetSizer->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-
-	GameStatusAndScore = new wxStaticText(this, wxID_ANY, wallahyZhe2t, wxDefaultPosition, wxDefaultSize, 0);
-	GameStatusAndScore->Wrap(-1);
-	GameStatusAndScore->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
-	GameStatusAndScore->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
-	GameStatusAndScore->SetBackgroundColour(wxColour(199, 5, 54));
-
-	ResetSizer->Add(GameStatusAndScore, 0, wxALL | wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM, 5);
-
-	ResetBtn = new wxButton(this, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0);
-	ResetBtn->SetBackgroundColour(wxColour(255, 255, 255));
-
-	ResetSizer->Add(ResetBtn, 0, wxALL | wxALIGN_BOTTOM | wxEXPAND, 5);
-
-
-	boardContainer->Add(ResetSizer, 1, wxEXPAND, 10);
-
-
-	this->SetSizer(boardContainer);
-	this->Layout();
-	MenuBar = new wxMenuBar(0);
-	Help = new wxMenu();
-	wxMenuItem* Instructions;
-	Instructions = new wxMenuItem(Help, wxID_ANY, wxString(wxT("Instructions")) + wxT('\t') + wxT("ALT+I"), wxEmptyString, wxITEM_NORMAL);
-	Help->Append(Instructions);
-
-	MenuBar->Append(Help, wxT("Help"));
-
-	this->SetMenuBar(MenuBar);
-
-
-	this->Centre(wxBOTH);
-
-	// Connect Events
-	for (short i = 0; i < 6; i++)
-	{
-		for (short j = 0; j < 7; j++)
-		{
-			cells[i][j]->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConnectFour::onCellClick), NULL, this);
-		}
-
-	}
-	Help->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(ConnectFour::OnInstructions), this, Instructions->GetId());
-	ResetBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConnectFour::OnResetBtn), NULL, this);
-
-	/*resetButton = new wxButton(this, wxID_ANY, wxT("Reset"));
-	resetButton->SetBackgroundColour(wxColour(255, 255, 255));
-	resetButton->SetSize(wxSize(5, 30));
-	resetButton->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &ConnectFour::OnResetBtn, this);*/
-
-}
 ConnectFour::~ConnectFour()
 {
 	// Disconnect Events
@@ -786,6 +708,7 @@ ConnectFour::~ConnectFour()
 	}
 
 }
+////////////////////////////////Pyramic's Methods//////////////////////////////////////
 PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX))
 {
 	this->SetSizeHints(350,425);
@@ -898,7 +821,6 @@ void PyramicTicTac::OnInstructions(wxCommandEvent& event)
 	wxMessageDialog dialog(this, instructionsMessage, "Instructions", wxOK | wxCENTRE);
 	dialog.ShowModal();
 }
-
 void PyramicTicTac::rand_comp_move()
 {
 	int randomIndex = rand() % 9;
@@ -942,8 +864,6 @@ void PyramicTicTac::rand_comp_move()
 
 
 }
-
-
 void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 {
 	// get the id of the button that was clicked
@@ -1051,13 +971,13 @@ bool PyramicTicTac::is_draw()
 	}
 	return true;
 }
-
 PyramicTicTac::~PyramicTicTac()
 {
 	// Disconnect Events
 	this->Disconnect(wxID_ANY, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(PyramicTicTac::CreditsOnUpdateUI));
 
 }
+////////////////////////////////5x5's Methods//////////////////////////////////////
 XO5x5::XO5x5(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
@@ -1230,6 +1150,7 @@ XO5x5::~XO5x5()
 	CellNo1->Disconnect(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler(XO5x5::onCellClick), NULL, this);
 
 }
+////////////////////////////////Credits's Methods//////////////////////////////////////
 Credits::Credits(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
@@ -1303,7 +1224,11 @@ Credits::Credits(wxWindow* parent, wxWindowID id, const wxString& title, const w
 	RowanPic->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(Credits::openLinkRowan), NULL, this);
 	JanaPic->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(Credits::openLinkJana), NULL, this);
 }
-
+void Credits::iconSetter()
+{
+	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
+	this->SetIcon(icon);
+}
 Credits::~Credits()
 {
 	// Disconnect Events
@@ -1312,9 +1237,7 @@ Credits::~Credits()
 	JanaPic->Disconnect(wxEVT_KEY_DOWN, wxKeyEventHandler(Credits::openLinkJana), NULL, this);
 
 }
-
-
-
+////////////////////////////////PlayersFrame's Methods//////////////////////////////////////
 PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxDialog(parent, id, title, pos, size, style)
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
@@ -1394,6 +1317,32 @@ PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& titl
 	doneBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick), NULL, this);
 	cancelBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::cancelBtnOnButtonClick ), NULL, this );
 }
+void PlayersFrame::doneBtnOnButtonClick(wxCommandEvent& event)
+{
+	players[0] = new GUI_Player(1, 'x');
+	if (playerOneField->GetValue() != "") {
+		players[0]->setName(playerOneField->GetValue().ToStdString());
+	}
+	else
+		players[0]->setName("Player 1");
+
+	if (!computerBtn->GetValue()) {
+		players[1] = new GUI_Player(2, 'o');
+		if (playerTowField->GetValue() != "") {
+			players[1]->setName(playerTowField->GetValue().ToStdString());
+		}
+		else
+			players[1]->setName("Player 2");
+
+	}
+	else {
+
+		players[1] = new GUI_RandomPlayer('o', 3);
+	}
+	wallahyZhe2t = players[0]->getName() + " (X) " + " VS " + players[1]->getName() + " (O) ";
+	whoVSwho->SetLabel(wallahyZhe2t);
+	Destroy();
+}
 PlayersFrame::~PlayersFrame()
 {
 	// Disconnect Events
@@ -1403,4 +1352,41 @@ PlayersFrame::~PlayersFrame()
 	doneBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick ), NULL, this );
 	cancelBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::cancelBtnOnButtonClick ), NULL, this );
 
+}
+////////////////////////////////GUI Player's Methods//////////////////////////////////////
+GUI_Player::GUI_Player(char symbol) {
+	this->symbol = symbol;
+}
+GUI_Player::GUI_Player(int order, char symbol) {
+	cout << "Welcome player " << order << endl;
+	cout << "Please enter your name: ";
+	cin >> name;
+	this->symbol = symbol;
+}
+string GUI_Player::getName()
+{
+	return name;
+}
+void GUI_Player::setName(string n)
+{
+	name = n;
+}
+void GUI_Player::get_move(int& x, int& y) {
+	cout << "\nPlease enter your move x and y separated by spaces: ";
+	cin >> x >> y;
+}
+string GUI_Player::to_string() {
+	return name;
+}
+char GUI_Player::get_symbol() {
+	return symbol;
+}
+GUI_RandomPlayer::GUI_RandomPlayer(char symbol, int dimension) :GUI_Player(symbol)
+{
+	this->dimension = dimension;
+	this->name = "Random Computer Player";
+}
+void GUI_RandomPlayer::get_move(int& x, int& y) {
+	x = (int)(rand() / (RAND_MAX + 1.0) * dimension);
+	y = (int)(rand() / (RAND_MAX + 1.0) * dimension);
 }
