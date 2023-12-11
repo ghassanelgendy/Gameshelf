@@ -477,7 +477,7 @@ void XO3x3::isWinner() {
 		// Do something to indicate the winner
 		isOver = true;
 	}
-	if (moves == 9) {
+	if (moves > 9) {
 		isOver = true;
 		GameStatusAndScore->SetLabel("                 Draw");
 	}
