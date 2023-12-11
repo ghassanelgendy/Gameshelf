@@ -1,11 +1,12 @@
-// File: A3_SheetPb05_20220239.cpp
-// Purpose: Task manager with more functionalities than the normal one like sorting with multiple options.
+// File: A3_SheetPb5_20220239.cpp
+// Purpose: Task manager with more functionalities than the normal one like sorting with multiple options and returning back to the beginning of terminal
 // Author: Ghassan Elgendy
 // Section: S21
 // ID: 20220239
 // TA: Rana Abdelkader
 // Date: 2 Dec 2023
 #include <bits/stdc++.h>
+#include <windows.h>
 
 #define Bye return 0;
 using namespace std;
@@ -176,7 +177,7 @@ public:
     //print the processes in the vector
     void print() {
         //header 3shan elshakl ;)
-        cout << "====================[ WELCOME TO GTASK MANAGER BY GHASSAN :'D ]=========================\n"
+        cout << "\n\n====================[ WELCOME TO GTASK MANAGER BY GHASSAN :'D ]=========================\n"
                 "Process Name                                     PID        Category      Memory Used\n" <<
                  "------------                                    -----       --------      -------------\n";
         for (auto a: *processes)
@@ -195,6 +196,12 @@ int main() {
     c.AddProcess(G,K);
     c.sortByMemoryUse();
     c.print();
+
+
+
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), {0, 0}); //to go back to the first line
+    cout<<"/n";
+
     system("pause");
     Bye
 }
