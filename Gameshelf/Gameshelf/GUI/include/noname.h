@@ -172,6 +172,7 @@ protected:
 public:
 	void ComputerPlay();
 	int isWinner();
+	bool isDraw();
 	void OnInstructions(wxCommandEvent& event);
 	void OnResetBtn(wxCommandEvent& event);
 	void endGame();

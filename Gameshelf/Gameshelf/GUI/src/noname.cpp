@@ -336,8 +336,6 @@ XO3x3::XO3x3(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoi
 		{
 			cells[i][j] = new wxButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 			cells[i][j]->SetBackgroundColour(wxColour(255, 255, 255));
-			string pose = to_string(i) + " , " + to_string(j);
-			cells[i][j]->SetLabel(pose);
 			boardContainer->Add(cells[i][j], 0, wxEXPAND, 5);
 			cells[i][j]->Bind(wxEVT_BUTTON, &XO3x3::onCellClick, this);
 			cells[i][j]->SetForegroundColour(wxColour(195, 195, 195));
@@ -582,6 +580,19 @@ int ConnectFour::isWinner()
 	}
 	return 0;
 }
+bool ConnectFour::isDraw()
+{
+	short c{ 0 };
+	for (short i = 0; i < 6; i++)
+	{
+		for (short j = 0;  j < 7;  j++)
+		{
+			if (cells[i][j]->GetLabel() == 'x' || cells[i][j]->GetLabel() == 'o')
+			c++;
+		}
+	}
+	return (c > 41 && !isWinner());
+}
 void ConnectFour::OnInstructions(wxCommandEvent& event)
 {
 	// You can customize the instructions message here
@@ -652,6 +663,10 @@ void ConnectFour::onCellClick(wxCommandEvent& event) {
 		}
 		else if (isWinner() == -1) {
 			GameStatusAndScore->SetLabel(players[1]->getName() + winner);
+			endGame();
+		}
+		if (isDraw()) {
+			GameStatusAndScore->SetLabel("                                   Draw!");
 			endGame();
 		}
 		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
@@ -808,9 +823,7 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 		buttons[i]->SetBackgroundColour(wxColour(255, 255, 255));
 
 		// Set font size for "X" and "O"
-		wxFont buttonFont = buttons[i]->GetFont();
-		buttonFont.SetPointSize(16);
-		buttons[i]->SetFont(buttonFont);
+		buttons[i]->SetFont(wxFont(24, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
 	}
 
 	for (int i = 0; i < 9; i++)
@@ -986,6 +999,7 @@ void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 		return;
 	}	
 	if ((players[1]->getName()) == "Random Computer Player") {
+		Sleep(290);
 		rand_comp_move();
 		
 	}
