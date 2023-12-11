@@ -293,7 +293,7 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 	XO3x3Btn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::launch3x3Frame), NULL, this);
 	SouretXO5x5->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(MainFrame::launch5x5Frame), NULL, this);
 	XO5x5Btn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::launch5x5Frame), NULL, this);
-	SouretConnectFour->ConneGameStatusAndScorect(wxEVT_KEY_DOWN, wxKeyEventHandler(MainFrame::launchConnectFourFrame), NULL, this);
+	SouretConnectFour->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(MainFrame::launchConnectFourFrame), NULL, this);
 	ConnectFourBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::launchConnectFourFrame), NULL, this);
 	SouretXOPyramid->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(MainFrame::launchPyramicXOFrame), NULL, this);
 	PyramicXOBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::launchPyramicXOFrame), NULL, this);
@@ -591,7 +591,9 @@ void ConnectFour::OnInstructions(wxCommandEvent& event)
 	wxMessageDialog dialog(this, instructionsMessage, "Instructions", wxOK | wxCENTRE);
 	dialog.ShowModal();
 }
-void ConnectFour::ComputerPlay();
+void ConnectFour::ComputerPlay() {
+
+}
 void ConnectFour::OnResetBtn(wxCommandEvent& event)
 {
 	for (short i = 0; i < 6; i++)
