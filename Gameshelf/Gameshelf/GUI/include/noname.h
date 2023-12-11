@@ -160,21 +160,20 @@ private:
 	short moves;
 protected:
 	wxButton* cells[7][7];
+	wxButton* ResetBtn;
 	wxStaticText* GameStatusAndScore;
 	wxMenuBar* MenuBar;
 	wxMenu* Help;
+	bool isOver;
 
 	// Virtual event handlers, override them in your derived class
 	virtual void onCellClick(wxCommandEvent& event); 
-
-
 public:
+	int isWinner();
 	void OnInstructions(wxCommandEvent& event);
-
-
+	void OnResetBtn(wxCommandEvent& event);
+	void endGame();
 	ConnectFour(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Connect Four"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(710, 700), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
-	bool isGameOver(short x, short y);
-	bool checkLine(short x, short y, short dx, short dy, wxString symbol);
 	~ConnectFour();
 
 };
@@ -319,8 +318,6 @@ protected:
 	virtual void computerBtnOnRadioButton(wxCommandEvent& event) { event.Skip(); }
 	virtual void doneBtnOnButtonClick(wxCommandEvent& event);
 	virtual void cancelBtnOnButtonClick(wxCommandEvent& event) { Destroy(); }
-
-
 
 public:
 

@@ -162,11 +162,13 @@ class ConnectFour : public wxFrame
 		wxToggleButton* m_toggleBtn78;
 		wxToggleButton* m_toggleBtn79;
 		wxStaticText* GameStatusAndScore;
+		wxButton* ResetBtn;
 		wxMenuBar* MenuBar;
 		wxMenu* Help;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void onCellClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnResetBtn( wxCommandEvent& event ) { event.Skip(); }
 
 
 	public:
