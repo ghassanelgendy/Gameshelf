@@ -124,7 +124,7 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 
 	wxMenuItem* Credits;
 	Credits = new wxMenuItem(Help, wxID_ANY, wxString(wxT("Credits")) + wxT('\t') + wxT("ALT+C"), wxEmptyString, wxITEM_NORMAL);
-	Help->Append(Credits);
+	//Help->Append(Credits);
 
 	MenuBar->Append(Help, wxT("Help"));
 
@@ -516,6 +516,35 @@ ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title,
 	resetButton->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &ConnectFour::OnResetBtn, this);*/
 
 }
+void ConnectFour::ComputerPlay(int &row, int &col)
+{
+generate:
+	row = (int)(rand() / (RAND_MAX + 1.0) * 6);
+	col = (int)(rand() / (RAND_MAX + 1.0) * (7));
+	if (cells[row][col]->GetLabel() == 'x' || cells[row][col]->GetLabel() == 'o') {
+		goto generate;
+	}
+	for (int i = 0; i < 6; ++i) {
+		if (cells[i][col]->GetLabel().size() > 1) {
+			row = i;
+		}
+	}
+	currentPlayerIndex = (currentPlayerIndex + 1) % 2;
+	cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
+	cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
+	if (isWinner() == 1) {
+		GameStatusAndScore->SetLabel(players[0]->getName() + winner);
+		endGame();
+	}
+	else if (isWinner() == -1) {
+		GameStatusAndScore->SetLabel(players[1]->getName() + winner);
+		endGame();
+	}
+	if (isDraw()) {
+		GameStatusAndScore->SetLabel("                                   Draw!");
+		endGame();
+	}
+}
 int ConnectFour::isWinner()
 {
 	for (unsigned short i = 0; i < 6; i++)
@@ -670,53 +699,30 @@ void ConnectFour::onCellClick(wxCommandEvent& event) {
 	if (isOver || cells[row][col]->GetLabel() == 'o' || cells[row][col]->GetLabel() == 'x') {
 		return;
 	}
-	cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
 	cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
+
+	cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
 	if (isWinner() == 1) {
-			GameStatusAndScore->SetLabel(players[0]->getName() + winner);
-			endGame();
-		}
+		GameStatusAndScore->SetLabel(players[0]->getName() + winner);
+		endGame();
+	}
 	else if (isWinner() == -1) {
-			GameStatusAndScore->SetLabel(players[1]->getName() + winner);
-			endGame();
-		}
+		GameStatusAndScore->SetLabel(players[1]->getName() + winner);
+		endGame();
+	}
 	if (isDraw()) {
-			GameStatusAndScore->SetLabel("                                   Draw!");
-			endGame();
-		}
+		GameStatusAndScore->SetLabel("                                   Draw!");
+		endGame();
+	}
+	Sleep(240);
+
 	if (players[1]->getName() == "Random Computer Player") {
 		players[1]->get_move(row, col);
+		ComputerPlay(row, col);
 
-	generate:
-		row = (int)(rand() / (RAND_MAX + 1.0) * 6);
-		col = (int)(rand() / (RAND_MAX + 1.0) * (7));
-		if (cells[row][col]->GetLabel() == 'x'|| cells[row][col]->GetLabel() == 'o') {
-			goto generate;
-		}
-
-		for (int i = 0; i < 6; ++i) {
-			if (cells[i][col]->GetLabel().size() > 1) {
-				row = i;
-			}
-		}
 		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
-		cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
-		cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
-		if (isWinner() == 1) {
-			GameStatusAndScore->SetLabel(players[0]->getName() + winner);
-			endGame();
-		}
-		else if (isWinner() == -1) {
-			GameStatusAndScore->SetLabel(players[1]->getName() + winner);
-			endGame();
-		}
-		if (isDraw()) {
-			GameStatusAndScore->SetLabel("                                   Draw!");
-			endGame();
-		}
-	}
-	currentPlayerIndex = (currentPlayerIndex + 1) % 2;
 		moves++;
+	}
 }
 ConnectFour::~ConnectFour()
 {

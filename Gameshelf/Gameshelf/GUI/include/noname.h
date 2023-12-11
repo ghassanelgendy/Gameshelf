@@ -177,7 +177,7 @@ protected:
 	// Virtual event handlers, override them in your derived class
 	virtual void onCellClick(wxCommandEvent& event); 
 public:
-	void ComputerPlay();
+	void ComputerPlay(int &row, int &col);
 	int isWinner();
 	bool isDraw();
 	void OnInstructions(wxCommandEvent& event);
