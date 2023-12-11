@@ -386,13 +386,26 @@ ConnectFour::ConnectFour( wxWindow* parent, wxWindowID id, const wxString& title
 
 	boardContainer->Add( 0, 0, 1, wxEXPAND, 5 );
 
+	wxFlexGridSizer* ResetSizer;
+	ResetSizer = new wxFlexGridSizer( 1, 1, 0, 0 );
+	ResetSizer->SetFlexibleDirection( wxBOTH );
+	ResetSizer->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
 	GameStatusAndScore = new wxStaticText( this, wxID_ANY, wxT("Player 1 (X) vs Player 2 (O)"), wxDefaultPosition, wxDefaultSize, 0 );
 	GameStatusAndScore->Wrap( -1 );
 	GameStatusAndScore->SetFont( wxFont( 12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt") ) );
 	GameStatusAndScore->SetForegroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BTNHIGHLIGHT ) );
 	GameStatusAndScore->SetBackgroundColour( wxColour( 199, 5, 54 ) );
 
-	boardContainer->Add( GameStatusAndScore, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+	ResetSizer->Add( GameStatusAndScore, 0, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_BOTTOM, 5 );
+
+	ResetBtn = new wxButton( this, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0 );
+	ResetBtn->SetBackgroundColour( wxColour( 255, 255, 255 ) );
+
+	ResetSizer->Add( ResetBtn, 0, wxALL|wxALIGN_BOTTOM|wxEXPAND, 5 );
+
+
+	boardContainer->Add( ResetSizer, 1, wxEXPAND, 10 );
 
 
 	this->SetSizer( boardContainer );
@@ -412,12 +425,14 @@ ConnectFour::ConnectFour( wxWindow* parent, wxWindowID id, const wxString& title
 
 	// Connect Events
 	thisOneIsCorrect->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ConnectFour::onCellClick ), NULL, this );
+	ResetBtn->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ConnectFour::OnResetBtn ), NULL, this );
 }
 
 ConnectFour::~ConnectFour()
 {
 	// Disconnect Events
 	thisOneIsCorrect->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ConnectFour::onCellClick ), NULL, this );
+	ResetBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ConnectFour::OnResetBtn ), NULL, this );
 
 }
 
@@ -800,10 +815,13 @@ Players::Players( wxWindow* parent, wxWindowID id, const wxString& title, const 
 	playersSizer->Add( playerTowStatic, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 
 	playerTowField = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	playersSizer->Add( playerTowField, 0, wxBOTTOM|wxRIGHT|wxLEFT, 5 );
+	playersSizer->Add( playerTowField, 0, wxALL, 5 );
+
+
+	playersSizer->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	aiBtn = new wxRadioButton( this, wxID_ANY, wxT("AI"), wxDefaultPosition, wxDefaultSize, 0 );
-	playersSizer->Add( aiBtn, 0, wxALIGN_RIGHT|wxTOP|wxBOTTOM|wxRIGHT, 5 );
+	playersSizer->Add( aiBtn, 0, wxALIGN_RIGHT|wxTOP|wxRIGHT|wxLEFT, 5 );
 
 	computerBtn = new wxRadioButton( this, wxID_ANY, wxT("Computer"), wxDefaultPosition, wxDefaultSize, 0 );
 	playersSizer->Add( computerBtn, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
@@ -815,6 +833,8 @@ Players::Players( wxWindow* parent, wxWindowID id, const wxString& title, const 
 	playersSizer->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	doneBtn = new wxButton( this, wxID_ANY, wxT("Done"), wxDefaultPosition, wxDefaultSize, 0 );
+	doneBtn->SetForegroundColour( wxColour( 181, 181, 181 ) );
+
 	playersSizer->Add( doneBtn, 0, wxALL, 5 );
 
 

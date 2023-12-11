@@ -4,7 +4,6 @@
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
-
 #include "../include/noname.h"
 GUI_Player* players[2];
 Player* Players_3ady[2];
@@ -14,7 +13,6 @@ string GUI_Player::getName()
 {
 	return name;
 }
-
 void GUI_Player::setName(string n)
 {
 	name = n;
@@ -31,36 +29,30 @@ GUI_Player::GUI_Player(int order, char symbol) {
 	cin >> name;
 	this->symbol = symbol;
 }
-
 // Get desired move: x y (each between 0 and 2)
 // Virtual (can change for other player types)
 void GUI_Player::get_move(int& x, int& y) {
 	cout << "\nPlease enter your move x and y separated by spaces: ";
 	cin >> x >> y;
 }
-
 // Give player info as a string
 string GUI_Player::to_string() {
 	return name;
 }
-
 // Get symbol used by player
 char GUI_Player::get_symbol() {
 	return symbol;
 }
-
 GUI_RandomPlayer::GUI_RandomPlayer(char symbol, int dimension) :GUI_Player(symbol)
 {
 	this->dimension = dimension;
 	this->name = "Random Computer Player";
 }
-
 // Generate a random move
 void GUI_RandomPlayer::get_move(int& x, int& y) {
 	x = (int)(rand() / (RAND_MAX + 1.0) * dimension);
 	y = (int)(rand() / (RAND_MAX + 1.0) * dimension);
 }
-
 ///////////////////////////////////////////////////////////////////////////
 //3shan aghayar icon elframes
 void XO3x3::iconSetter() {
@@ -80,7 +72,6 @@ bool XO3x3::isDraw()
 {
 	return moves > 9;
 }
-
 void MainFrame::iconSetter() {
 	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
 	this->SetIcon(icon);
@@ -172,8 +163,6 @@ void PlayersFrame::doneBtnOnButtonClick(wxCommandEvent& event)
 	whoVSwho->SetLabel(wallahyZhe2t);
 	Destroy();
 }
-
-
 ///////////////////////////////////////////////////////////////////////////
 MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX))
 {
@@ -317,7 +306,6 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 	Help->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MainFrame::launchCreditsFrame), this, Credits->GetId());
 	this->Connect(Credits->GetId(), wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::CreditsOnUpdateUI));
 }
-
 MainFrame::~MainFrame()
 {
 	// Disconnect Events
@@ -333,7 +321,6 @@ MainFrame::~MainFrame()
 	this->Disconnect(wxID_ANY, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::CreditsOnUpdateUI));
 
 }
-
 XO3x3::XO3x3(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
 	moves =  0 ;
@@ -498,7 +485,6 @@ void XO3x3::isWinner() {
 	}
 	// No winner yet
 }
-
 XO3x3::~XO3x3()
 {
 	// Disconnect Events
@@ -511,7 +497,91 @@ XO3x3::~XO3x3()
 
 	}
 }
+int ConnectFour::isWinner()
+{
+	for (unsigned short i = 0; i < 6; i++)
+	{
+		for (unsigned short j = 0; j < 4; j++) {
+			if (cells[i][j]->GetLabel() == cells[i][j + 1]->GetLabel() &&
+				cells[i][j]->GetLabel() == cells[i][j + 2]->GetLabel() &&
+				cells[i][j]->GetLabel() == cells[i][j + 3]->GetLabel() &&
+				((cells[i][j]->GetLabel() == 'x') || (cells[i][j]->GetLabel() == 'o'))) {
+				for (short g = 0; g < 4; g++)
+				{
+					cells[i][j + g]->SetForegroundColour(wxColour(255,20,20));
+				}
+				if (cells[i][j]->GetLabel() == 'x') {
+					return 1;
+				}
+				else
+					return -1;
+			}
+		}
+		
+	}
+	//to handle the col win
+	for (unsigned short i = 0; i < 4; i++)
+	{
+		for (unsigned short j = 0; j < 7; j++) {
+			if (cells[i][j]->GetLabel() == cells[i + 1][j]->GetLabel() &&
+				cells[i][j]->GetLabel() == cells[i + 2][j]->GetLabel() &&
+				cells[i][j]->GetLabel() == cells[i + 3][j]->GetLabel() &&
+				((cells[i][j]->GetLabel() == 'x') || (cells[i][j]->GetLabel() == 'o'))) {
+				for (short g = 0; g < 4; g++)
+				{
+					cells[i+g][j]->SetForegroundColour(wxColour(255, 20, 20));
+				}
+				{
+					if (cells[i][j]->GetLabel() == 'x') {
+						return 1;
+					}
+					else
+						return -1;
+				}
+			}
+		}
+	}
+	////to handle the diag win
+	for (unsigned short i = 0; i < 3; i++)
+	{
+		for (unsigned short j = 0; j < 4; j++) {
+			if (cells[i][j]-> GetLabel()== cells[i + 1][j + 1]-> GetLabel()&&
+				cells[i][j]-> GetLabel()== cells[i + 2][j + 2]-> GetLabel()&&
+				cells[i][j]-> GetLabel()== cells[i + 3][j + 3]-> GetLabel()&&
+				((cells[i][j]-> GetLabel()== 'x') || (cells[i][j]-> GetLabel()== 'o'))) {
+				for (short g = 0; g < 4; g++)
+				{
+					cells[i+g][j + g]->SetForegroundColour(wxColour(255, 20, 20));
+				}
+				if (cells[i][j]->GetLabel() == 'x') {
+					return 1;
+				}
+				else
+					return -1;
+			}
+		}
 
+	}
+	for (unsigned short i = 0; i < 3; i++) {
+		for (unsigned short j = 3; j < 7; j++) {
+			if (cells[i][j]-> GetLabel()== cells[i + 1][j - 1]-> GetLabel()&&
+				cells[i][j]-> GetLabel()== cells[i + 2][j - 2]-> GetLabel()&&
+				cells[i][j]-> GetLabel()== cells[i + 3][j - 3]-> GetLabel()&&
+				(cells[i][j]-> GetLabel()== 'x' || cells[i][j]-> GetLabel()== 'o')) {
+				for (short g = 0; g < 4; g++)
+				{
+					cells[i+g][j - g]->SetForegroundColour(wxColour(255, 20, 20));
+				}
+				if (cells[i][j]->GetLabel() == 'x') {
+					return 1;
+				}
+				else
+					return -1;
+			}
+		}
+	}
+	return 0;
+}
 void ConnectFour::OnInstructions(wxCommandEvent& event)
 {
 	// You can customize the instructions message here
@@ -521,8 +591,73 @@ void ConnectFour::OnInstructions(wxCommandEvent& event)
 	wxMessageDialog dialog(this, instructionsMessage, "Instructions", wxOK | wxCENTRE);
 	dialog.ShowModal();
 }
+void ConnectFour::ComputerPlay() {
+
+}
+void ConnectFour::OnResetBtn(wxCommandEvent& event)
+{
+	for (short i = 0; i < 6; i++)
+	{
+		for (short j = 0; j < 7; j++)
+		{
+			cells[i][j]->Enable();
+			cells[i][j]->SetLabel(' ' + to_string(j) + ' ');
+			if (i != 0 && j < 8) {
+				cells[i][j]->SetForegroundColour(wxColour(255, 255, 255));
+			}
+			else {
+				cells[i][j]->SetForegroundColour(wxColour(195, 195, 195));
+
+			}
+		}
+	}
+		isOver = 0;
+		currentPlayerIndex = 0;
+		GameStatusAndScore->SetLabel(wallahyZhe2t);
+}
+void ConnectFour::endGame()
+{
+	for (short i = 0; i < 6; i++)
+	{
+		for (short j = 0; j < 7; j++)
+		{
+			if (!(cells[i][j]->GetLabel() == 'x' || cells[i][j]->GetLabel() == 'o')) {
+				cells[i][j]->SetLabel("   ");
+			}
+		}
+	}
+	GameStatusAndScore->SetLabel(GameStatusAndScore->GetLabel() + " - Press Reset To Rematch");
+	isOver = true;
+}
+void ConnectFour::onCellClick(wxCommandEvent& event) {
+	wxButton* cell = static_cast<wxButton*>(event.GetEventObject());
+
+	int row = (cell->GetId() - 989) / 7;
+	int col = (cell->GetId() - 989) % 7;
+	for (int i = 0; i < 6; ++i) {
+		if (cells[i][col]->GetLabel().size() > 1) {
+			row = i;
+		}
+	}
 
 
+	if (!(cells[row][col]->GetLabel() == 'o' || cells[row][col]->GetLabel() == 'x') && !(isOver)) {
+		cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
+		cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
+
+
+		if (isWinner() == 1) {
+			GameStatusAndScore->SetLabel(players[0]->getName() + winner);
+			endGame();
+		}
+		else if (isWinner() == -1) {
+			GameStatusAndScore->SetLabel(players[1]->getName() + winner);
+			endGame();
+		}
+		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
+		moves++;
+	}
+}
 ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
 	moves = 0;
@@ -537,10 +672,12 @@ ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title,
 	{
 		for (short j = 0; j < 7; j++)
 		{
-			
+
 			cells[i][j] = new wxButton(this, rr, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 			cells[i][j]->SetBackgroundColour(wxColour(255, 255, 255));
 			cells[i][j]->SetLabel(' ' + to_string(j)+ ' ');
+			cells[i][j]->SetFont(wxFont(27, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
+
 			boardContainer->Add(cells[i][j], 0, wxEXPAND, 5);
 			cells[i][j]->Bind(wxEVT_BUTTON, &ConnectFour::onCellClick, this);
 			cells[i][j]->SetForegroundColour(wxColour(195, 195, 195));
@@ -564,6 +701,10 @@ ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title,
 
 
 	boardContainer->Add(0, 0, 1, wxEXPAND, 5);
+	wxFlexGridSizer* ResetSizer;
+	ResetSizer = new wxFlexGridSizer(2, 1, 0, 0);
+	ResetSizer->SetFlexibleDirection(wxBOTH);
+	ResetSizer->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 
 	GameStatusAndScore = new wxStaticText(this, wxID_ANY, wallahyZhe2t, wxDefaultPosition, wxDefaultSize, 0);
 	GameStatusAndScore->Wrap(-1);
@@ -571,7 +712,15 @@ ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title,
 	GameStatusAndScore->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
 	GameStatusAndScore->SetBackgroundColour(wxColour(199, 5, 54));
 
-	boardContainer->Add(GameStatusAndScore, 0, wxALL | wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL, 5);
+	ResetSizer->Add(GameStatusAndScore, 0, wxALL | wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM, 5);
+
+	ResetBtn = new wxButton(this, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0);
+	ResetBtn->SetBackgroundColour(wxColour(255, 255, 255));
+
+	ResetSizer->Add(ResetBtn, 0, wxALL | wxALIGN_BOTTOM | wxEXPAND, 5);
+
+
+	boardContainer->Add(ResetSizer, 1, wxEXPAND, 10);
 
 
 	this->SetSizer(boardContainer);
@@ -599,57 +748,19 @@ ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title,
 
 	}
 	Help->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(ConnectFour::OnInstructions), this, Instructions->GetId());
+	ResetBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConnectFour::OnResetBtn), NULL, this);
 
+	/*resetButton = new wxButton(this, wxID_ANY, wxT("Reset"));
+	resetButton->SetBackgroundColour(wxColour(255, 255, 255));
+	resetButton->SetSize(wxSize(5, 30));
+	resetButton->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &ConnectFour::OnResetBtn, this);*/
 
-}
-
-void ConnectFour::onCellClick(wxCommandEvent& event) {
-	wxButton* cell = static_cast<wxButton*>(event.GetEventObject());
-
-	int row = (cell->GetId() - 989) / 7;
-	int col = (cell->GetId() - 989) % 7;
-
-	for (int i = 0; i < 6; ++i) {
-		if (cells[i][col]->GetLabel().size() > 1) {
-			row = i;
-		}
-	}
-	cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
-	cells[row][col]->SetFont(wxFont(27, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
-	cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
-	currentPlayerIndex = (currentPlayerIndex + 1) % 2;
-	moves++;
-}
-bool ConnectFour::isGameOver(short x, short y) {
-	wxString symbol = cells[x][y]->GetLabel(); // Get the symbol of the last move
-	// Check for horizontal, vertical, and diagonal lines of four
-	return checkLine(x, y, 0, 1, symbol) || checkLine(x, y, 1, 0, symbol) || checkLine(x, y, 1, 1, symbol) || checkLine(x, y, 1, -1, symbol);
-}
-
-// Line checker
-bool ConnectFour::checkLine(short x, short y, short dx, short dy, wxString symbol) {
-	short count = 1; // Initialize the count to 1
-	// Check in one direction
-	for (int i = 1; i < 4; i++) {
-		short nx = x + i * dx; // Next row
-		short ny = y + i * dy; // Next column
-		if (nx < 0 || nx > 5 || ny < 0 || ny > 6) break; // Out of bounds
-		if (cells[nx][ny]->GetLabel() != symbol) break; // Different symbol
-		count++; // Increment the count
-	}
-	// Check in the opposite direction
-	for (int i = 1; i < 4; i++) {
-		short nx = x - i * dx; // Previous row
-		short ny = y - i * dy; // Previous column
-		if (nx < 0 || nx > 5 || ny < 0 || ny > 6) break; // Out of bounds
-		if (cells[nx][ny]->GetLabel() != symbol) break; // Different symbol
-		count++; // Increment the count
-	}
-	return count >= 4; // Return true if the count is at least 4
 }
 ConnectFour::~ConnectFour()
 {
 	// Disconnect Events
+	ResetBtn->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConnectFour::OnResetBtn), NULL, this);
+
 	for (short i = 0; i < 6; i++)
 	{
 		for (short j = 0; j < 7; j++)
@@ -660,7 +771,6 @@ ConnectFour::~ConnectFour()
 	}
 
 }
-
 PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX))
 {
 	this->SetSizeHints(350,425);
@@ -763,7 +873,6 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 	
 	
 }
-
 void PyramicTicTac::OnInstructions(wxCommandEvent& event)
 {
 	// You can customize the instructions message here
@@ -886,7 +995,6 @@ void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 
 
 }
-
 bool PyramicTicTac::is_winner(int player)
 {
 	// Check horizontal lines
@@ -904,14 +1012,7 @@ bool PyramicTicTac::is_winner(int player)
 
 	return false;
 }
-
 void PyramicTicTac::ResetButton(wxCommandEvent& event)
-{
-	Reset();
-	  
-}
-
-void PyramicTicTac::Reset()
 {
 	for (int i = 0; i < 9; i++)
 	{
@@ -920,9 +1021,14 @@ void PyramicTicTac::Reset()
 		buttons[i]->Enable();
 	}
 	turn = 1;
-	GameStatusAndScore->SetLabel(wallahyZhe2t);
-}
 
+	GameStatusAndScore->SetLabel(wallahyZhe2t);
+	  
+}
+void PyramicTicTac::Reset()
+{
+	
+}
 bool PyramicTicTac::is_draw()
 {
 	for (int i = 0; i < 9; i++)
@@ -1104,14 +1210,12 @@ XO5x5::XO5x5(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoi
 	// Connect Events
 	CellNo1->Connect(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler(XO5x5::onCellClick), NULL, this);
 }
-
 XO5x5::~XO5x5()
 {
 	// Disconnect Events
 	CellNo1->Disconnect(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler(XO5x5::onCellClick), NULL, this);
 
 }
-
 Credits::Credits(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
@@ -1276,7 +1380,6 @@ PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& titl
 	doneBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick), NULL, this);
 	cancelBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::cancelBtnOnButtonClick ), NULL, this );
 }
-
 PlayersFrame::~PlayersFrame()
 {
 	// Disconnect Events
@@ -1287,6 +1390,3 @@ PlayersFrame::~PlayersFrame()
 	cancelBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::cancelBtnOnButtonClick ), NULL, this );
 
 }
-
-
-
