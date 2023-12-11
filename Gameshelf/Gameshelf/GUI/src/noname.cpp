@@ -59,6 +59,15 @@ void XO3x3::iconSetter() {
 	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
 	this->SetIcon(icon);
 }
+void XO3x3::OnInstructions(wxCommandEvent& event)
+{
+	// You can customize the instructions message here
+	wxString instructionsMessage = "Welcome to Tic Tac Toe!\n\nInstructions:\n• The game board is a 3x3 grid.\n• Players choose a token (X or O) and take turns placing tokens on the grid.\n• The goal is to form a horizontal, vertical, or diagonal line of three tokens of the same mark.\n\nWinning:\n•The first player to connect three discs of their mark wins the game.\n• If the board is full and no player has connected three tokens, the game is a draw.";
+
+	// Display instructions in a dialog
+	wxMessageDialog dialog(this, instructionsMessage, "Instructions", wxOK | wxCENTRE);
+	dialog.ShowModal();
+}
 bool XO3x3::isDraw()
 {
 	return moves > 9;
@@ -356,6 +365,9 @@ XO3x3::XO3x3(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoi
 	Instructions = new wxMenuItem(Help, wxID_ANY, wxString(wxT("Instructions")) + wxT('\t') + wxT("ALT+I"), wxEmptyString, wxITEM_NORMAL);
 	Help->Append(Instructions);
 
+
+
+
 	MenuBar->Append(Help, wxT("Help"));
 
 	this->SetMenuBar(MenuBar);
@@ -364,6 +376,8 @@ XO3x3::XO3x3(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoi
 	this->Centre(wxBOTH);
 
 	// Connect Events
+
+	Help->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(XO3x3::OnInstructions), this, Instructions->GetId());
 	for (short i = 0; i < 3; i++)
 	{
 		for (short j = 0; j < 3; j++)
@@ -869,33 +883,21 @@ void PyramicTicTac::OnInstructions(wxCommandEvent& event)
 	wxMessageDialog dialog(this, instructionsMessage, "Instructions", wxOK | wxCENTRE);
 	dialog.ShowModal();
 }
-void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
+
+void PyramicTicTac::rand_comp_move()
 {
-	// get the id of the button that was clicked
-	int id = event.GetId();
+	int randomIndex = rand() % 9;
+	while (board[randomIndex] != 0)
+	{
+		randomIndex = rand() % 9;
+	}
+	board[randomIndex] = -1;
+	buttons[randomIndex]->SetLabel("O");
 
-	// get the index of the button in the array
-	int index = id - 1000;
+	turn = -turn;
 
-	// check if the button is already occupied
-	if (board[index] != 0)
-	{
-		// do nothing
-		return;
-	}
-	if (turn == 1)
-	{
-		board[index] = 1;
-		buttons[index]->SetLabel("X");
-	}
-	else
-	{
-		board[index] = -1;
-		buttons[index]->SetLabel("O");
-	}
 	if (is_winner(turn))
 	{
-		// display the winner and disable the buttons
 		if (turn == 1)
 		{
 			GameStatusAndScore->SetLabel(players[0]->getName() + winner);
@@ -915,15 +917,81 @@ void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 	}
 	if (is_draw())
 	{
-		GameStatusAndScore->SetLabel("               Draw!");
+		GameStatusAndScore->SetLabel("                                   Draw!");
 		for (int i = 0; i < 9; i++)
 		{
 			buttons[i]->Disable();
 		}
 		return;
 	}
+
+
+}
+
+
+void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
+{
+	// get the id of the button that was clicked
+	int id = event.GetId();
+
+	// get the index of the button in the array
+	int index = id - 1000;
+
+	// check if the button is already occupied
+	if (board[index] != 0)
+	{
+		return;
+	}
+	if (turn == 1)
+	{
+		board[index] = 1;
+		buttons[index]->SetLabel("X");
+	}
+	else                                                                                                              
+	{
+		
+			board[index] = -1;
+			buttons[index]->SetLabel("O");
+
+	}
+
+	if (is_winner(turn))
+	{
+		if (turn == 1)
+		{
+			GameStatusAndScore->SetLabel(players[0]->getName() + winner);
+
+		}
+
+		else
+		{
+			GameStatusAndScore->SetLabel(players[1]->getName() + winner);
+		}
+
+		for (int i = 0; i < 9; i++)
+		{
+			buttons[i]->Disable();
+		}
+		return;
+	}
+	if (is_draw())
+	{
+		GameStatusAndScore->SetLabel("                                   Draw!");
+		for (int i = 0; i < 9; i++)
+		{
+			buttons[i]->Disable();
+		}
+		return;
+	}	
+	if ((players[1]->getName()) == "Random Computer Player") {
+		rand_comp_move();
+		
+	}
 	
+
 	turn = -turn;
+
+
 }
 bool PyramicTicTac::is_winner(int player)
 {
@@ -967,6 +1035,7 @@ bool PyramicTicTac::is_draw()
 	}
 	return true;
 }
+
 PyramicTicTac::~PyramicTicTac()
 {
 	// Disconnect Events
@@ -1218,6 +1287,7 @@ Credits::Credits(wxWindow* parent, wxWindowID id, const wxString& title, const w
 	RowanPic->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(Credits::openLinkRowan), NULL, this);
 	JanaPic->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(Credits::openLinkJana), NULL, this);
 }
+
 Credits::~Credits()
 {
 	// Disconnect Events
@@ -1226,6 +1296,9 @@ Credits::~Credits()
 	JanaPic->Disconnect(wxEVT_KEY_DOWN, wxKeyEventHandler(Credits::openLinkJana), NULL, this);
 
 }
+
+
+
 PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxDialog(parent, id, title, pos, size, style)
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
