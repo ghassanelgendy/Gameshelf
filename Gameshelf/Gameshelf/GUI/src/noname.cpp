@@ -787,41 +787,10 @@ void PyramicTicTac::rand_comp_move()
 	board[randomIndex] = -1;
 	buttons[randomIndex]->SetLabel("O");
 
-}
+	turn = -turn;
 
-
-void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
-{
-	// get the id of the button that was clicked
-	int id = event.GetId();
-
-	// get the index of the button in the array
-	int index = id - 1000;
-
-	// check if the button is already occupied
-	if (board[index] != 0)
-	{
-		// do nothing
-		return;
-	}
-	if (turn == 1)
-	{
-		board[index] = 1;
-		buttons[index]->SetLabel("X");
-	}
-	else                                                                                                              
-	{
-		if ((players[1]->getName()) == "Random Computer Player") {
-			rand_comp_move();
-		}
-		else {
-			board[index] = -1;
-			buttons[index]->SetLabel("O");
-		}
-	}
 	if (is_winner(turn))
 	{
-		// display the winner and disable the buttons
 		if (turn == 1)
 		{
 			GameStatusAndScore->SetLabel(players[0]->getName() + winner);
@@ -850,7 +819,69 @@ void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 	}
 
 
+}
+
+
+void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
+{
+	// get the id of the button that was clicked
+	int id = event.GetId();
+
+	// get the index of the button in the array
+	int index = id - 1000;
+
+	// check if the button is already occupied
+	if (board[index] != 0)
+	{
+		return;
+	}
+	if (turn == 1)
+	{
+		board[index] = 1;
+		buttons[index]->SetLabel("X");
+	}
+	else                                                                                                              
+	{
+		
+			board[index] = -1;
+			buttons[index]->SetLabel("O");
+
+	}
+
+	if (is_winner(turn))
+	{
+		if (turn == 1)
+		{
+			GameStatusAndScore->SetLabel(players[0]->getName() + winner);
+
+		}
+
+		else
+		{
+			GameStatusAndScore->SetLabel(players[1]->getName() + winner);
+		}
+
+		for (int i = 0; i < 9; i++)
+		{
+			buttons[i]->Disable();
+		}
+		return;
+	}
+	if (is_draw())
+	{
+		GameStatusAndScore->SetLabel("                                   Draw!");
+		for (int i = 0; i < 9; i++)
+		{
+			buttons[i]->Disable();
+		}
+		return;
+	}	
+	if ((players[1]->getName()) == "Random Computer Player") {
+		rand_comp_move();
+		
+	}
 	
+
 	turn = -turn;
 
 
