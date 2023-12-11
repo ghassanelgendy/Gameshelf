@@ -144,6 +144,7 @@ public:
 	bool isDraw();
 	void isWinner();
 	void iconSetter();
+	void OnInstructions(wxCommandEvent& event);
 
 	XO3x3(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("3x3 Tic Tac Toe"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(456, 600), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
 
@@ -200,6 +201,7 @@ protected:
 	bool is_winner(int player);
 	void Reset();
 	bool is_draw();
+	void rand_comp_move();
 
 	void OnInstructions(wxCommandEvent& event);
 	void ResetButton(wxCommandEvent& event);
