@@ -497,6 +497,17 @@ XO3x3::~XO3x3()
 	}
 }
 
+void ConnectFour::OnInstructions(wxCommandEvent& event)
+{
+	// You can customize the instructions message here
+	wxString instructionsMessage = "Welcome to Connect Four!\n\nInstructions:\n• The game board is a 6x7 grid.\n• Players choose a token (X or O) and take turns dropping tokens from the top of grid.\n• The tokens fall to the lowest available space in the column.\n• The goal is to form a horizontal, vertical, or diagonal line of four tokens of the same mark.\n\nWinning:\n•The first player to connect four discs of their mark wins the game.\n• If the board is full and no player has connected four tokens, the game is a draw.";
+
+	// Display instructions in a dialog
+	wxMessageDialog dialog(this, instructionsMessage, "Instructions", wxOK | wxCENTRE);
+	dialog.ShowModal();
+}
+
+
 ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
 	moves = 0;
@@ -514,11 +525,15 @@ ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title,
 			
 			cells[i][j] = new wxButton(this, rr, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 			cells[i][j]->SetBackgroundColour(wxColour(255, 255, 255));
-			cells[i][j]->SetLabel('-' + to_string(j)+ '-');
+			cells[i][j]->SetLabel(' ' + to_string(j)+ ' ');
 			boardContainer->Add(cells[i][j], 0, wxEXPAND, 5);
 			cells[i][j]->Bind(wxEVT_BUTTON, &ConnectFour::onCellClick, this);
 			cells[i][j]->SetForegroundColour(wxColour(195, 195, 195));
 			rr++;
+			if (i != 0 && j < 8) {
+				cells[i][j]->SetForegroundColour(wxColour(255, 255, 255));
+
+			}
 		}
 	}
 	for (short i = 0; i < 7; i++) {
@@ -568,6 +583,8 @@ ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title,
 		}
 
 	}
+	Help->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(ConnectFour::OnInstructions), this, Instructions->GetId());
+
 
 }
 

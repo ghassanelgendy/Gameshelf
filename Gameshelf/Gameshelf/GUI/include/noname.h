@@ -169,6 +169,8 @@ protected:
 
 
 public:
+	void OnInstructions(wxCommandEvent& event);
+
 
 	ConnectFour(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Connect Four"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(710, 700), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
 	bool isGameOver(short x, short y);
