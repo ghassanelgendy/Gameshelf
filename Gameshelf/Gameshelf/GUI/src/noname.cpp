@@ -175,7 +175,7 @@ void PlayersFrame::doneBtnOnButtonClick(wxCommandEvent& event)
 
 
 ///////////////////////////////////////////////////////////////////////////
-MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
+MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX))
 {
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
 	this->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNTEXT));
