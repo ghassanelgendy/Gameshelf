@@ -5,6 +5,7 @@
 #include "../include/noname.h"
 ////////////////////////////////Globals//////////////////////////////////////
 GUI_Player* players[2];
+short clicks{ 0 };
 Player* Players_3ady[2];
 short currentPlayerIndex{ 0 };
 string winner = " is the winner";
@@ -381,7 +382,7 @@ void XO3x3::isWinner() {
 		// Do something to indicate the winner
 		isOver = true;
 	}
-	if (moves > 9) {
+	if (moves >= 9) {
 		isOver = true;
 		GameStatusAndScore->SetLabel("                 Draw");
 	}
@@ -622,9 +623,6 @@ void ConnectFour::OnInstructions(wxCommandEvent& event)
 	wxMessageDialog dialog(this, instructionsMessage, "Instructions", wxOK | wxCENTRE);
 	dialog.ShowModal();
 }
-void ConnectFour::ComputerPlay() {
-
-}
 void ConnectFour::OnResetBtn(wxCommandEvent& event)
 {
 	for (short i = 0; i < 6; i++)
@@ -662,7 +660,6 @@ void ConnectFour::endGame()
 }
 void ConnectFour::onCellClick(wxCommandEvent& event) {
 	wxButton* cell = static_cast<wxButton*>(event.GetEventObject());
-
 	int row = (cell->GetId() - 989) / 7;
 	int col = (cell->GetId() - 989) % 7;
 	for (int i = 0; i < 6; ++i) {
@@ -670,13 +667,41 @@ void ConnectFour::onCellClick(wxCommandEvent& event) {
 			row = i;
 		}
 	}
+	if (isOver || cells[row][col]->GetLabel() == 'o' || cells[row][col]->GetLabel() == 'x') {
+		return;
+	}
+	cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
+	cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
+	if (isWinner() == 1) {
+			GameStatusAndScore->SetLabel(players[0]->getName() + winner);
+			endGame();
+		}
+	else if (isWinner() == -1) {
+			GameStatusAndScore->SetLabel(players[1]->getName() + winner);
+			endGame();
+		}
+	if (isDraw()) {
+			GameStatusAndScore->SetLabel("                                   Draw!");
+			endGame();
+		}
+	if (players[1]->getName() == "Random Computer Player") {
+		players[1]->get_move(row, col);
 
+	generate:
+		row = (int)(rand() / (RAND_MAX + 1.0) * 6);
+		col = (int)(rand() / (RAND_MAX + 1.0) * (7));
+		if (cells[row][col]->GetLabel() == 'x'|| cells[row][col]->GetLabel() == 'o') {
+			goto generate;
+		}
 
-	if (!(cells[row][col]->GetLabel() == 'o' || cells[row][col]->GetLabel() == 'x') && !(isOver)) {
+		for (int i = 0; i < 6; ++i) {
+			if (cells[i][col]->GetLabel().size() > 1) {
+				row = i;
+			}
+		}
+		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
 		cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
 		cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
-
-
 		if (isWinner() == 1) {
 			GameStatusAndScore->SetLabel(players[0]->getName() + winner);
 			endGame();
@@ -689,9 +714,9 @@ void ConnectFour::onCellClick(wxCommandEvent& event) {
 			GameStatusAndScore->SetLabel("                                   Draw!");
 			endGame();
 		}
-		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
-		moves++;
 	}
+	currentPlayerIndex = (currentPlayerIndex + 1) % 2;
+		moves++;
 }
 ConnectFour::~ConnectFour()
 {
@@ -861,8 +886,6 @@ void PyramicTicTac::rand_comp_move()
 		}
 		return;
 	}
-
-
 }
 void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 {
@@ -1274,10 +1297,10 @@ PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& titl
 
 	computerBtn = new wxRadioButton( this, wxID_ANY, wxT("Computer"), wxDefaultPosition, wxDefaultSize, 0 );
 	playersSizer->Add( computerBtn, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
-
+	computerBtn->Bind(wxEVT_RIGHT_DOWN, &PlayersFrame::OnRadioRightClick, this);
+	computerBtn->Bind(wxEVT_LEFT_DOWN, &PlayersFrame::OnRadioLeftClick, this);
 
 	playersSizer->Add( 0, 0, 0, wxEXPAND, 5 );
-
 
 
 	doneBtn = new wxButton( this, wxID_ANY, wxT("Done"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -1313,9 +1336,25 @@ PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& titl
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick));
 	aiBtn->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(PlayersFrame::aiBtnOnRadioButton), NULL, this);
-	computerBtn->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(PlayersFrame::computerBtnOnRadioButton), NULL, this);
 	doneBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick), NULL, this);
 	cancelBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::cancelBtnOnButtonClick ), NULL, this );
+}
+void PlayersFrame::OnRadioRightClick(wxMouseEvent& event)
+{
+	playerTowField->Enable();
+	playerTowField->SetLabel("");
+	computerBtn->SetValue(0);
+
+}
+void PlayersFrame::OnRadioLeftClick(wxMouseEvent& event)
+{
+	clicks++;
+	if (clicks == 2) {
+		whoVSwho->SetLabel("Right Click To Discard");
+	}
+	playerTowField->Disable();
+	playerTowField->SetLabel("Computer");
+	computerBtn->SetValue(1);
 }
 void PlayersFrame::doneBtnOnButtonClick(wxCommandEvent& event)
 {
@@ -1325,7 +1364,6 @@ void PlayersFrame::doneBtnOnButtonClick(wxCommandEvent& event)
 	}
 	else
 		players[0]->setName("Player 1");
-
 	if (!computerBtn->GetValue()) {
 		players[1] = new GUI_Player(2, 'o');
 		if (playerTowField->GetValue() != "") {
@@ -1348,7 +1386,6 @@ PlayersFrame::~PlayersFrame()
 	// Disconnect Events
 	
 	aiBtn->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(PlayersFrame::aiBtnOnRadioButton ), NULL, this );
-	computerBtn->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(PlayersFrame::computerBtnOnRadioButton ), NULL, this );
 	doneBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick ), NULL, this );
 	cancelBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::cancelBtnOnButtonClick ), NULL, this );
 
@@ -1386,7 +1423,7 @@ GUI_RandomPlayer::GUI_RandomPlayer(char symbol, int dimension) :GUI_Player(symbo
 	this->dimension = dimension;
 	this->name = "Random Computer Player";
 }
-void GUI_RandomPlayer::get_move(int& x, int& y) {
-	x = (int)(rand() / (RAND_MAX + 1.0) * dimension);
-	y = (int)(rand() / (RAND_MAX + 1.0) * dimension);
+
+void GUI_RandomPlayer::get_move(int& x, int& y)
+{
 }

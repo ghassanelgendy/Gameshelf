@@ -32,8 +32,10 @@
 #include <wx/dialog.h>
 #include "../../../Gameboard/include/BoardGame_Classes.hpp"
 using namespace std;
-///////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////////////////
+/// Class GUI Player
+///////////////////////////////////////////////////////////////////////////
 class GUI_Player {
 protected:
 	string name;
@@ -57,6 +59,10 @@ public:
 	// Get symbol used by player
 	char get_symbol();
 };
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class MainFrame
+///////////////////////////////////////////////////////////////////////////
 class GUI_RandomPlayer : public GUI_Player {
 protected:
 	int dimension;
@@ -122,6 +128,7 @@ public:
 	~MainFrame();
 
 };
+
 ///////////////////////////////////////////////////////////////////////////////
 /// Class XO3x3
 ///////////////////////////////////////////////////////////////////////////////
@@ -319,14 +326,13 @@ protected:
 
 	// Virtual event handlers, override them in your derived class
 	virtual void aiBtnOnRadioButton(wxCommandEvent& event) { event.Skip(); }
-	virtual void computerBtnOnRadioButton(wxCommandEvent& event) { event.Skip(); }
 	virtual void doneBtnOnButtonClick(wxCommandEvent& event);
+	virtual void OnRadioRightClick(wxMouseEvent& event);
 	virtual void cancelBtnOnButtonClick(wxCommandEvent& event) { Destroy(); }
-
+	virtual void OnRadioLeftClick(wxMouseEvent& event);
 public:
 
 	PlayersFrame(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Players"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(400, 200), long style = wxDEFAULT_DIALOG_STYLE);
-
 	~PlayersFrame();
 
 };
