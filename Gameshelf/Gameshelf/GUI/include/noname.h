@@ -192,6 +192,7 @@ protected:
 	wxButton* buttons[9];
 	wxStaticText* GameStatusAndScore;
 	wxBoxSizer* sizer;
+	wxButton* resetButton;
 	int board[9];
 	int turn;
 	bool is_winner(int player);
@@ -199,9 +200,7 @@ protected:
 	bool is_draw();
 
 	void OnInstructions(wxCommandEvent& event);
-
-	// Virtual event handlers, override them in your derived class
-	virtual void openThree(wxCommandEvent& event) { event.Skip(); }
+	void ResetButton(wxCommandEvent& event);
 
 	virtual void CreditsOnUpdateUI(wxUpdateUIEvent& event) { event.Skip(); }
 
@@ -314,7 +313,6 @@ protected:
 	wxStaticText* whoVSwho;
 
 	// Virtual event handlers, override them in your derived class
-	virtual void PlayersOnClose(wxCloseEvent& event) { event.Skip(); }
 	virtual void aiBtnOnRadioButton(wxCommandEvent& event) { event.Skip(); }
 	virtual void computerBtnOnRadioButton(wxCommandEvent& event) { event.Skip(); }
 	virtual void doneBtnOnButtonClick(wxCommandEvent& event);

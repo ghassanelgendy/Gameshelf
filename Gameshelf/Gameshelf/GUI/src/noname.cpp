@@ -18,7 +18,8 @@ string GUI_Player::getName()
 void GUI_Player::setName(string n)
 {
 	name = n;
-}GUI_Player::GUI_Player(char symbol) {
+}
+GUI_Player::GUI_Player(char symbol) {
 	this->symbol = symbol;
 }
 string wallahyZhe2t = "Player 1 VS Player 2";
@@ -631,7 +632,7 @@ ConnectFour::~ConnectFour()
 
 PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX))
 {
-	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
+	this->SetSizeHints(350,425);
 	this->SetBackgroundColour(wxColour(1, 68, 33));
 
 	MenuBar = new wxMenuBar(0);
@@ -648,6 +649,12 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 	MenuBar->Append(Help, wxT("Help"));
 
 	this->SetMenuBar(MenuBar);
+
+	resetButton = new wxButton(this, wxID_ANY, wxT("Reset"));
+	resetButton->SetBackgroundColour(wxColour(255, 255, 255));
+	resetButton->SetSize(wxSize(5, 30));
+	resetButton->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &PyramicTicTac::ResetButton, this);
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	for (int i = 0; i < 9; i++)
@@ -690,6 +697,7 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 	row3->Add(buttons[8], 4, wxALIGN_CENTER | wxALL, 5);
 
 	wxBoxSizer* main_sizer = new wxBoxSizer(wxVERTICAL);
+	main_sizer->Add(resetButton, 0, wxALIGN_RIGHT | wxALL, 5);
 	main_sizer->Add(row1, 2, wxALIGN_CENTER | wxALL, 3);
 	main_sizer->Add(row2, 2, wxALIGN_CENTER | wxALL, 3);
 	main_sizer->Add(row3, 2, wxALIGN_CENTER | wxALL, 3);
@@ -703,6 +711,8 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 	GameStatusAndScore->SetBackgroundColour(wxColour(1, 68, 33));
 
 	main_sizer->Add(GameStatusAndScore, 2, wxALIGN_CENTER | wxALL, 5);
+	
+
 
 	SetSizer(main_sizer);
 
@@ -713,6 +723,7 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 	main_sizer->Layout();
 	this->Layout();
 	this->Centre(wxBOTH);
+
 
 
 
@@ -783,7 +794,7 @@ void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 	}
 	if (is_draw())
 	{
-		GameStatusAndScore->SetLabel("                 Draw!");
+		GameStatusAndScore->SetLabel("               Draw!");
 		for (int i = 0; i < 9; i++)
 		{
 			buttons[i]->Disable();
@@ -812,6 +823,11 @@ bool PyramicTicTac::is_winner(int player)
 	return false;
 }
 
+void PyramicTicTac::ResetButton(wxCommandEvent& event)
+{
+	Reset();
+	  
+}
 
 void PyramicTicTac::Reset()
 {
@@ -822,6 +838,7 @@ void PyramicTicTac::Reset()
 		buttons[i]->Enable();
 	}
 	turn = 1;
+	GameStatusAndScore->SetLabel(wallahyZhe2t);
 }
 
 bool PyramicTicTac::is_draw()
@@ -1170,7 +1187,7 @@ PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& titl
 	this->Centre( wxBOTH );
 
 	// Connect Events
-	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler(PlayersFrame::PlayersOnClose ) );
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick));
 	aiBtn->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(PlayersFrame::aiBtnOnRadioButton), NULL, this);
 	computerBtn->Connect(wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(PlayersFrame::computerBtnOnRadioButton), NULL, this);
 	doneBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick), NULL, this);
@@ -1180,7 +1197,7 @@ PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& titl
 PlayersFrame::~PlayersFrame()
 {
 	// Disconnect Events
-	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler(PlayersFrame::PlayersOnClose ) );
+	
 	aiBtn->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(PlayersFrame::aiBtnOnRadioButton ), NULL, this );
 	computerBtn->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(PlayersFrame::computerBtnOnRadioButton ), NULL, this );
 	doneBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick ), NULL, this );
