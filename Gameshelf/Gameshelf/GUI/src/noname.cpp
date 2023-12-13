@@ -896,7 +896,7 @@ void ConnectFour::onCellClick(wxCommandEvent& event) {
 	}
 	Sleep(240);
 
-	if (players[1]->getName() == "Easy AI Player") {
+	if (players[1]->getName() == "Easy AI") {
 		ezAI(row, col);
 	}
 	if (players[1]->getName() == "Random Computer Player") {
