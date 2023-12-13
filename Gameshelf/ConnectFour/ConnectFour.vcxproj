@@ -134,6 +134,7 @@
     <ClCompile Include="..\Gameboard\src\GameManager.cpp" />
     <ClCompile Include="..\Gameboard\src\Player.cpp" />
     <ClCompile Include="..\Gameboard\src\RandomPlayer.cpp" />
+    <ClCompile Include="src\AiPlayer.cpp" />
     <ClCompile Include="src\ConnectFourBoard.cpp" />
     <ClCompile Include="src\ConnectFour_App.cpp" />
     <ClCompile Include="src\ConnectRandomPlayer.cpp" />

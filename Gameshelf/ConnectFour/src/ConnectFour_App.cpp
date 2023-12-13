@@ -27,7 +27,7 @@ int main() {
         players[1] = new RandomPlayer('o', 6);
         break;
     case('3'):
-        //players[1] = new AI_Player();
+        players[1] = new AiPlayer('O');
         break;
     default:
         cout << "\nAn error has occured, try again!\n";

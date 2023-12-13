@@ -126,3 +126,14 @@ bool ConnectFourBoard::is_draw() {
 bool ConnectFourBoard::game_is_over () {
     return n_moves >= 42;
 }
+
+char ConnectFourBoard::get_board_value(int& x, int& y)
+{
+    return board[x][y];
+}
+
+void ConnectFourBoard::set_board_value(int& x, int& y, char mark)
+{
+    board[x][y] = mark;
+}
+

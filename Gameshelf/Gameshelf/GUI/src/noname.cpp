@@ -547,27 +547,68 @@ generate:
 }
 void ConnectFour::ezAI(int& row, int& col)
 {
-generate:
-	row = (int)(rand() / (RAND_MAX + 1.0) * 6);
-	col = (int)(rand() / (RAND_MAX + 1.0) * (7));
-	for (short i = 0; i < 6; i++)
-	{
-		for (short j = 0; j < 7; j++)
-		{
-			
+	bool valid = false; // A flag to indicate if the move is valid
+	while (!valid) { // Repeat until a valid move is found
+		// Generate a random row and column
+		row = (int)(rand() / (RAND_MAX + 1.0) * 6);
+		col = (int)(rand() / (RAND_MAX + 1.0) * (7));
+		// Check if the cell is empty
+		if (cells[row][col]->GetLabel() == ' ') {
+			valid = true; // Set the flag to true
 		}
 	}
-	if (cells[row][col]->GetLabel() == 'x' || cells[row][col]->GetLabel() == 'o') {
-		goto generate;
-	}
-	for (int i = 0; i < 6; ++i) {
-		if (cells[i][col]->GetLabel().size() > 1) {
-			row = i;
+	int bestMove = -1; // A variable to store the best move
+	int bestScore = -1000; // A variable to store the best score
+	int checkRow = -1; // A variable to store the lowest empty row in the best column
+	// Loop through all the columns
+	for (int checkCol = 0; checkCol < 7; checkCol++) {
+		// Find the lowest empty row in this column
+		checkRow = -1;
+		for (int i = 0; i < 6; i++) {
+			if (cells[i][checkCol]->GetLabel() == "   ") {
+				checkRow = i;
+				break;
+			}
+		}
+		// If the column is not full
+		if (checkRow != -1) {
+			// Make a temporary move
+			cells[checkRow][checkCol]->SetLabel(players[currentPlayerIndex]->get_symbol());
+			// Check if this move can win the game for the current player
+			if (isWinner() != -1) {
+				// Undo the temporary move
+				cells[checkRow][checkCol]->SetLabel("   ");
+				// Set the best move and score
+				bestMove = checkCol;
+				bestScore = 1000;
+				// Break the loop
+				break;
+			}
+			// Check if this move can win the game for the other player
+			cells[checkRow][checkCol]->SetLabel(players[(currentPlayerIndex + 1) % 2]->get_symbol());
+			if (isWinner() != -1) {
+				// Undo the temporary move
+				cells[checkRow][checkCol]->SetLabel("   ");
+				// Set the best move and score
+				bestMove = checkCol;
+				bestScore = 500;
+			}
+			// Undo the temporary move
+			cells[checkRow][checkCol]->SetLabel("   ");
 		}
 	}
-	currentPlayerIndex = (currentPlayerIndex + 1) % 2;
+	// If no best move is found, choose a random move
+	if (bestMove == -1) {
+		bestMove = rand() % 7;
+	}
+	// Set the row and col to the best move
+	row = checkRow;
+	col = bestMove;
+	// Make the move
 	cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
 	cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
+	// Check for the game status
+	// Update the game status and score
 	if (isWinner() == 1) {
 		GameStatusAndScore->SetLabel(players[0]->getName() + winner);
 		endGame();
@@ -581,6 +622,80 @@ generate:
 		endGame();
 	}
 }
+//	//to generate a random moves incase not an end game
+//generate:
+//	row = (int)(rand() / (RAND_MAX + 1.0) * 6);
+//	col = (int)(rand() / (RAND_MAX + 1.0) * (7));
+//	for (short i = 0; i < 6; i++)
+//	{
+//		for (short j = 0; j < 7; j++)
+//		{
+//
+//		}
+//	}
+//	if (cells[row][col]->GetLabel() == 'x' || cells[row][col]->GetLabel() == 'o') {
+//		goto generate;
+//	}
+//	//getting lowest cell in the col
+//	for (int col = 0; col < 7; col++) {
+//		int row = -1;
+//		for (int i = 0; i < 6; i++) {
+//			if (cells[i][col]->GetLabel() == "   ") {
+//				row = i;
+//				break;
+//			}
+//		}
+//		if (row != -1) {
+//			// Make a temporary move
+//			cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
+//			// Check if this move can win the game for the current player
+//			if (isWinner() != -1) {
+//				cells[row][col]->SetLabel("   ");
+//			}
+//			cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
+//		}
+//	}
+//
+//
+//	// If no winning move is found, loop again to find a blocking move
+//	for (int col = 0; col < 7; col++) {
+//		// Find the lowest empty row in this column
+//		int row = -1;
+//		for (int i = 0; i < 6; i++) {
+//			if (cells[i][col]->GetLabel() == "   ") {
+//				row = i;
+//				break;
+//			}
+//		}
+//		// If the column is not full
+//		if (row != -1) {
+//			// Make a temporary move
+//			cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
+//			// Check if this move can win the game for the other player
+//			cells[row][col]->SetLabel("   ");
+//		}
+//		cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
+//	}
+//			// Undo the temporary move
+//	cells[row][col]->SetLabel("   ");
+//		//taking turns
+//		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
+//		//ai process starts hena
+//		cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
+//		cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
+//		if (isWinner() == 1) {
+//			GameStatusAndScore->SetLabel(players[0]->getName() + winner);
+//			endGame();
+//		}
+//		else if (isWinner() == -1) {
+//			GameStatusAndScore->SetLabel(players[1]->getName() + winner);
+//			endGame();
+//		}
+//		if (isDraw()) {
+//			GameStatusAndScore->SetLabel("                                   Draw!");
+//			endGame();
+//		}
+//	}
 void ConnectFour::ultimateAI(int& row, int& col)
 {
 generate:
@@ -781,8 +896,10 @@ void ConnectFour::onCellClick(wxCommandEvent& event) {
 	}
 	Sleep(240);
 
+	if (players[1]->getName() == "Easy AI Player") {
+		ezAI(row, col);
+	}
 	if (players[1]->getName() == "Random Computer Player") {
-		players[1]->get_move(row, col);
 		ComputerPlay(row, col);
 	}
 	currentPlayerIndex = (currentPlayerIndex + 1) % 2;
@@ -1362,14 +1479,15 @@ PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& titl
 	playersSizer->Add( playerTowField, 0, wxBOTTOM|wxRIGHT|wxLEFT, 5 );
 	playersSizer->Add(0, 0, 0, wxEXPAND, 5);
 
-	aiBtn = new wxRadioButton( this, wxID_ANY, wxT("AI"), wxDefaultPosition, wxDefaultSize, 0 );
+	aiBtn = new wxRadioButton( this, 554, wxT("AI"), wxDefaultPosition, wxDefaultSize, 0 );
 	playersSizer->Add( aiBtn, 0, wxBOTTOM | wxRIGHT | wxLEFT | wxTOP, 5 );
 
-	computerBtn = new wxRadioButton( this, wxID_ANY, wxT("Computer"), wxDefaultPosition, wxDefaultSize, 0 );
+	computerBtn = new wxRadioButton( this, 568, wxT("Computer"), wxDefaultPosition, wxDefaultSize, 0 );
 	playersSizer->Add( computerBtn, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 	computerBtn->Bind(wxEVT_RIGHT_DOWN, &PlayersFrame::OnRadioRightClick, this);
 	computerBtn->Bind(wxEVT_LEFT_DOWN, &PlayersFrame::OnRadioLeftClick, this);
-
+	aiBtn->Bind(wxEVT_RIGHT_DOWN, &PlayersFrame::OnRadioRightClick, this);
+	aiBtn->Bind(wxEVT_LEFT_DOWN, &PlayersFrame::OnRadioLeftClick, this);
 	playersSizer->Add( 0, 0, 0, wxEXPAND, 5 );
 
 
@@ -1405,7 +1523,6 @@ PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& titl
 
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick));
-	aiBtn->Connect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(PlayersFrame::aiBtnOnRadioButton), NULL, this);
 	doneBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick), NULL, this);
 	cancelBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::cancelBtnOnButtonClick ), NULL, this );
 }
@@ -1414,17 +1531,32 @@ void PlayersFrame::OnRadioRightClick(wxMouseEvent& event)
 	playerTowField->Enable();
 	playerTowField->SetLabel("");
 	computerBtn->SetValue(0);
+	aiBtn->SetValue(0);
 
 }
 void PlayersFrame::OnRadioLeftClick(wxMouseEvent& event)
 {
+	wxRadioButton* button = wxDynamicCast(event.GetEventObject(), wxRadioButton);
 	clicks++;
 	if (clicks == 2) {
 		whoVSwho->SetLabel("Right Click To Discard");
 	}
-	playerTowField->Disable();
-	playerTowField->SetLabel("Computer");
-	computerBtn->SetValue(1);
+	if (button->GetLabel() == "AI") {
+		playerTowField->Disable();
+		playerTowField->SetLabel("Easy AI");
+		computerBtn->SetValue(0);
+		aiBtn->SetValue(1);
+		computerBtn->SetValue(0);
+
+	}
+	else {
+		playerTowField->Disable();
+		playerTowField->SetLabel("Computer");
+		computerBtn->SetValue(1);
+		aiBtn->SetValue(0);
+
+	}
+	event.Skip();
 }
 void PlayersFrame::doneBtnOnButtonClick(wxCommandEvent& event)
 {
@@ -1455,7 +1587,6 @@ PlayersFrame::~PlayersFrame()
 {
 	// Disconnect Events
 	
-	aiBtn->Disconnect( wxEVT_COMMAND_RADIOBUTTON_SELECTED, wxCommandEventHandler(PlayersFrame::aiBtnOnRadioButton ), NULL, this );
 	doneBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick ), NULL, this );
 	cancelBtn->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::cancelBtnOnButtonClick ), NULL, this );
 

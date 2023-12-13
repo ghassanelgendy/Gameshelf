@@ -67,6 +67,9 @@ class Player {
         string to_string();
         // Get symbol used by player
         char get_symbol();
+        //to get the board pointer for ai
+        virtual void get_board(Board* bPtr);
+
 };
 
 ///////////////////////////////////////////

@@ -42,3 +42,7 @@ string Player::to_string(){
 char Player::get_symbol() {
     return symbol;
 }
+
+void Player::get_board(Board* bPtr)
+{
+}
