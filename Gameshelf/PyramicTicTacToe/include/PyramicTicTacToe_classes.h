@@ -21,6 +21,8 @@ public:
      bool is_winner() override;
     bool is_draw() override;
     bool game_is_over() override;
+    char get_board_value(int& x, int& y);
+    void set_board_value(int& x, int& y, char mark);
 
 };
 
@@ -34,12 +36,10 @@ class PyramicTicTacToe_AIPlayer:public RandomPlayer {
 public:
    PyramicTicTacToe_AIPlayer(char symbol);
     void get_move(int& x, int& y) override;
-};
+    virtual void get_board(Board* bPtr);
 
-void static initPyramicTicTacToe() {
-    PyramicTicTacToe_Board();
-    PyramicTicTacToe_RandomPlayer('o');
-    PyramicTicTacToe_AIPlayer('o');
-}
+private:
+    PyramicTicTacToe_Board pyramic_board;
+};
 
 #endif //CS213_A3_PYRAMICTICTACTOE_CLASSES_H

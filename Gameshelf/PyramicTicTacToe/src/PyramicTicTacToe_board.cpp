@@ -77,8 +77,12 @@ bool PyramicTicTacToe_Board::game_is_over() {
     return n_moves >= 9;
 }
 
+char PyramicTicTacToe_Board::get_board_value(int& x, int& y) {
+	return board[x][y];
+}
 
-
-
+void PyramicTicTacToe_Board::set_board_value(int& x, int& y, char value) {
+	board[x][y] = value;
+}
 
 

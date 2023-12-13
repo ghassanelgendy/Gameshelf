@@ -88,8 +88,7 @@ void static initPyramicTicTacToe(char& choice) {
         if (comp_choice == 1)
             players[1] = new PyramicTicTacToe_RandomPlayer('o');
         else if (comp_choice == 2)
-            //players[1] = new PyramicTicTacToe_AIPlayer('o');
-            cout << "AI not implemented yet\n";
+            players[1] = new PyramicTicTacToe_AIPlayer('o');
         else
         {
             cout << "Please choose a valid option\n";
