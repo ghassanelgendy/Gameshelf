@@ -212,7 +212,7 @@ protected:
 	void Reset();
 	bool is_draw();
 	void rand_comp_move();
-
+	void	smart_comp_move();
 	void OnInstructions(wxCommandEvent& event);
 	void ResetButton(wxCommandEvent& event);
 

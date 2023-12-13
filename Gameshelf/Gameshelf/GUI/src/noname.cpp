@@ -933,9 +933,6 @@ PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& ti
 	wxMenuItem* Instructions;
 	Instructions = new wxMenuItem(Help, wxID_ANY, wxString(wxT("Instructions")) + wxT('\t') + wxT("ALT+I"), wxEmptyString, wxITEM_NORMAL);
 	Help->Append(Instructions);
-
-	
-
 	
 	MenuBar->Append(Help, wxT("Help"));
 
@@ -1041,7 +1038,7 @@ void PyramicTicTac::rand_comp_move()
 		randomIndex = rand() % 9;
 	}
 	board[randomIndex] = -1;
-	buttons[randomIndex]->SetLabel("O");
+	buttons[randomIndex]->SetLabel("o");
 
 	turn = -turn;
 
@@ -1074,6 +1071,52 @@ void PyramicTicTac::rand_comp_move()
 		return;
 	}
 }
+
+
+void PyramicTicTac::smart_comp_move()
+{
+	for (int i = 0; i < 9; i++)
+	{
+		if (board[i] == 0) 
+		{
+			board[i] = -1; 
+			if (is_winner(-1)) 
+			{
+				buttons[i]->SetLabel("o");
+				turn = -turn;
+				GameStatusAndScore->SetLabel(players[1]->getName() + winner);
+				for (int j = 0; j < 9; j++)
+				{
+					buttons[j]->Disable();
+				}
+				return;
+			}
+			board[i] = 0;
+		}
+	}
+
+	for (int i = 0; i < 9; i++)
+	{
+		if (board[i] == 0)
+		{
+			board[i] = 1; 
+			if (is_winner(1)) 
+			{
+				board[i] = -1; 
+				buttons[i]->SetLabel("o");
+				turn = -turn;
+				return;
+			}
+			board[i] = 0; 
+		}
+	}
+
+	rand_comp_move();
+}
+
+
+
+
 void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 {
 	// get the id of the button that was clicked
@@ -1090,13 +1133,13 @@ void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 	if (turn == 1)
 	{
 		board[index] = 1;
-		buttons[index]->SetLabel("X");
+		buttons[index]->SetLabel("x");
 	}
 	else                                                                                                              
 	{
 		
 			board[index] = -1;
-			buttons[index]->SetLabel("O");
+			buttons[index]->SetLabel("o");
 
 	}
 
@@ -1131,6 +1174,12 @@ void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 	if ((players[1]->getName()) == "Random Computer Player") {
 		Sleep(290);
 		rand_comp_move();
+		
+	}
+
+	if (players[1]->getName() == "Easy AI") {
+		Sleep(290);
+		smart_comp_move();
 		
 	}
 	
@@ -1579,6 +1628,7 @@ void PlayersFrame::doneBtnOnButtonClick(wxCommandEvent& event)
 
 		players[1] = new GUI_RandomPlayer('o', 3);
 	}
+
 	wallahyZhe2t = players[0]->getName() + " (X) " + " VS " + players[1]->getName() + " (O) ";
 	whoVSwho->SetLabel(wallahyZhe2t);
 	Destroy();
@@ -1628,3 +1678,4 @@ GUI_RandomPlayer::GUI_RandomPlayer(char symbol, int dimension) :GUI_Player(symbo
 void GUI_RandomPlayer::get_move(int& x, int& y)
 {
 }
+
