@@ -290,6 +290,32 @@ XO3x3::XO3x3(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoi
 
 	}
 }
+
+void XO3x3::rand_comp_move() {
+	if (isOver) {
+		return;
+	}
+	int randomRow = rand() % 3;
+	int randomCol = rand() % 3;
+
+	while (cells[randomRow][randomCol]->GetLabel() != "")
+	{
+		randomRow = rand() % 3;
+		randomCol = rand() % 3;
+	}
+	
+	cells[randomRow][randomCol]->SetLabel(players[1]->get_symbol());
+	cells[randomRow][randomCol]->SetFont(wxFont(27, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
+	cells[randomRow][randomCol]->SetForegroundColour(wxColour(0, 0, 0));
+
+
+	isWinner();
+	isDraw();
+
+
+}
+
+
 void XO3x3::onCellClick(wxCommandEvent& event) {
 	wxButton* cell = dynamic_cast<wxButton*>(event.GetEventObject());
 	wxString label = cell->GetLabel();
@@ -311,7 +337,13 @@ void XO3x3::onCellClick(wxCommandEvent& event) {
 
 		isWinner();
 
-		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
+		if ((players[1]->getName()) == "Random Computer Player") {
+			rand_comp_move();
+
+		}
+		else {
+			currentPlayerIndex = (currentPlayerIndex + 1) % 2;
+		}
 	}
 }
 void XO3x3::isWinner() {
