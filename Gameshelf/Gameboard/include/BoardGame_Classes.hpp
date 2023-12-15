@@ -88,7 +88,7 @@ class RandomPlayer: public Player {
 
 ///////////////////////////////////////////
 class GameManager {
-    private:
+    protected:
         Board* boardPtr;
         Player* players[2];
     public:

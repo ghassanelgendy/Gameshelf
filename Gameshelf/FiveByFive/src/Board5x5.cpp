@@ -3,6 +3,11 @@
 #include <iomanip>
 #include <algorithm>
 #include "../include/5x5Headerfiles.h"
+void Board5x5::getPlayers(Player* players[2])
+{
+    players5[0] = players[0];
+    players5[1] = players[1];
+}
 // Set the board
 Board5x5::Board5x5(){
     n_rows = n_cols = 25;         //elboard fady
@@ -40,29 +45,6 @@ void Board5x5::display_board() {
     }
     cout << endl;
 }
-
-// Returns true if there is any winner
-// either X or O
-// Written in a complex way. DO NOT DO LIKE THIS.
-//bool Board5x5::is_winner() {
-//    char row_win[3], col_win[3], diag_win[2];
-//    for (int i:{0,1,2}) {
-//        row_win[i] = board[i][0] & board[i][1] & board[i][2];
-//        col_win[i] = board[0][i] & board[1][i] & board[2][i];
-//    }
-//    diag_win[0] = board[0][0] & board[1][1] & board[2][2];
-//    diag_win[1] = board[2][0] & board[1][1] & board[0][2];
-//
-//    for (int i:{0,1,2}) {
-//        if ( (row_win[i] && (row_win[i] == board[i][0])) ||
-//             (col_win[i] && (col_win[i] == board[0][i])) )
-//        {return true;}
-//    }
-//    if ((diag_win[0] && diag_win[0] == board[1][1]) ||
-//        (diag_win[1] && diag_win[1] == board[1][1]))
-//    {return true;}
-//    return false;
-//}
 
 bool Board5x5::is_winner() {
     int xwins = 0;
@@ -127,10 +109,10 @@ bool Board5x5::is_winner() {
     // Check if either X or O has more three-in-a-rows after 24 moves
     if (n_moves == 24) {
         if (xwins > owins) {
-            cout << " Player X wins!" << endl;
+            cout << players5[0]->to_string()<<" wins!" << endl;
         }
         else if (owins > xwins) {
-            cout << "Player O wins!" << endl;
+            cout << players5[1]->to_string() << " wins!" << endl;
         }
         else {
             cout << "It's a draw!" << endl;
@@ -150,7 +132,6 @@ bool Board5x5::is_winner() {
 // Return true if 9 moves are done and no winner
 bool Board5x5::is_draw() {
     return false;
-    //return (n_moves == 24 && !is_winner());
 }
 
 bool Board5x5::game_is_over () {

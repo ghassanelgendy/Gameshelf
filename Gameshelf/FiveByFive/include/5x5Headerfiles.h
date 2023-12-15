@@ -8,7 +8,10 @@
 #include <algorithm>
 #include "../../Gameboard//include//BoardGame_Classes.hpp"
 class Board5x5:public Board{
+private:
+    Player* players5[2];
 public:
+    void getPlayers(Player* players[2]);
     Board5x5();
     bool update_board (int x, int y, char symbol) override ;
 // Returns true if there is any winner
@@ -45,7 +48,7 @@ public:
 //};
 
 
-class GameManager5x5 : public GameManager {
+class GameManager5x5 : public GameManager  {
 public:
     GameManager5x5( Board5x5* bPtr, Player* playerPtr[2]);
     void run() ;

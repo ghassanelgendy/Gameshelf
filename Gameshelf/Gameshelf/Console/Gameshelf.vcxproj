@@ -129,6 +129,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\ConnectFour\src\ConnectFourBoard.cpp" />
     <ClCompile Include="..\..\ConnectFour\src\ConnectRandomPlayer.cpp" />
+    <ClCompile Include="..\..\FiveByFive\src\Board5x5.cpp" />
+    <ClCompile Include="..\..\FiveByFive\src\GameManager5x5.cpp" />
+    <ClCompile Include="..\..\FiveByFive\src\RandomPlayer5x5.cpp" />
     <ClCompile Include="..\..\Gameboard\src\GameManager.cpp" />
     <ClCompile Include="..\..\Gameboard\src\Player.cpp" />
     <ClCompile Include="..\..\Gameboard\src\RandomPlayer.cpp" />
@@ -139,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ConnectFour\include\ConnectFour_Classes.hpp" />
+    <ClInclude Include="..\..\FiveByFive\include\5x5Headerfiles.h" />
     <ClInclude Include="..\..\Gameboard\include\BoardGame_Classes.hpp" />
     <ClInclude Include="..\..\PyramicTicTacToe\include\PyramicTicTacToe_classes.h" />
   </ItemGroup>

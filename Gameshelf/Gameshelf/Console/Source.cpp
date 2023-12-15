@@ -11,26 +11,27 @@
 #include "../../ConnectFour/include/ConnectFour_Classes.hpp"
 #include "../../PyramicTicTacToe/include/PyramicTicTacToe_classes.h"
 #include "../../Gameboard/include/BoardGame_Classes.hpp"
+#include "../../fiveByfive/include/5x5Headerfiles.h"
 
 
 using namespace std;
 
-void static init3x3_XO(char& choice){
-        Player* players[2];
-        players[0] = new Player(1, 'x');
+void static init3x3_XO(char& choice) {
+    Player* players[2];
+    players[0] = new Player(1, 'x');
 
-        cout << "Welcome to FCAI X-O Game. :)\n";
-        cout << "Press 1 if you want to play with computer: ";
-        cin >> choice;
-        if (choice != '1')
-            players[1] = new Player(2, 'o');
-        else
-            //  Player pointer points to child
-            players[1] = new RandomPlayer('o', 3);
-        GameManager x_o_game(new X_O_Board(), players);
-        x_o_game.run();
-    }
-void static initConnectFour(char &choice) {
+    cout << "Welcome to FCAI X-O Game. :)\n";
+    cout << "Press 1 if you want to play with computer: ";
+    cin >> choice;
+    if (choice != '1')
+        players[1] = new Player(2, 'o');
+    else
+        //  Player pointer points to child
+        players[1] = new RandomPlayer('o', 3);
+    GameManager x_o_game(new X_O_Board(), players);
+    x_o_game.run();
+}
+void static initConnectFour(char& choice) {
 startChoice:
     Player* players[2];
     players[0] = new Player(1, 'x');
@@ -72,7 +73,7 @@ startConnectFourLabel:
 void static initPyramicTicTacToe(char& choice) {
     Player* players[2];
     players[0] = new Player(1, 'x');
-    startChoice:
+startChoice:
     cout << "enter 1 for multi-player mode or enter 2 to play against a computer: ";
     cin >> choice;
     int comp_choice;
@@ -81,8 +82,8 @@ void static initPyramicTicTacToe(char& choice) {
         players[1] = new Player(2, 'o');
     }
     else if (choice == '2')
-    { 
-        compchoicestart:
+    {
+    compchoicestart:
         cout << "\nenter 1 to play against a dumb computer or enter 2 to play against an AI: ";
         cin >> comp_choice;
         if (comp_choice == 1)
@@ -94,7 +95,7 @@ void static initPyramicTicTacToe(char& choice) {
             cout << "Please choose a valid option\n";
             goto compchoicestart;
         }
-        
+
     }
     else
     {
@@ -102,8 +103,8 @@ void static initPyramicTicTacToe(char& choice) {
         goto startChoice;
 
     }
-    
-    startpyramicgame:
+
+startpyramicgame:
 
     Board* boardPtr = new PyramicTicTacToe_Board();
     system("cls");
@@ -114,15 +115,38 @@ void static initPyramicTicTacToe(char& choice) {
     char rematch;
     cin >> rematch;
     if (tolower(rematch) == 'y') {
-       goto startpyramicgame;
+        goto startpyramicgame;
     }
 }
+void static init5x5(char& choice) {
+    Player* players[2];
+    players[0] = new Player(1, 'x');
+startChoice:
+    cout << "Welcome to FCAI X-O Game. :)\n";
+    cout << "Press 1 if you want to play with computer: ";
+    cin >> choice;
+    if (choice != '1')
+        players[1] = new Player(2, 'o');
+    else {
+        players[1] = new RandomPlayer5x5('o');
+    }
+
+    Board5x5* elboard = new Board5x5;
+    GameManager5x5 Game(elboard, players);
+
+    elboard->getPlayers(players);
+    Game.run();
+    system("pause");
+
+
+
+}
 int main() {
-    chooseGameLabel:
+chooseGameLabel:
     char gameChoice;
     cout << "\n\t\t\t\t\t===[Welcome to FCAI Gameshelf]===\n\n";
     cout << "Please choose a game:\n" << "  1. 3x3 X/O\n  2. 5x5 X/O \n  3. Pyramic X/O\n  4. Connect Four\n";
-    cin>>gameChoice;
+    cin >> gameChoice;
     char choice;
     switch (gameChoice) {
     case('1'):
@@ -130,6 +154,7 @@ int main() {
         break;
 
     case('2'):
+        init5x5(choice);
         break;
 
     case('3'):
@@ -145,7 +170,7 @@ int main() {
     }
     cout << "Want to try another game? Y/N\n";
     cin >> choice;
-    if (tolower(choice )== 'y') {
+    if (tolower(choice) == 'y') {
         goto chooseGameLabel;
     }
     system("pause");

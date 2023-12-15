@@ -42,6 +42,15 @@
     <ClCompile Include="..\..\PyramicTicTacToe\src\PyramicTicTacToe_RandomPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\FiveByFive\src\Board5x5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FiveByFive\src\GameManager5x5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\FiveByFive\src\RandomPlayer5x5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Gameboard\include\BoardGame_Classes.hpp">
@@ -51,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\PyramicTicTacToe\include\PyramicTicTacToe_classes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\FiveByFive\include\5x5Headerfiles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
