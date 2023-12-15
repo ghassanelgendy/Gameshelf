@@ -16,8 +16,8 @@ PyramicTicTacToe_RandomPlayer::PyramicTicTacToe_RandomPlayer(char symbol):Random
 }
 
 void PyramicTicTacToe_RandomPlayer::get_move(int &x, int &y) {
-    x = (int) (rand() / (RAND_MAX + 1.0) * 3);
-    y = (int) (rand() / (RAND_MAX + 1.0) * 5);
+    x = rand() % 3;
+    y = rand() % 5;
 }
 
 PyramicTicTacToe_AIPlayer::PyramicTicTacToe_AIPlayer(char symbol):RandomPlayer(symbol, 3) {
@@ -29,10 +29,11 @@ void PyramicTicTacToe_AIPlayer::get_move( int& x, int& y) {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 2 * i + 1; j++) {
             if (pyramic_board.get_board_value(i, j) == 0) {
-                pyramic_board.set_board_value(i, j, symbol);
+                pyramic_board.set_board_value(i, j, 'O');
                 if (pyramic_board.is_winner()) {
                     x = i;
                     y = j;
+                    pyramic_board.set_board_value(i, j, 0);
                     return;
                 }
                 pyramic_board.set_board_value(i, j, 0);
@@ -41,7 +42,7 @@ void PyramicTicTacToe_AIPlayer::get_move( int& x, int& y) {
     }
 
 
-    char  opponent_symbol = 'x';
+    char  opponent_symbol = 'X';
 
     //law mesh hnksb yb2a wala howa hayksb
     for (int i = 0; i < 3; i++) {
@@ -51,16 +52,19 @@ void PyramicTicTacToe_AIPlayer::get_move( int& x, int& y) {
                 if (pyramic_board.is_winner()) {
                     x = i;
                     y = j;
-                    pyramic_board.set_board_value(i, j, symbol); 
+                    pyramic_board.set_board_value(i, j, 0);
                     return;
+               
                 }
                 pyramic_board.set_board_value(i, j, 0);
             }
         }
     }
 
-    x = (int)(rand() / (RAND_MAX + 1.0) * 3);
-    y = (int)(rand() / (RAND_MAX + 1.0) * 5);
+   
+        x = rand() % 3;
+        y = rand() % (2 * x + 1);
+        return;
 }
 
 void PyramicTicTacToe_AIPlayer::get_board(Board* bPtr)
