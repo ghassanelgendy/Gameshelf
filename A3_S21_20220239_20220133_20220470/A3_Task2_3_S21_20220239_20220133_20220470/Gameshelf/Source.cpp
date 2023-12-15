@@ -8,10 +8,10 @@
 // Version: 1.1
 
 #include <iostream>
-#include "../../ConnectFour/include/ConnectFour_Classes.hpp"
-#include "../../PyramicTicTacToe/include/PyramicTicTacToe_classes.h"
-#include "../../Gameboard/include/BoardGame_Classes.hpp"
-#include "../../fiveByfive/include/5x5Headerfiles.h"
+#include "../ConnectFour/include/ConnectFour_Classes.hpp"
+#include "../PyramicTicTacToe/include/PyramicTicTacToe_classes.h"
+#include "../Gameboard/include/BoardGame_Classes.hpp"
+#include "../fiveByfive/include/5x5Headerfiles.h"
 
 
 using namespace std;

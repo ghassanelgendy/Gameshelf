@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{2bd71afc-df2b-4f37-b5b4-759bbd26ab7c}</ProjectGuid>
+    <ProjectGuid>{f1e38a61-1186-4bd0-9f5f-36c143245646}</ProjectGuid>
     <RootNamespace>Gameshelf</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -127,25 +127,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ConnectFour\src\AiPlayer.cpp" />
-    <ClCompile Include="..\..\ConnectFour\src\ConnectFourBoard.cpp" />
-    <ClCompile Include="..\..\ConnectFour\src\ConnectRandomPlayer.cpp" />
-    <ClCompile Include="..\..\FiveByFive\src\Board5x5.cpp" />
-    <ClCompile Include="..\..\FiveByFive\src\GameManager5x5.cpp" />
-    <ClCompile Include="..\..\FiveByFive\src\RandomPlayer5x5.cpp" />
-    <ClCompile Include="..\..\Gameboard\src\GameManager.cpp" />
-    <ClCompile Include="..\..\Gameboard\src\Player.cpp" />
-    <ClCompile Include="..\..\Gameboard\src\RandomPlayer.cpp" />
-    <ClCompile Include="..\..\Gameboard\src\X_O_Board.cpp" />
-    <ClCompile Include="..\..\PyramicTicTacToe\src\PyramicTicTacToe_board.cpp" />
-    <ClCompile Include="..\..\PyramicTicTacToe\src\PyramicTicTacToe_RandomPlayer.cpp" />
+    <ClCompile Include="..\ConnectFour\src\AiPlayer.cpp" />
+    <ClCompile Include="..\ConnectFour\src\ConnectFourBoard.cpp" />
+    <ClCompile Include="..\ConnectFour\src\ConnectRandomPlayer.cpp" />
+    <ClCompile Include="..\FiveByFive\src\Board5x5.cpp" />
+    <ClCompile Include="..\FiveByFive\src\GameManager5x5.cpp" />
+    <ClCompile Include="..\FiveByFive\src\RandomPlayer5x5.cpp" />
+    <ClCompile Include="..\Gameboard\src\GameManager.cpp" />
+    <ClCompile Include="..\Gameboard\src\Player.cpp" />
+    <ClCompile Include="..\Gameboard\src\RandomPlayer.cpp" />
+    <ClCompile Include="..\Gameboard\src\X_O_Board.cpp" />
+    <ClCompile Include="..\PyramicTicTacToe\src\PyramicTicTacToe_board.cpp" />
+    <ClCompile Include="..\PyramicTicTacToe\src\PyramicTicTacToe_RandomPlayer.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ConnectFour\include\ConnectFour_Classes.hpp" />
-    <ClInclude Include="..\..\FiveByFive\include\5x5Headerfiles.h" />
-    <ClInclude Include="..\..\Gameboard\include\BoardGame_Classes.hpp" />
-    <ClInclude Include="..\..\PyramicTicTacToe\include\PyramicTicTacToe_classes.h" />
+    <ClInclude Include="..\ConnectFour\include\ConnectFour_Classes.hpp" />
+    <ClInclude Include="..\FiveByFive\include\5x5Headerfiles.h" />
+    <ClInclude Include="..\Gameboard\include\BoardGame_Classes.hpp" />
+    <ClInclude Include="..\PyramicTicTacToe\include\PyramicTicTacToe_classes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
