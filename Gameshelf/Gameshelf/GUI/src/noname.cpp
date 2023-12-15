@@ -290,7 +290,6 @@ XO3x3::XO3x3(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoi
 
 	}
 }
-
 void XO3x3::rand_comp_move() {
 	if (isOver) {
 		return;
@@ -314,8 +313,6 @@ void XO3x3::rand_comp_move() {
 
 
 }
-
-
 void XO3x3::onCellClick(wxCommandEvent& event) {
 	wxButton* cell = dynamic_cast<wxButton*>(event.GetEventObject());
 	wxString label = cell->GetLabel();
@@ -469,7 +466,6 @@ ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title,
 			cells[i][j]->SetBackgroundColour(wxColour(255, 255, 255));
 			cells[i][j]->SetLabel(' ' + to_string(j) + ' ');
 			cells[i][j]->SetFont(wxFont(27, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
-
 			boardContainer->Add(cells[i][j], 0, wxEXPAND, 5);
 			cells[i][j]->Bind(wxEVT_BUTTON, &ConnectFour::onCellClick, this);
 			cells[i][j]->SetForegroundColour(wxColour(195, 195, 195));
@@ -551,8 +547,8 @@ ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title,
 void ConnectFour::ComputerPlay(int &row, int &col)
 {
 generate:
-	row = (int)(rand() / (RAND_MAX + 1.0) * 6);
-	col = (int)(rand() / (RAND_MAX + 1.0) * (7));
+	row = (rand()% 6);
+	col = (rand()% 7);
 	if (cells[row][col]->GetLabel() == 'x' || cells[row][col]->GetLabel() == 'o') {
 		goto generate;
 	}
@@ -577,185 +573,21 @@ generate:
 		endGame();
 	}
 }
-void ConnectFour::ezAI(int& row, int& col)
+
+void ConnectFour::AIMove(int& row, int& col)
 {
-	bool valid = false; // A flag to indicate if the move is valid
-	while (!valid) { // Repeat until a valid move is found
-		// Generate a random row and column
-		row = (int)(rand() / (RAND_MAX + 1.0) * 6);
-		col = (int)(rand() / (RAND_MAX + 1.0) * (7));
-		// Check if the cell is empty
-		if (cells[row][col]->GetLabel() == ' ') {
-			valid = true; // Set the flag to true
-		}
-	}
-	int bestMove = -1; // A variable to store the best move
-	int bestScore = -1000; // A variable to store the best score
-	int checkRow = -1; // A variable to store the lowest empty row in the best column
-	// Loop through all the columns
-	for (int checkCol = 0; checkCol < 7; checkCol++) {
-		// Find the lowest empty row in this column
-		checkRow = -1;
-		for (int i = 0; i < 6; i++) {
-			if (cells[i][checkCol]->GetLabel() == "   ") {
-				checkRow = i;
-				break;
+	for (short i = 0; i < 6; i++)
+	{
+		for (short j = 0; j < 7; j++)
+		{
+			if (cells[i][j]->GetLabel() == cells[i][j + 1]->GetLabel() &&
+				cells[i][j]->GetLabel() == cells[i][j + 2]->GetLabel() && (cells[i][j]->GetLabel() == 'x')) {
+					cells[i][j + 3]->SetLabel(players[currentPlayerIndex]->get_symbol());
+				cells[i][j + 3]->SetForegroundColour(wxColour(0, 0, 0));
 			}
 		}
-		// If the column is not full
-		if (checkRow != -1) {
-			// Make a temporary move
-			cells[checkRow][checkCol]->SetLabel(players[currentPlayerIndex]->get_symbol());
-			// Check if this move can win the game for the current player
-			if (isWinner() != -1) {
-				// Undo the temporary move
-				cells[checkRow][checkCol]->SetLabel("   ");
-				// Set the best move and score
-				bestMove = checkCol;
-				bestScore = 1000;
-				// Break the loop
-				break;
-			}
-			// Check if this move can win the game for the other player
-			cells[checkRow][checkCol]->SetLabel(players[(currentPlayerIndex + 1) % 2]->get_symbol());
-			if (isWinner() != -1) {
-				// Undo the temporary move
-				cells[checkRow][checkCol]->SetLabel("   ");
-				// Set the best move and score
-				bestMove = checkCol;
-				bestScore = 500;
-			}
-			// Undo the temporary move
-			cells[checkRow][checkCol]->SetLabel("   ");
-		}
 	}
-	// If no best move is found, choose a random move
-	if (bestMove == -1) {
-		bestMove = rand() % 7;
-	}
-	// Set the row and col to the best move
-	row = checkRow;
-	col = bestMove;
-	// Make the move
-	cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
-	cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
-	// Check for the game status
-	// Update the game status and score
-	if (isWinner() == 1) {
-		GameStatusAndScore->SetLabel(players[0]->getName() + winner);
-		endGame();
-	}
-	else if (isWinner() == -1) {
-		GameStatusAndScore->SetLabel(players[1]->getName() + winner);
-		endGame();
-	}
-	if (isDraw()) {
-		GameStatusAndScore->SetLabel("                                   Draw!");
-		endGame();
-	}
-}
-//	//to generate a random moves incase not an end game
-//generate:
-//	row = (int)(rand() / (RAND_MAX + 1.0) * 6);
-//	col = (int)(rand() / (RAND_MAX + 1.0) * (7));
-//	for (short i = 0; i < 6; i++)
-//	{
-//		for (short j = 0; j < 7; j++)
-//		{
-//
-//		}
-//	}
-//	if (cells[row][col]->GetLabel() == 'x' || cells[row][col]->GetLabel() == 'o') {
-//		goto generate;
-//	}
-//	//getting lowest cell in the col
-//	for (int col = 0; col < 7; col++) {
-//		int row = -1;
-//		for (int i = 0; i < 6; i++) {
-//			if (cells[i][col]->GetLabel() == "   ") {
-//				row = i;
-//				break;
-//			}
-//		}
-//		if (row != -1) {
-//			// Make a temporary move
-//			cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
-//			// Check if this move can win the game for the current player
-//			if (isWinner() != -1) {
-//				cells[row][col]->SetLabel("   ");
-//			}
-//			cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
-//		}
-//	}
-//
-//
-//	// If no winning move is found, loop again to find a blocking move
-//	for (int col = 0; col < 7; col++) {
-//		// Find the lowest empty row in this column
-//		int row = -1;
-//		for (int i = 0; i < 6; i++) {
-//			if (cells[i][col]->GetLabel() == "   ") {
-//				row = i;
-//				break;
-//			}
-//		}
-//		// If the column is not full
-//		if (row != -1) {
-//			// Make a temporary move
-//			cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
-//			// Check if this move can win the game for the other player
-//			cells[row][col]->SetLabel("   ");
-//		}
-//		cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
-//	}
-//			// Undo the temporary move
-//	cells[row][col]->SetLabel("   ");
-//		//taking turns
-//		currentPlayerIndex = (currentPlayerIndex + 1) % 2;
-//		//ai process starts hena
-//		cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
-//		cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
-//		if (isWinner() == 1) {
-//			GameStatusAndScore->SetLabel(players[0]->getName() + winner);
-//			endGame();
-//		}
-//		else if (isWinner() == -1) {
-//			GameStatusAndScore->SetLabel(players[1]->getName() + winner);
-//			endGame();
-//		}
-//		if (isDraw()) {
-//			GameStatusAndScore->SetLabel("                                   Draw!");
-//			endGame();
-//		}
-//	}
-void ConnectFour::ultimateAI(int& row, int& col)
-{
-generate:
-	row = (int)(rand() / (RAND_MAX + 1.0) * 6);
-	col = (int)(rand() / (RAND_MAX + 1.0) * (7));
-	if (cells[row][col]->GetLabel() == 'x' || cells[row][col]->GetLabel() == 'o') {
-		goto generate;
-	}
-	for (int i = 0; i < 6; ++i) {
-		if (cells[i][col]->GetLabel().size() > 1) {
-			row = i;
-		}
-	}
-	currentPlayerIndex = (currentPlayerIndex + 1) % 2;
-	cells[row][col]->SetLabel(players[currentPlayerIndex]->get_symbol());
-	cells[row][col]->SetForegroundColour(wxColour(0, 0, 0));
-	if (isWinner() == 1) {
-		GameStatusAndScore->SetLabel(players[0]->getName() + winner);
-		endGame();
-	}
-	else if (isWinner() == -1) {
-		GameStatusAndScore->SetLabel(players[1]->getName() + winner);
-		endGame();
-	}
-	if (isDraw()) {
-		GameStatusAndScore->SetLabel("                                   Draw!");
-		endGame();
-	}
+	ComputerPlay(row, col);
 }
 int ConnectFour::isWinner()
 {
@@ -929,7 +761,7 @@ void ConnectFour::onCellClick(wxCommandEvent& event) {
 	Sleep(240);
 
 	if (players[1]->getName() == "Easy AI") {
-		ezAI(row, col);
+		ComputerPlay(row, col);
 	}
 	if (players[1]->getName() == "Random Computer Player") {
 		ComputerPlay(row, col);
@@ -1103,8 +935,6 @@ void PyramicTicTac::rand_comp_move()
 		return;
 	}
 }
-
-
 void PyramicTicTac::smart_comp_move()
 {
 	for (int i = 0; i < 9; i++)
@@ -1145,10 +975,6 @@ void PyramicTicTac::smart_comp_move()
 
 	rand_comp_move();
 }
-
-
-
-
 void PyramicTicTac::OnButtonClicked(wxCommandEvent& event)
 {
 	// get the id of the button that was clicked
@@ -1706,7 +1532,6 @@ GUI_RandomPlayer::GUI_RandomPlayer(char symbol, int dimension) :GUI_Player(symbo
 	this->dimension = dimension;
 	this->name = "Random Computer Player";
 }
-
 void GUI_RandomPlayer::get_move(int& x, int& y)
 {
 }

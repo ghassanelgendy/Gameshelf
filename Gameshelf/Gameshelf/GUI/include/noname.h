@@ -180,8 +180,7 @@ protected:
 	virtual void onCellClick(wxCommandEvent& event); 
 public:
 	void ComputerPlay(int &row, int &col);
-	void ezAI(int& row, int& col);
-	void ultimateAI(int& row, int& col);
+	void AIMove(int& row, int& col);
 	int isWinner();
 	bool isDraw();
 	void OnInstructions(wxCommandEvent& event);
