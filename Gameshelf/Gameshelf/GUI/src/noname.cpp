@@ -3,6 +3,7 @@
 // TA: Rana Abdelkader
 // GUI CLASSES
 #include "../include/noname.h"
+#include "../resource.h"
 ////////////////////////////////Globals//////////////////////////////////////
 GUI_Player* players[2];
 short clicks{ 0 };
@@ -22,8 +23,8 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 
 	wxGridSizer* SizerAwelLe3ba;
 	SizerAwelLe3ba = new wxGridSizer(2, 0, 0, 0);
+	SouretXO3x3 = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("THREE"), wxBITMAP_TYPE_RESOURCE), wxDefaultPosition, wxDefaultSize, 0);
 
-	SouretXO3x3 = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("./img/three.bmp"), wxBITMAP_TYPE_ANY), wxDefaultPosition, wxDefaultSize, 0);
 	SizerAwelLe3ba->Add(SouretXO3x3, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
 
 	XO3x3Btn = new wxButton(this, wxID_ANY, wxT("3x3 XO "), wxDefaultPosition, wxSize(70, 35), 0);
@@ -36,8 +37,7 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 
 	wxGridSizer* SizerTanyLe3ba;
 	SizerTanyLe3ba = new wxGridSizer(2, 0, 0, 0);
-
-	SouretXO5x5 = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("./img/five.bmp"), wxBITMAP_TYPE_ANY), wxDefaultPosition, wxDefaultSize, 0);
+	SouretXO5x5 = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("FIVE"), wxBITMAP_TYPE_RESOURCE), wxDefaultPosition, wxDefaultSize, 0);
 	SizerTanyLe3ba->Add(SouretXO5x5, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
 
 	XO5x5Btn = new wxButton(this, wxID_ANY, wxT("5x5 XO "), wxDefaultPosition, wxSize(70, 35), 0);
@@ -51,7 +51,7 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 	wxGridSizer* SizerTaletLe3ba;
 	SizerTaletLe3ba = new wxGridSizer(2, 0, 0, 0);
 
-	SouretConnectFour = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("./img/connectfour.bmp"), wxBITMAP_TYPE_ANY), wxDefaultPosition, wxDefaultSize, 0);
+	SouretConnectFour = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("CONNECTFOUR"), wxBITMAP_TYPE_RESOURCE), wxDefaultPosition, wxDefaultSize, 0);
 	SizerTaletLe3ba->Add(SouretConnectFour, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
 
 	ConnectFourBtn = new wxButton(this, wxID_ANY, wxT("Connect Four"), wxDefaultPosition, wxSize(90, 35), 0);
@@ -65,7 +65,8 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 	wxGridSizer* SizerRabe3Le3ba;
 	SizerRabe3Le3ba = new wxGridSizer(2, 0, 0, 0);
 
-	SouretXOPyramid = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("./img/pyramid.bmp"), wxBITMAP_TYPE_ANY), wxDefaultPosition, wxDefaultSize, 0);
+	SouretXOPyramid = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("PYRAMID"), wxBITMAP_TYPE_RESOURCE), wxDefaultPosition, wxDefaultSize, 0);
+
 	SizerRabe3Le3ba->Add(SouretXOPyramid, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 5);
 
 	PyramicXOBtn = new wxButton(this, wxID_ANY, wxT("Pyramic XO"), wxDefaultPosition, wxSize(90, 35), 0);
@@ -155,50 +156,35 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 }
 void MainFrame::CreateCredits() {
 	Credits* setupPlayersFrame = new Credits(this, wxID_ANY, wxT("Credits"));
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	setupPlayersFrame->SetIcon(icon);
 	setupPlayersFrame->Show(true);
 	setupPlayersFrame->Raise();
 }
-void MainFrame::iconSetter() {
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	this->SetIcon(icon);
-}
+
 void MainFrame::CreatePlayerModal() {
 	PlayersFrame* setupPlayersFrame = new PlayersFrame(this, wxID_ANY, wxT("Players Setup"));
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	setupPlayersFrame->SetIcon(icon);
 	setupPlayersFrame->Show(true);
 	setupPlayersFrame->Raise();
 }
 void MainFrame::Create3x3() {
 	XO3x3* xo3x3Frame = new XO3x3(this, wxID_ANY, wxT("3x3 Tic Tac Toe"));
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	xo3x3Frame->SetIcon(icon);
 	xo3x3Frame->Show(true);
 	xo3x3Frame->Raise();
 }
 void MainFrame::Create5x5()
 {
 	XO5x5* xo5x5Frame = new XO5x5(this, wxID_ANY, wxT("5x5 Tic Tac Toe"));
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	xo5x5Frame->SetIcon(icon);
 	xo5x5Frame->Show(true);
 	xo5x5Frame->Raise();
 }
 void MainFrame::CreateConnect4()
 {
 	ConnectFour* connect4Frame = new ConnectFour(this, wxID_ANY, wxT("Connect Four"));
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	connect4Frame->SetIcon(icon);
 	connect4Frame->Show(true);
 	connect4Frame->Raise();
 }
 void MainFrame::CreatePyramic()
 {
 	PyramicTicTac* PyramicFrame = new PyramicTicTac(this, wxID_ANY, wxT("Pyramic Tic Tac Toe"));
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	PyramicFrame->SetIcon(icon);
 	PyramicFrame->Show(true);
 	PyramicFrame->Raise();
 }
@@ -228,6 +214,8 @@ MainFrame::~MainFrame()
 ////////////////////////////////3x3's Methods//////////////////////////////////////
 XO3x3::XO3x3(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
+	wxIcon icon("ICONAYA", wxBITMAP_TYPE_ICO_RESOURCE);
+	this->SetIcon(icon);
 	moves =  0 ;
 	currentPlayerIndex = 0;
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
@@ -417,10 +405,6 @@ void XO3x3::isWinner() {
 	}
 	// No winner yet
 }
-void XO3x3::iconSetter() {
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	this->SetIcon(icon);
-}
 void XO3x3::OnInstructions(wxCommandEvent& event)
 {
 	// You can customize the instructions message here
@@ -449,6 +433,8 @@ XO3x3::~XO3x3()
 ////////////////////////////////ConnectFour's Methods//////////////////////////////////////
 ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
+	wxIcon icon("ICONAYA", wxBITMAP_TYPE_ICO_RESOURCE);
+	this->SetIcon(icon);
 	moves = 0;
 	currentPlayerIndex = 0;
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
@@ -787,6 +773,8 @@ ConnectFour::~ConnectFour()
 ////////////////////////////////Pyramic's Methods//////////////////////////////////////
 PyramicTicTac::PyramicTicTac(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX))
 {
+	wxIcon icon("ICONAYA", wxBITMAP_TYPE_ICO_RESOURCE);
+	this->SetIcon(icon);
 	this->SetSizeHints(350,425);
 	this->SetBackgroundColour(wxColour(1, 68, 33));
 
@@ -1097,6 +1085,8 @@ PyramicTicTac::~PyramicTicTac()
 ////////////////////////////////5x5's Methods//////////////////////////////////////
 XO5x5::XO5x5(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
+	wxIcon icon("ICONAYA", wxBITMAP_TYPE_ICO_RESOURCE);
+	this->SetIcon(icon);
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
 	this->SetBackgroundColour(wxColour(54, 180, 248));
 
@@ -1270,6 +1260,8 @@ XO5x5::~XO5x5()
 ////////////////////////////////Credits's Methods//////////////////////////////////////
 Credits::Credits(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
+	wxIcon icon("ICONAYA", wxBITMAP_TYPE_ICO_RESOURCE);
+	this->SetIcon(icon);
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
 	this->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 
@@ -1305,18 +1297,20 @@ Credits::Credits(wxWindow* parent, wxWindowID id, const wxString& title, const w
 
 	wxWrapSizer* sizerPics;
 	sizerPics = new wxWrapSizer(wxVERTICAL, wxWRAPSIZER_DEFAULT_FLAGS);
+	GhassanPic = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("GHASSAN"), wxBITMAP_TYPE_RESOURCE), wxDefaultPosition, wxDefaultSize, 0);
 
-	GhassanPic = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("./img/ghassan.bmp"), wxBITMAP_TYPE_ANY), wxDefaultPosition, wxDefaultSize, 0);
 	GhassanPic->SetMaxSize(wxSize(200, 200));
 
-	sizerPics->Add(GhassanPic, 0, wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_CENTER_HORIZONTAL, 5);
 
-	RowanPic = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("./img/rawan.bmp"), wxBITMAP_TYPE_ANY), wxDefaultPosition, wxDefaultSize, 0);
+	sizerPics->Add(GhassanPic, 0, wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_CENTER_HORIZONTAL, 5);
+	RowanPic = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("RUE"), wxBITMAP_TYPE_RESOURCE), wxDefaultPosition, wxDefaultSize, 0);
+
 	RowanPic->SetMaxSize(wxSize(200, 200));
 
 	sizerPics->Add(RowanPic, 0, wxALL | wxALIGN_CENTER_VERTICAL | wxALIGN_CENTER_HORIZONTAL, 5);
 
-	JanaPic = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("./img/jana.bmp"), wxBITMAP_TYPE_ANY), wxDefaultPosition, wxDefaultSize, 0);
+	JanaPic = new wxStaticBitmap(this, wxID_ANY, wxBitmap(wxT("JANA"), wxBITMAP_TYPE_RESOURCE), wxDefaultPosition, wxDefaultSize, 0);
+
 	JanaPic->SetMaxSize(wxSize(200, 200));
 
 	sizerPics->Add(JanaPic, 0, wxALL | wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL, 5);
@@ -1341,11 +1335,6 @@ Credits::Credits(wxWindow* parent, wxWindowID id, const wxString& title, const w
 	RowanPic->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(Credits::openLinkRowan), NULL, this);
 	JanaPic->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(Credits::openLinkJana), NULL, this);
 }
-void Credits::iconSetter()
-{
-	wxIcon icon("./icon.ico", wxBITMAP_TYPE_ICO);
-	this->SetIcon(icon);
-}
 Credits::~Credits()
 {
 	// Disconnect Events
@@ -1357,6 +1346,7 @@ Credits::~Credits()
 ////////////////////////////////PlayersFrame's Methods//////////////////////////////////////
 PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxDialog(parent, id, title, pos, size, style)
 {
+
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	wxGridSizer* playersSizer;
@@ -1425,9 +1415,9 @@ PlayersFrame::PlayersFrame(wxWindow* parent, wxWindowID id, const wxString& titl
 
 	this->SetSizer( playersSizer );
 	this->Layout();
-
+	wxIcon icon("ICONAYA", wxBITMAP_TYPE_ICO_RESOURCE);
+	this->SetIcon(icon);
 	this->Centre( wxBOTH );
-
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick));
 	doneBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(PlayersFrame::doneBtnOnButtonClick), NULL, this);

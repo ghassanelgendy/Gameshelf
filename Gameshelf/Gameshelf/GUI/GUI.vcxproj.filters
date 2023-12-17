@@ -38,10 +38,10 @@
     <ClInclude Include="include\noname.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="..\..\Gameboard\include\BoardGame_Classes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Gameboard\include\BoardGame_Classes.hpp">
+    <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -52,6 +52,36 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\ghassan.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\connectfour.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\five.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\jana.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\pyramid.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\rawan.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\three.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\icon2.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\janamm.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="img\rue.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
