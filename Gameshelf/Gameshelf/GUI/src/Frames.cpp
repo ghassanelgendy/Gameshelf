@@ -2,7 +2,7 @@
 // Section: S21
 // TA: Rana Abdelkader
 // GUI CLASSES
-#include "../include/noname.h"
+#include "../include/Frames.h"
 #include "../resource.h"
 ////////////////////////////////Globals//////////////////////////////////////
 GUI_Player* players[2];

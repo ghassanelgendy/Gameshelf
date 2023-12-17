@@ -1,4 +1,4 @@
-#include "../include/noname.h"
+#include "../include/Frames.h"
 #include <wx/wx.h>
 
 class GameApp : public wxApp {

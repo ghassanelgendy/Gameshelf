@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\noname.cpp">
+    <ClCompile Include="src\Frames.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Game_App.cpp">
@@ -35,7 +35,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\noname.h">
+    <ClInclude Include="include\Frames.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Gameboard\include\BoardGame_Classes.hpp">
@@ -51,9 +51,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="icon.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="img\ghassan.bmp">
       <Filter>Resource Files</Filter>
     </Image>
@@ -73,9 +70,6 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="img\three.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="img\icon2.ico">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="img\janamm.bmp">

@@ -142,22 +142,20 @@
     <ClCompile Include="..\..\Gameboard\src\RandomPlayer.cpp" />
     <ClCompile Include="..\..\Gameboard\src\X_O_Board.cpp" />
     <ClCompile Include="src\Game_App.cpp" />
-    <ClCompile Include="src\noname.cpp" />
+    <ClCompile Include="src\Frames.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Gameboard\include\BoardGame_Classes.hpp" />
-    <ClInclude Include="include\noname.h" />
+    <ClInclude Include="include\Frames.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GUI.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="icon.ico" />
     <Image Include="img\connectfour.bmp" />
     <Image Include="img\five.bmp" />
     <Image Include="img\ghassan.bmp" />
-    <Image Include="img\icon2.ico" />
     <Image Include="img\jana.bmp" />
     <Image Include="img\janamm.bmp" />
     <Image Include="img\pyramid.bmp" />
