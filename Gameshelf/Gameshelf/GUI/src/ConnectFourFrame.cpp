@@ -16,7 +16,11 @@ ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title,
 	moves = 0;
 	currentPlayerIndex = 0;
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
-	this->SetBackgroundColour(wxColour(199, 5, 54));
+	//randomize background color 
+	short r = rand() % 150;
+	short g = rand() % 180;
+	short b = rand() % 185;
+	this->SetBackgroundColour(wxColour(r, g, b));
 
 	wxGridSizer* boardContainer;
 	boardContainer = new wxGridSizer(7, 7, 0, 0);
@@ -62,7 +66,7 @@ ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title,
 	GameStatusAndScore->Wrap(-1);
 	GameStatusAndScore->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
 	GameStatusAndScore->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNHIGHLIGHT));
-	GameStatusAndScore->SetBackgroundColour(wxColour(199, 5, 54));
+	GameStatusAndScore->SetBackgroundColour(wxColour(r, g, b));
 
 	ResetSizer->Add(GameStatusAndScore, 0, wxALL | wxALIGN_CENTER_HORIZONTAL | wxALIGN_BOTTOM, 5);
 
