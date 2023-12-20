@@ -104,6 +104,28 @@ ConnectFour::ConnectFour(wxWindow* parent, wxWindowID id, const wxString& title,
 	this->SetFocus();
 
 }
+void ConnectFour::reset()
+{
+	for (short i = 0; i < 6; i++)
+	{
+		for (short j = 0; j < 7; j++)
+		{
+			cells[i][j]->Enable();
+			cells[i][j]->SetLabel(' ' + to_string(j) + ' ');
+			if (i != 0 && j < 8) {
+				cells[i][j]->SetForegroundColour(wxColour(255, 255, 255));
+			}
+			else {
+				cells[i][j]->SetForegroundColour(wxColour(195, 195, 195));
+
+			}
+		}
+	}
+	isOver = 0;
+	currentPlayerIndex = 0;
+	GameStatusAndScore->SetLabel(wallahyZhe2t);
+	this->SetFocus();
+}
 void ConnectFour::ComputerPlay(int &row, int &col)
 {
 generate:
@@ -257,25 +279,7 @@ void ConnectFour::OnInstructions(wxCommandEvent& event)
 }
 void ConnectFour::OnResetBtn(wxCommandEvent& event)
 {
-	for (short i = 0; i < 6; i++)
-	{
-		for (short j = 0; j < 7; j++)
-		{
-			cells[i][j]->Enable();
-			cells[i][j]->SetLabel(' ' + to_string(j) + ' ');
-			if (i != 0 && j < 8) {
-				cells[i][j]->SetForegroundColour(wxColour(255, 255, 255));
-			}
-			else {
-				cells[i][j]->SetForegroundColour(wxColour(195, 195, 195));
-
-			}
-		}
-	}
-		isOver = 0;
-		currentPlayerIndex = 0;
-		GameStatusAndScore->SetLabel(wallahyZhe2t);
-		this->SetFocus();
+	reset();
 }
 void ConnectFour::endGame()
 {
@@ -288,7 +292,7 @@ void ConnectFour::endGame()
 			}
 		}
 	}
-	GameStatusAndScore->SetLabel(GameStatusAndScore->GetLabel() + " - Press Reset To Rematch");
+	GameStatusAndScore->SetLabel(GameStatusAndScore->GetLabel() + " - Reset or \"R\" to rematch");
 	isOver = true;
 }
 void ConnectFour::onCellClick(wxCommandEvent& event) {
@@ -342,6 +346,9 @@ void ConnectFour::OnCharEvent(wxKeyEvent& event) {
 		row = 0;
 		col = (keycode-'0');
 		click();
+	}
+	if (tolower(keycode)== 'r') {
+		reset();
 	}
 
 	event.Skip(); // Allow default processing for other keys

@@ -93,9 +93,4 @@
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Font Include="F:\Graphic Design\Materials\Fonts\Hacen-Egypt.ttf">
-      <Filter>Resource Files</Filter>
-    </Font>
-  </ItemGroup>
 </Project>

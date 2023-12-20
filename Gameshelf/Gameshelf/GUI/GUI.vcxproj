@@ -169,9 +169,6 @@
   <ItemGroup>
     <None Include="E:\Clean Ups\Downloads Trash\dim_v4_technoblue_by_biueguy\DIM v4 - TechnoBlue\DIM v4 [TB] Bonus Cursors\Statics\[TB] Link v4.cur" />
   </ItemGroup>
-  <ItemGroup>
-    <Font Include="F:\Graphic Design\Materials\Fonts\Hacen-Egypt.ttf" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

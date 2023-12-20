@@ -57,6 +57,7 @@ protected:
 	void OnCharEvent(wxKeyEvent& event);
 
 public:
+	void reset();
 	void ComputerPlay(int &row, int &col);
 	void AIMove(int& row, int& col);
 	int isWinner();
