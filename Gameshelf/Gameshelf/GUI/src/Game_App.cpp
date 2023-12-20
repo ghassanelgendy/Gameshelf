@@ -14,6 +14,7 @@ public:
         return true;
     }
     int OnExit() override {
+
         GameApp().GetTopWindow()->Close();
         return wxApp::OnExit();
     }

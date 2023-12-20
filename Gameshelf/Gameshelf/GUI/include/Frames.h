@@ -6,6 +6,8 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include <wx/font.h> // Include header for wxFont
+#include <wx/stream.h> 
 #include <wx/wx.h>
 #include <wx/timer.h>
 #include <wx/artprov.h>
@@ -118,6 +120,16 @@ protected:
 			}
 		}
 	}
+	virtual void openBug(wxCommandEvent& e) {
+		int answer = wxMessageBox("You are going to be redirected to a google form", "Redirect Confirmation", wxYES_NO | wxICON_QUESTION, this);
+
+		if (answer == wxYES) {
+			wxString url = "https://forms.gle/VqFiaYeqEcHakuci9";
+			if (!wxLaunchDefaultBrowser(url)) {
+				wxMessageBox("Failed to open the browser.", "Error", wxOK | wxICON_ERROR, this);
+			}
+		}
+	}
 	virtual void launchCreditsFrame(wxCommandEvent& event) { CreateCredits(); }
 	virtual void CreditsOnUpdateUI(wxUpdateUIEvent& event) { event.Skip(); }
 
@@ -145,59 +157,22 @@ protected:
 
 	// Virtual event handlers, override them in your derived class
 	virtual void onCellClick(wxCommandEvent& event); 
-
-
 public:
 	bool isDraw();
 	void isWinner();
-	void iconSetter();
 	void OnInstructions(wxCommandEvent& event);
 	void rand_comp_move();
-	void smart_comp_move();
-
 	XO3x3(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("3x3 Tic Tac Toe"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(456, 600), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
-
 	~XO3x3();
-
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class ConnectFour
-///////////////////////////////////////////////////////////////////////////////
-class ConnectFour : public wxFrame
-{
-private:
-	short moves;
-protected:
-	wxButton* cells[7][7];
-	wxButton* ResetBtn;
-	wxStaticText* GameStatusAndScore;
-	wxMenuBar* MenuBar;
-	wxMenu* Help;
-	bool isOver;
-
-	// Virtual event handlers, override them in your derived class
-	virtual void onCellClick(wxCommandEvent& event); 
-public:
-	void ComputerPlay(int &row, int &col);
-	void AIMove(int& row, int& col);
-	int isWinner();
-	bool isDraw();
-	void OnInstructions(wxCommandEvent& event);
-	void OnResetBtn(wxCommandEvent& event);
-	void endGame();
-	ConnectFour(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Connect Four"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(710, 700), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
-	~ConnectFour();
-
-};
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class PyramicTicTac
 ///////////////////////////////////////////////////////////////////////////////
 class PyramicTicTac : public wxFrame
 {
-private:
-
 protected:
 	wxMenuBar* MenuBar;
 	wxMenu* Games;
@@ -213,15 +188,11 @@ protected:
 	void Reset();
 	bool is_draw();
 	void rand_comp_move();
-	void	smart_comp_move();
+	void smart_comp_move();
 	void OnInstructions(wxCommandEvent& event);
 	void ResetButton(wxCommandEvent& event);
 
-	virtual void CreditsOnUpdateUI(wxUpdateUIEvent& event) { event.Skip(); }
-
-
 public:
-
 	PyramicTicTac(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Pyramic Tic Tac Toe"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(600, 400), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
 	void OnButtonClicked(wxCommandEvent& event);
 	~PyramicTicTac();
@@ -233,8 +204,6 @@ public:
 ///////////////////////////////////////////////////////////////////////////////
 class XO5x5 : public wxFrame
 {
-private:
-
 protected:
 	wxToggleButton* CellNo25;
 	wxToggleButton* CellNo24;
@@ -267,12 +236,8 @@ protected:
 
 	// Virtual event handlers, override them in your derived class
 	virtual void onCellClick(wxCommandEvent& event) { event.Skip(); }
-
-
 public:
-
 	XO5x5(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("5x5 Tic Tac Toe"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(500, 600), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
-
 	~XO5x5();
 
 };
@@ -300,13 +265,8 @@ protected:
 
 
 public:
-
-	void iconSetter();
-
 	Credits(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Credits"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(634, 322), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
-
 	~Credits();
-
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -314,8 +274,6 @@ public:
 ///////////////////////////////////////////////////////////////////////////////
 class PlayersFrame : public wxDialog
 {
-private:
-
 protected:
 	wxStaticText* playerOneStatic;
 	wxTextCtrl* playerOneField;
@@ -331,7 +289,7 @@ protected:
 	virtual void aiBtnOnRadioButton(wxCommandEvent& event) { event.Skip(); }
 	virtual void doneBtnOnButtonClick(wxCommandEvent& event);
 	virtual void OnRadioRightClick(wxMouseEvent& event);
-	virtual void cancelBtnOnButtonClick(wxCommandEvent& event) { Destroy(); }
+	virtual void cancelBtnOnButtonClick(wxCommandEvent& event) { if (playerOneField->GetValue() == "" || playerTowField->GetValue() == "") { doneBtnOnButtonClick(event); } }
 	virtual void OnRadioLeftClick(wxMouseEvent& event);
 public:
 
@@ -340,3 +298,10 @@ public:
 
 };
 
+////////////////////////////////Globals//////////////////////////////////////
+extern GUI_Player* players[2];
+extern short clicks;
+extern Player* Players_3ady[2];
+extern short currentPlayerIndex;
+extern string winner;
+extern string wallahyZhe2t;
