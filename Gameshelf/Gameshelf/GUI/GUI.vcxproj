@@ -141,11 +141,13 @@
     <ClCompile Include="..\..\Gameboard\src\Player.cpp" />
     <ClCompile Include="..\..\Gameboard\src\RandomPlayer.cpp" />
     <ClCompile Include="..\..\Gameboard\src\X_O_Board.cpp" />
+    <ClCompile Include="src\ConnectFourFrame.cpp" />
     <ClCompile Include="src\Game_App.cpp" />
     <ClCompile Include="src\Frames.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Gameboard\include\BoardGame_Classes.hpp" />
+    <ClInclude Include="include\ConnectFourFrame.h" />
     <ClInclude Include="include\Frames.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -156,12 +158,19 @@
     <Image Include="img\connectfour.bmp" />
     <Image Include="img\five.bmp" />
     <Image Include="img\ghassan.bmp" />
+    <Image Include="img\icon.ico" />
     <Image Include="img\jana.bmp" />
     <Image Include="img\janamm.bmp" />
     <Image Include="img\pyramid.bmp" />
     <Image Include="img\rawan.bmp" />
     <Image Include="img\rue.bmp" />
     <Image Include="img\three.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="E:\Clean Ups\Downloads Trash\dim_v4_technoblue_by_biueguy\DIM v4 - TechnoBlue\DIM v4 [TB] Bonus Cursors\Statics\[TB] Link v4.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="F:\Graphic Design\Materials\Fonts\Hacen-Egypt.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
