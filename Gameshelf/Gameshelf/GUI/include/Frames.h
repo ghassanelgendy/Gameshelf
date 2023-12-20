@@ -204,43 +204,29 @@ public:
 ///////////////////////////////////////////////////////////////////////////////
 class XO5x5 : public wxFrame
 {
+private:
+
 protected:
-	wxToggleButton* CellNo25;
-	wxToggleButton* CellNo24;
-	wxToggleButton* CellNo23;
-	wxToggleButton* CellNo22;
-	wxToggleButton* CellNo20;
-	wxToggleButton* CellNo21;
-	wxToggleButton* CellNo19;
-	wxToggleButton* CellNo18;
-	wxToggleButton* CellNo16;
-	wxToggleButton* CellNo17;
-	wxToggleButton* CellNo15;
-	wxToggleButton* CellNo14;
-	wxToggleButton* CellNo13;
-	wxToggleButton* CellNo12;
-	wxToggleButton* CellNo11;
-	wxToggleButton* CellNo10;
-	wxToggleButton* CellNo9;
-	wxToggleButton* CellNo7;
-	wxToggleButton* CellNo8;
-	wxToggleButton* CellNo5;
-	wxToggleButton* CellNo6;
-	wxToggleButton* CellNo3;
-	wxToggleButton* CellNo4;
-	wxToggleButton* CellNo2;
-	wxToggleButton* CellNo1;
+	wxButton* cells[5][5];
 	wxStaticText* GameStatusAndScore;
+	int currentPlayerIndex;
 	wxMenuBar* MenuBar;
 	wxMenu* Help;
+	int turn;
+	wxButton* ResetBtn;
 
-	// Virtual event handlers, override them in your derived class
-	virtual void onCellClick(wxCommandEvent& event) { event.Skip(); }
 public:
+	int moves;
+	bool is_draw();
+	void rand_comp_move();
+	void isWinner();
+	void onCellClick(wxCommandEvent& event);
 	XO5x5(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("5x5 Tic Tac Toe"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(500, 600), long style = wxDEFAULT_FRAME_STYLE | wxTAB_TRAVERSAL);
 	~XO5x5();
-
+	void OnInstructions(wxCommandEvent& event);
+	void OnResetBtn(wxCommandEvent& event);
 };
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class Credits

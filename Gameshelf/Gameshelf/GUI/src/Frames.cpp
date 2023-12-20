@@ -753,159 +753,63 @@ PyramicTicTac::~PyramicTicTac()
 ////////////////////////////////5x5's Methods//////////////////////////////////////
 XO5x5::XO5x5(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
 {
-	SetCursor(wxCursor(wxT("MOUSE"), wxBITMAP_TYPE_CUR_RESOURCE));
-
 	wxIcon icon("ICONAYA", wxBITMAP_TYPE_ICO_RESOURCE);
 	this->SetIcon(icon);
+	moves = 0;
+	currentPlayerIndex = 0;
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
-	this->SetBackgroundColour(wxColour(54, 180, 248));
+	this->SetBackgroundColour(wxColour(0, 71, 171));
 
 	wxGridSizer* boardContainer;
-	boardContainer = new wxGridSizer(6, 5, 0, 0);
+	boardContainer = new wxGridSizer(6, 5, 6, 5); // 6 rows and 5 cols 
+	short rr{ 989 };
+	for (short i = 0; i < 5; i++) // iterate from 0 to 4
+	{
+		for (short j = 0; j < 5; j++) // iterate from 0 to 4
+		{
 
-	CellNo25 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo25->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo25, 0, wxEXPAND, 5);
-
-	CellNo24 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo24->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo24, 0, wxEXPAND, 5);
-
-	CellNo23 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo23->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo23, 0, wxEXPAND, 5);
-
-	CellNo22 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo22->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo22, 0, wxEXPAND, 5);
-
-	CellNo20 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo20->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo20, 0, wxEXPAND, 5);
-
-	CellNo21 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo21->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo21, 0, wxEXPAND, 5);
-
-	CellNo19 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo19->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo19, 0, wxEXPAND, 5);
-
-	CellNo18 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo18->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo18, 0, wxEXPAND, 5);
-
-	CellNo16 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo16->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo16, 0, wxEXPAND, 5);
-
-	CellNo17 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo17->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo17, 0, wxEXPAND, 5);
-
-	CellNo15 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo15->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo15, 0, wxEXPAND, 5);
-
-	CellNo14 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo14->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo14, 0, wxEXPAND, 5);
-
-	CellNo13 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo13->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo13, 0, wxEXPAND, 5);
-
-	CellNo12 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo12->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo12, 0, wxEXPAND, 5);
-
-	CellNo11 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo11->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo11, 0, wxEXPAND, 5);
-
-	CellNo10 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo10->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo10, 0, wxEXPAND, 5);
-
-	CellNo9 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo9->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo9, 0, wxEXPAND, 5);
-
-	CellNo7 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo7->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo7, 0, wxEXPAND, 5);
-
-	CellNo8 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo8->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo8, 0, wxEXPAND, 5);
-
-	CellNo5 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo5->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo5, 0, wxEXPAND, 5);
-
-	CellNo6 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo6->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo6, 0, wxEXPAND, 5);
-
-	CellNo3 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo3->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo3, 0, wxEXPAND, 5);
-
-	CellNo4 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo4->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo4, 0, wxEXPAND, 5);
-
-	CellNo2 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo2->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo2, 0, wxEXPAND, 5);
-
-	CellNo1 = new wxToggleButton(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	CellNo1->SetBackgroundColour(wxColour(255, 255, 255));
-
-	boardContainer->Add(CellNo1, 0, wxEXPAND, 5);
-
+			cells[i][j] = new wxButton(this, rr, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+			cells[i][j]->SetBackgroundColour(wxColour(255, 255, 255));
+			cells[i][j]->SetFont(wxFont(18, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt"))); // change the font size
+			cells[i][j]->SetMinSize(wxSize(50, 50)); // set the minimum size
+			cells[i][j]->SetMaxSize(wxSize(50, 50)); // set the maximum size
+			cells[i][j]->SetWindowStyleFlag(wxNO_BORDER); // remove the border
+			boardContainer->Add(cells[i][j], 0, wxEXPAND, 5);
+			cells[i][j]->Bind(wxEVT_BUTTON, &XO5x5::onCellClick, this);
+			cells[i][j]->SetForegroundColour(wxColour(0, 0, 0));
+			rr++;
+		}
+	}
+	wxFlexGridSizer* ResetSizer;
+	ResetSizer = new wxFlexGridSizer(2, 1, 0, 0);
+	ResetSizer->SetFlexibleDirection(wxBOTH);
+	ResetSizer->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 
 	boardContainer->Add(0, 0, 1, wxEXPAND, 5);
-
-
 	boardContainer->Add(0, 0, 1, wxEXPAND, 5);
 
-	GameStatusAndScore = new wxStaticText(this, wxID_ANY, wallahyZhe2t, wxDefaultPosition, wxDefaultSize, 0);
-	GameStatusAndScore->Wrap(-1);
-	GameStatusAndScore->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Aharoni")));
-	GameStatusAndScore->SetForegroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BACKGROUND));
-	GameStatusAndScore->SetBackgroundColour(wxColour(50, 180, 248));
+	ResetBtn = new wxButton(this, wxID_ANY, wxT("Reset"), wxDefaultPosition, wxDefaultSize, 0);
+	ResetBtn->SetBackgroundColour(wxColour(255, 255, 255));
 
-	boardContainer->Add(GameStatusAndScore, 0, wxALIGN_CENTER_HORIZONTAL | wxALL | wxALIGN_CENTER_VERTICAL, 5);
+	ResetSizer->Add(ResetBtn, 0, wxALL | wxALIGN_BOTTOM | wxEXPAND, 5);
 
+	boardContainer->Add(ResetSizer, 1, wxEXPAND, 10);
 
-	this->SetSizer(boardContainer);
 	this->Layout();
+	this->Centre(wxBOTH);
+
+	// Connect Events
+	for (short i = 0; i < 5; i++)
+	{
+		for (short j = 0; j < 5; j++)
+		{
+			cells[i][j]->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(XO5x5::onCellClick), NULL, this);
+		}
+
+	}
+
 	MenuBar = new wxMenuBar(0);
+
 	Help = new wxMenu();
 	wxMenuItem* Instructions;
 	Instructions = new wxMenuItem(Help, wxID_ANY, wxString(wxT("Instructions")) + wxT('\t') + wxT("ALT+I"), wxEmptyString, wxITEM_NORMAL);
@@ -915,17 +819,197 @@ XO5x5::XO5x5(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoi
 
 	this->SetMenuBar(MenuBar);
 
+	wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
+	mainSizer->Add(boardContainer, 1, wxEXPAND | wxALL, 2);
 
-	this->Centre(wxBOTH);
+	GameStatusAndScore = new wxStaticText(this, wxID_ANY, wallahyZhe2t, wxDefaultPosition, wxDefaultSize, 0);
+	GameStatusAndScore->Wrap(-1);
+	GameStatusAndScore->SetFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Hacen Egypt")));
+	GameStatusAndScore->SetForegroundColour(wxColour(255, 255, 255));
+	GameStatusAndScore->SetBackgroundColour(wxColour(0, 71, 171));
+	mainSizer->Add(GameStatusAndScore, 0, wxALIGN_CENTER | wxALL, 5);
+	this->SetSizer(mainSizer);
 
-	// Connect Events
-	CellNo1->Connect(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler(XO5x5::onCellClick), NULL, this);
+	ResetBtn->Bind(wxEVT_BUTTON, &XO5x5::OnResetBtn, this);
+	Help->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(XO5x5::OnInstructions), this, Instructions->GetId());
+
 }
 XO5x5::~XO5x5()
 {
 	// Disconnect Events
-	CellNo1->Disconnect(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler(XO5x5::onCellClick), NULL, this);
+	for (short i = 0; i < 5; i++)
+	{
+		for (short j = 0; j < 5; j++)
+		{
+			cells[i][j]->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(XO5x5::onCellClick), NULL, this);
+		}
+	}
+}
+void XO5x5::onCellClick(wxCommandEvent& event) {
+	// Get the button that was clicked
+	wxButton* btn = (wxButton*)event.GetEventObject();
 
+	// beygeeb el indices of the button
+	int row = (btn->GetId() - 989) / 5;
+	int col = (btn->GetId() - 989) % 5;
+
+	// Check if the cell is empty
+	if (btn->GetLabel().IsEmpty()) {
+		if (turn == 0) {
+			btn->SetLabel("x");
+		}
+		else {
+			btn->SetLabel("o");
+		}
+
+		// Increment moves
+		moves++;
+
+		// Check for a winner or draw
+		isWinner();
+
+		// Switch to the next player
+		turn = 1 - turn;
+
+		if ((players[1]->getName()) == "Random Computer Player") {
+			if (moves != 24) {              // tool ma el game makhlsetsh
+				Sleep(290);
+				rand_comp_move();
+			}
+		}
+	}
+}
+void XO5x5::isWinner() {
+	int xwins = 0;
+	int owins = 0;
+
+	// Check rows
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 3; j++) {
+			if (cells[i][j]->GetLabel() == cells[i][j + 1]->GetLabel() && cells[i][j + 1]->GetLabel() == cells[i][j + 2]->GetLabel() && !cells[i][j]->GetLabel().IsEmpty()) {
+				if (cells[i][j]->GetLabel() == "x") {
+					xwins++;
+				}
+				else if (cells[i][j]->GetLabel() == "o") {
+					owins++;
+				}
+			}
+		}
+	}
+
+	// Check columns
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 5; j++) {
+			if (cells[i][j]->GetLabel() == cells[i + 1][j]->GetLabel() && cells[i + 1][j]->GetLabel() == cells[i + 2][j]->GetLabel() && !cells[i][j]->GetLabel().IsEmpty()) {
+				if (cells[i][j]->GetLabel() == "x") {
+					xwins++;
+				}
+				else if (cells[i][j]->GetLabel() == "o") {
+					owins++;
+				}
+			}
+		}
+	}
+
+	// Check diagonals
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			if (cells[i][j]->GetLabel() == cells[i + 1][j + 1]->GetLabel() && cells[i + 1][j + 1]->GetLabel() == cells[i + 2][j + 2]->GetLabel() && !cells[i][j]->GetLabel().IsEmpty()) {
+				if (cells[i][j]->GetLabel() == "x") {
+					xwins++;
+				}
+				else if (cells[i][j]->GetLabel() == "o") {
+					owins++;
+				}
+			}
+		}
+	}
+
+	// Check reverse diagonals
+	for (int i = 0; i < 3; i++) {
+		for (int j = 2; j < 5; j++) {
+			if (cells[i][j]->GetLabel() == cells[i + 1][j - 1]->GetLabel() && cells[i + 1][j - 1]->GetLabel() == cells[i + 2][j - 2]->GetLabel() && !cells[i][j]->GetLabel().IsEmpty()) {
+				if (cells[i][j]->GetLabel() == "x") {
+					xwins++;
+				}
+				else if (cells[i][j]->GetLabel() == "o") {
+					owins++;
+				}
+			}
+		}
+	}
+	if (moves == 24) {
+		// Determine the winner based on the count of three-in-a-row sequences
+		if (xwins > owins) {
+			GameStatusAndScore->SetLabel("Player X wins!");
+		}
+		else if (owins > xwins) {
+			GameStatusAndScore->SetLabel("Player O wins!");
+		}
+		else {
+			GameStatusAndScore->SetLabel("It's a draw!");
+		}
+		for (int i = 0; i < 5; i++)
+		{
+			for (int j = 0; j < 5; j++)
+
+				cells[i][j]->Disable();                 // disable ely fadel bas beydoos 3al cell mareteen 3ady
+		}
+	}
+}
+bool XO5x5::is_draw() {
+	return false;
+}
+void XO5x5::rand_comp_move() {
+	int row, col;
+
+	// Generate random row and column until an empty cell is found
+generate:
+	row = rand() % 5;
+	col = rand() % 5;
+
+	if (!cells[row][col]->GetLabel().IsEmpty()) {
+		goto generate;
+	}
+
+	// Random computer beyl3ab be 'O'
+	if (turn == 1) {
+		cells[row][col]->SetLabel("o");
+	}
+
+	// Increment moves
+	moves++;
+
+	// Switch to the next player
+	turn = 1 - turn;
+
+	// Check el winner if the game is over
+	if (moves == 24) {
+		isWinner();
+	}
+}
+void XO5x5::OnInstructions(wxCommandEvent& event) {
+
+
+	wxString instructionsMessage = "Welcome to 5x5 Tic Tac Toe!\n\nInstructions:\n• The game board is a 5x5 grid.\n• Players choose a token (X or O) and take turns placing tokens on the grid.\n• \nWinning:\n•Count the number of three in a rows each player has. Sequences can be vertically or horizontally or diagonally. Whover has the most wins. then it is a draw.";
+
+
+	wxMessageDialog dialog(this, instructionsMessage, "Instructions", wxOK | wxCENTRE);
+	dialog.ShowModal();
+}
+void XO5x5::OnResetBtn(wxCommandEvent& event)
+{
+	for (short i = 0; i < 5; i++)
+	{
+		for (short j = 0; j < 5; j++)
+		{
+			cells[i][j]->Enable();
+			cells[i][j]->SetLabel("");
+		}
+	}
+	turn = 0;
+	moves = 0;
+	GameStatusAndScore->SetLabel(wallahyZhe2t);
 }
 ////////////////////////////////Credits's Methods//////////////////////////////////////
 Credits::Credits(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxFrame(parent, id, title, pos, size, style)
