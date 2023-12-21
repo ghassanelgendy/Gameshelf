@@ -25,14 +25,7 @@ void GameManager5x5::run() {
             boardPtr->display_board();
             boardPtr->is_winner();
             boardPtr->is_draw();
-            //if (boardPtr->is_winner()) {
-                //cout << players[i]->to_string() << " wins\n";
-                //return;
-            //}
-            //if (boardPtr->is_draw()) {
-                //cout << "Draw!\n";
-                //return;
-            //}
+
         }
     }
 }

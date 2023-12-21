@@ -24,6 +24,8 @@ public:
     void display_board() override;
 // Return true if game is over
     bool game_is_over() override;
+    char get_board_value(int x, int  y);
+    void set_board_value(int & x, int &  y, char mark);
 };
 
 //class GameManager5x5:public GameManager{
@@ -37,6 +39,14 @@ public:
      // Generate a random move
      void get_move(int& x, int& y) override;
 
+ };
+ class AI_Player : public RandomPlayer {
+ private:
+     Board5x5 board;
+ public:
+     AI_Player(char symbol);
+     void get_move(int& x, int& y) override;
+     virtual void get_board(Board* bPtr);
  };
 
 

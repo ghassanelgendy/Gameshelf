@@ -142,5 +142,13 @@ bool Board5x5::game_is_over () {
         return false;
     }
 }
+char Board5x5::get_board_value(int x, int y) {
+    return board[x][y];
+}
+
+void Board5x5::set_board_value(int& x, int& y, char value) {
+    board[x][y] = value;
+}
+
 
 
