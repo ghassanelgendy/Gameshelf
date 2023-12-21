@@ -59,13 +59,13 @@
     <ClInclude Include="..\..\Gameboard\include\BoardGame_Classes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ConnectFour\include\ConnectFour_Classes.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\PyramicTicTacToe\include\PyramicTicTacToe_classes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\FiveByFive\include\5x5Headerfiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ConnectFour\include\ConnectFour_Classes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

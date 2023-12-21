@@ -122,12 +122,15 @@ void static init5x5(char& choice) {
     Player* players[2];
     players[0] = new Player(1, 'x');
     cout << "Welcome to FCAI X-O Game. :)\n";
-    cout << "Press 1 if you want to play with computer: ";
+    cout << "Press 1 if you want to play with computer:\nPress 2 if you want to play with a highly sophisticated AI:\nPress 3 if you want to play with a friend:\n";
     cin >> choice;
-    if (choice != '1')
-        players[1] = new Player(2, 'o');
-    else {
+    if (choice == '1')
         players[1] = new RandomPlayer5x5('o');
+    else if(choice == '2') {
+        players[1] = new AI_Player('o');
+    }
+    else if (choice == '3') {
+        players[1] = new Player('o');
     }
 
     Board5x5* elboard = new Board5x5;
